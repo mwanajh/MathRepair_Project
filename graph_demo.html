@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MathRepair Graph Lab</title>
+    <link rel="stylesheet" href="graph_demo.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-block">
+        <p class="eyebrow">PROPOSED METHOD / LIVE PROTOTYPE</p>
+        <h1>MathRepair Graph Lab</h1>
+        <p class="subtitle">Dependency-aware verification for a single algebra trace</p>
+      </div>
+      <div class="topbar-actions">
+        <span class="run-state" id="runState"><span class="state-dot"></span>Ready</span>
+        <button class="button button-ghost" id="resetButton" type="button">Reset</button>
+        <button class="button button-primary" id="runButton" type="button">Run verification</button>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="problem-strip" aria-label="Problem context">
+        <div>
+          <span class="label">Problem</span>
+          <strong id="problemText">2(x + 3) = 14</strong>
+        </div>
+        <div class="strip-meta">
+          <span class="contract-tag">Symbolic verifier</span>
+          <span class="contract-tag">Budget 10 calls</span>
+          <span class="contract-tag">Branching graph</span>
+        </div>
+      </section>
+
+      <section class="trace-input" aria-label="Trace input">
+        <div class="input-heading">
+          <div>
+            <span class="label">Trace input</span>
+            <h2>Inspect your own equation steps</h2>
+          </div>
+          <button class="button button-ghost input-sample" id="sampleButton" type="button">Load sample</button>
+        </div>
+        <form id="traceForm" class="trace-form">
+          <label>
+            <span>Problem equation</span>
+            <input id="problemInput" name="problem" value="2(x + 3) = 14" autocomplete="off" spellcheck="false">
+          </label>
+          <label class="steps-field">
+            <span>Reasoning steps <em>one equation per line</em></span>
+            <textarea id="stepsInput" name="steps" rows="3" spellcheck="false">2x + 3 = 14
+2x = 11
+x = 5.5</textarea>
+          </label>
+          <button class="button button-primary analyze-button" type="submit">Analyze trace</button>
+        </form>
+        <p class="input-feedback" id="inputFeedback" role="status">Using the sample trace. Enter your own steps to inspect them.</p>
+      </section>
+
+      <nav class="stagebar" aria-label="Pipeline stages">
+        <span class="stage active">01 <b>Construct</b></span>
+        <span class="stage">02 <b>Verify</b></span>
+        <span class="stage">03 <b>Localize</b></span>
+        <span class="stage">04 <b>Repair</b></span>
+        <span class="stage">05 <b>Allocate</b></span>
+      </nav>
+
+      <section class="workspace">
+        <div class="graph-section">
+          <div class="section-heading">
+            <div>
+              <span class="label">Reasoning graph</span>
+              <h2>Every state keeps its dependencies</h2>
+            </div>
+            <div class="legend" aria-label="Graph status legend">
+              <span><i class="legend-swatch swatch-error"></i>Error</span>
+              <span><i class="legend-swatch swatch-affected"></i>Affected</span>
+              <span><i class="legend-swatch swatch-clear"></i>Unaffected</span>
+            </div>
+          </div>
+          <div class="graph-board" id="graphBoard">
+            <svg class="edges" id="edgeLayer" aria-hidden="true"></svg>
+            <div class="problem-node" id="problemNode">Problem<br><strong>2(x + 3) = 14</strong></div>
+            <div class="node-card node-error" data-node="n1" tabindex="0" role="button" aria-label="Node n1, error">
+              <div class="node-top"><span class="node-id">n1</span><span class="node-status">ERROR</span></div>
+              <div class="equation">2x + 3 = 14</div>
+              <div class="node-foot">depends on problem</div>
+            </div>
+            <div class="node-card node-affected" data-node="n2" tabindex="0" role="button" aria-label="Node n2, affected">
+              <div class="node-top"><span class="node-id">n2</span><span class="node-status">AFFECTED</span></div>
+              <div class="equation">2x = 11</div>
+              <div class="node-foot">depends on n1</div>
+            </div>
+            <div class="node-card node-affected" data-node="n3" tabindex="0" role="button" aria-label="Node n3, affected">
+              <div class="node-top"><span class="node-id">n3</span><span class="node-status">AFFECTED</span></div>
+              <div class="equation">x = 5.5</div>
+              <div class="node-foot">depends on n2</div>
+            </div>
+            <div class="node-card node-clear" data-node="n4" tabindex="0" role="button" aria-label="Node n4, unaffected">
+              <div class="node-top"><span class="node-id">n4</span><span class="node-status">CLEAR</span></div>
+              <div class="equation">14 = 2(x + 3)</div>
+              <div class="node-foot">depends on problem</div>
+            </div>
+            <div class="node-card node-clear" data-node="n5" tabindex="0" role="button" aria-label="Node n5, unaffected">
+              <div class="node-top"><span class="node-id">n5</span><span class="node-status">CLEAR</span></div>
+              <div class="equation">x = 4</div>
+              <div class="node-foot">depends on n4</div>
+            </div>
+          </div>
+          <div class="graph-footer">
+            <span><b id="nodeCount">5</b> states</span>
+            <span><b id="edgeCount">5</b> dependencies</span>
+            <span>Selected: <b id="selectedNode">n1</b></span>
+          </div>
+        </div>
+
+        <aside class="inspector" aria-label="Verification inspector">
+          <section class="inspector-block diagnosis-block">
+            <div class="block-heading"><span class="label">Diagnosis</span><span class="severity">HIGH IMPACT</span></div>
+            <h2 id="diagnosisTitle">Algebraic transformation error</h2>
+            <p class="diagnosis-copy" id="diagnosisCopy">The coefficient 2 was not distributed to the constant 3.</p>
+            <div class="answer-row">
+              <span>Verified answer</span>
+              <strong id="answerText">x = 4</strong>
+            </div>
+            <div class="repair-callout">
+              <span class="label">Suggested local repair</span>
+              <code id="repairText">2x + 6 = 14</code>
+            </div>
+          </section>
+
+          <section class="inspector-block">
+            <div class="block-heading"><span class="label">Repair policy</span><span class="action-pill" id="actionPill">REFORMALIZE</span></div>
+            <p class="policy-reason" id="policyReason">Expand or simplify the equation in symbolic form.</p>
+            <div class="affected-list">
+              <div><span class="metric-value" id="affectedCount">2</span><span class="metric-label">affected descendants</span></div>
+              <div><span class="metric-value" id="clearCount">2</span><span class="metric-label">unaffected states</span></div>
+            </div>
+          </section>
+
+          <section class="inspector-block allocation-block">
+            <div class="block-heading"><span class="label">Adaptive allocation</span><span class="budget-label">10 / 10 calls</span></div>
+            <div class="allocation-list" id="allocationList">
+              <div class="allocation-row"><span class="allocation-id">n1</span><div class="allocation-track"><i style="width: 100%"></i></div><b>7</b></div>
+              <div class="allocation-row"><span class="allocation-id">n2</span><div class="allocation-track"><i style="width: 29%"></i></div><b>2</b></div>
+              <div class="allocation-row"><span class="allocation-id">n3</span><div class="allocation-track"><i style="width: 14%"></i></div><b>1</b></div>
+              <div class="allocation-row muted"><span class="allocation-id">n4</span><div class="allocation-track"><i style="width: 0%"></i></div><b>0</b></div>
+              <div class="allocation-row muted"><span class="allocation-id">n5</span><div class="allocation-track"><i style="width: 0%"></i></div><b>0</b></div>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="run-log" aria-live="polite">
+        <div class="section-heading compact-heading">
+          <div><span class="label">Verification log</span><h2 id="logTitle">Graph ready for verification</h2></div>
+          <span class="log-time" id="logTime">--:--:--</span>
+        </div>
+        <div class="log-line" id="logLine"><span class="log-marker"></span><span id="logText">Select a node to inspect its dependencies, or run the verification sequence.</span></div>
+      </section>
+    </main>
+    <script src="graph_demo.js"></script>
+  </body>
+</html>

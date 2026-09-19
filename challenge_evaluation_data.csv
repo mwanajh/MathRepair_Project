@@ -1,0 +1,22 @@
+original,proposed,has_error,error_type,expected_repair,expected_answer,expected_action
+2(x - 4) = 10,2x - 4 = 10,true,algebraic_transformation_error,2x - 8 = 10,x = 9,REFORMALIZE
+3x + 5 = 2x + 9,x = 14,true,algebraic_transformation_error,3x + 5 = 2x + 9,x = 4,REFORMALIZE
+x/3 + 2 = 5,x = 1,true,algebraic_transformation_error,x/3 + 2 = 5,x = 9,REFORMALIZE
+-4(x - 2) = 12,-4x - 8 = 12,true,sign_error,x = -1,x = -1,BACKTRACK
+x + 7 = 3,x = 10,true,sign_error,x = -4,x = -4,BACKTRACK
+5 - x = 2,x = -3,true,sign_error,x = 3,x = 3,BACKTRACK
+-3x = 12,x = 4,true,sign_error,x = -4,x = -4,BACKTRACK
+3x - 4 = 11,x = 7/3,true,sign_error,x = 5,x = 5,BACKTRACK
+x^2 = 9,x = 3,true,algebraic_transformation_error,x**2 = 9,"x in {-3, 3}",REFORMALIZE
+2x + 1 = 2x + 2,x = 1,true,algebraic_transformation_error,2x + 1 = 2x + 2,x in EmptySet,REFORMALIZE
+3(x + 1) = 3x + 3,x = 0,true,algebraic_transformation_error,3x + 3 = 3x + 3,x in Reals,REFORMALIZE
+20 - 13 = 7,20 - 13 = 33,true,arithmetic_error,20 - 13 = 7,true,TOOL_EXECUTE
+8 * 7 = 56,8 * 7 = 54,true,arithmetic_error,8 * 7 = 56,true,TOOL_EXECUTE
+24 / 6 = 4,24 / 6 = 5,true,arithmetic_error,24 / 6 = 4,true,TOOL_EXECUTE
+2(x - 4) = 10,2x - 8 = 10,false,,2x - 8 = 10,x = 9,CONTINUE
+3x + 5 = 2x + 9,x = 4,false,,3x + 5 = 2x + 9,x = 4,CONTINUE
+x/3 + 2 = 5,x/3 = 3,false,,x/3 + 2 = 5,x = 9,CONTINUE
+-4(x - 2) = 12,-4x + 8 = 12,false,,8 - 4x = 12,x = -1,CONTINUE
+x^2 = 9,(x - 3)(x + 3) = 0,false,,x**2 = 9,"x in {-3, 3}",CONTINUE
+2x + 1 = 2x + 2,0 = 1,false,,2x + 1 = 2x + 2,x in EmptySet,CONTINUE
+3(x + 1) = 3x + 3,3x + 3 = 3x + 3,false,,3x + 3 = 3x + 3,x in Reals,CONTINUE

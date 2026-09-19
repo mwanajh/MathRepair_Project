@@ -1,0 +1,1117 @@
+{
+  "problem_set": "expanded_heldout_model_problems.csv",
+  "trial_count": 3,
+  "categories": {
+    "cubic_factorization": {
+      "runs_per_trial": 2,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.5,
+              1.0
+            ],
+            "mean": 0.8333333333333334,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.11616666666666675,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.5,
+              1.0
+            ],
+            "mean": 0.8333333333333334,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.11616666666666675,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.5,
+              1.0
+            ],
+            "mean": 0.8333333333333334,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.11616666666666675,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.5,
+              1.0
+            ],
+            "mean": 0.8333333333333334,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.11616666666666675,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.5,
+              1.0
+            ],
+            "mean": 0.8333333333333334,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.11616666666666675,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.5,
+              1.0
+            ],
+            "mean": 0.8333333333333334,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.11616666666666675,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "cubic_transformation": {
+      "runs_per_trial": 2,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.0,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3333333333333333,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.0,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3333333333333333,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              0.0,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3333333333333333,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.0,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3333333333333333,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.0,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3333333333333333,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.0,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3333333333333333,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "large_coefficients": {
+      "runs_per_trial": 4,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "large_fractions": {
+      "runs_per_trial": 6,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.16666666666666666,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3888888888888889,
+            "sample_standard_deviation": 0.19245008972987526,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              0.867
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.16666666666666666,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3888888888888889,
+            "sample_standard_deviation": 0.19245008972987526,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              0.867
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              0.16666666666666666,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3888888888888889,
+            "sample_standard_deviation": 0.19245008972987526,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              0.867
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.16666666666666666,
+              0.5,
+              0.5
+            ],
+            "mean": 0.3888888888888889,
+            "sample_standard_deviation": 0.19245008972987526,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              0.867
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.6666666666666666,
+              0.8333333333333334,
+              0.8333333333333334
+            ],
+            "mean": 0.7777777777777778,
+            "sample_standard_deviation": 0.09622504486493767,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5387222222222221,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.6666666666666666,
+              0.8333333333333334,
+              0.8333333333333334
+            ],
+            "mean": 0.7777777777777778,
+            "sample_standard_deviation": 0.09622504486493767,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5387222222222221,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "nested_distribution": {
+      "runs_per_trial": 4,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.5,
+              0.75,
+              0.75
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.3080833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.5,
+              0.75,
+              0.75
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.3080833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "mean": 0.75,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.75,
+              0.75
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "mean": 0.75,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.75,
+              0.75
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.75,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.75,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "nested_subtraction": {
+      "runs_per_trial": 4,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              0.75,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "quartic_factorization": {
+      "runs_per_trial": 2,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.5,
+              0.5,
+              1.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              0.5,
+              0.5,
+              1.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.5,
+              0.5,
+              1.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.28867513459481287,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "rational_equation": {
+      "runs_per_trial": 6,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.8333333333333334,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9444444444444445,
+            "sample_standard_deviation": 0.0962250448649376,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.7053888888888891,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.8333333333333334,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9444444444444445,
+            "sample_standard_deviation": 0.0962250448649376,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.7053888888888891,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              0.8333333333333334,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9444444444444445,
+            "sample_standard_deviation": 0.0962250448649376,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.7053888888888891,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.8333333333333334,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9444444444444445,
+            "sample_standard_deviation": 0.0962250448649376,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.7053888888888891,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              0.8333333333333334,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9444444444444445,
+            "sample_standard_deviation": 0.0962250448649376,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.7053888888888891,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.8333333333333334,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9444444444444445,
+            "sample_standard_deviation": 0.0962250448649376,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.7053888888888891,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "repeated_quadratic_root": {
+      "runs_per_trial": 4,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.75,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.75,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "mean": 1.0,
+            "sample_standard_deviation": 0.0,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              1.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              0.75,
+              1.0,
+              1.0
+            ],
+            "mean": 0.9166666666666666,
+            "sample_standard_deviation": 0.14433756729740643,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.5580833333333333,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "repeated_quartic_root": {
+      "runs_per_trial": 1,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    },
+    "repeated_quintic_root": {
+      "runs_per_trial": 1,
+      "strategy_metrics": {
+        "no_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_global_regeneration": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        },
+        "verified_local_repair": {
+          "answer_accuracy": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          },
+          "trace_valid_rate": {
+            "values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "mean": 0.6666666666666666,
+            "sample_standard_deviation": 0.5773502691896257,
+            "confidence_level": 0.95,
+            "confidence_interval": [
+              0.0,
+              1.0
+            ],
+            "trial_count": 3
+          }
+        }
+      }
+    }
+  }
+}

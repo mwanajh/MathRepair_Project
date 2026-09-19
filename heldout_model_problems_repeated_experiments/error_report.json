@@ -1,0 +1,14 @@
+{
+  "algebraic_transformation_error": {
+    "detected": 4,
+    "accepted_repairs": 2,
+    "corrected_wrong_answers": 1,
+    "repair_regressions": 0
+  },
+  "sign_error": {
+    "detected": 1,
+    "accepted_repairs": 1,
+    "corrected_wrong_answers": 1,
+    "repair_regressions": 0
+  }
+}

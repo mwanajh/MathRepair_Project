@@ -1,0 +1,11 @@
+problem,expected_answer,category
+2(x + 3) = 14,x = 4,linear_distribution
+3(x - 2) = 21,x = 9,linear_distribution
+5(x + 4) = 45,x = 5,linear_distribution
+4x + 7 = 31,x = 6,linear
+7x - 5 = 30,x = 5,linear
+x/3 + 2 = 7,x = 15,fraction
+3x + 5 = 2x + 12,x = 7,both_sides
+8 - 2x = 20,x = -6,negative_coefficient
+-3(x - 4) = 18,x = -2,negative_distribution
+2(x + 5) - 3 = 17,x = 5,multi_operation

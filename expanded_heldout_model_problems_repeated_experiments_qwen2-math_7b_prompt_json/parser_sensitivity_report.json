@@ -1,0 +1,431 @@
+{
+  "analysis": "parser_normalized_sensitivity",
+  "input_directory": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json",
+  "trial_count": 3,
+  "total_runs": 108,
+  "strict_failure_count": 10,
+  "recovered_output_count": 5,
+  "unrecovered_output_count": 5,
+  "recovered_answer_correct_count": 5,
+  "recovered_trace_valid_count": 5,
+  "recovered_isolated_answer_count": 4,
+  "mean_strict_answer_accuracy": 0.75,
+  "mean_normalized_answer_accuracy": 0.7962962962962963,
+  "mean_strict_trace_valid_rate": 0.7592592592592592,
+  "mean_normalized_trace_valid_rate": 0.8055555555555557,
+  "normalized_error_type_counts": {
+    "parser_failure": 5
+  },
+  "trial_results": [
+    {
+      "base_seed": 160500,
+      "run_count": 36,
+      "strict_failure_count": 3,
+      "recovered_output_count": 2,
+      "recovered_isolated_answer_count": 2,
+      "recovered_answer_correct_count": 2,
+      "recovered_trace_valid_count": 2,
+      "strict_answer_accuracy": 0.6944444444444444,
+      "normalized_answer_accuracy": 0.75,
+      "strict_trace_valid_rate": 0.6944444444444444,
+      "normalized_trace_valid_rate": 0.75
+    },
+    {
+      "base_seed": 180500,
+      "run_count": 36,
+      "strict_failure_count": 3,
+      "recovered_output_count": 2,
+      "recovered_isolated_answer_count": 1,
+      "recovered_answer_correct_count": 2,
+      "recovered_trace_valid_count": 2,
+      "strict_answer_accuracy": 0.75,
+      "normalized_answer_accuracy": 0.8055555555555556,
+      "strict_trace_valid_rate": 0.7777777777777778,
+      "normalized_trace_valid_rate": 0.8333333333333334
+    },
+    {
+      "base_seed": 200500,
+      "run_count": 36,
+      "strict_failure_count": 4,
+      "recovered_output_count": 1,
+      "recovered_isolated_answer_count": 1,
+      "recovered_answer_correct_count": 1,
+      "recovered_trace_valid_count": 1,
+      "strict_answer_accuracy": 0.8055555555555556,
+      "normalized_answer_accuracy": 0.8333333333333334,
+      "strict_trace_valid_rate": 0.8055555555555556,
+      "normalized_trace_valid_rate": 0.8333333333333334
+    }
+  ],
+  "recovered_records": [
+    {
+      "trial": "seed_160500",
+      "problem": "(3x - 2)^3 = 343",
+      "seed": 171500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": true,
+      "steps": [
+        "(3x - 2)^3 = 343",
+        "3x = 9",
+        "x = 3"
+      ],
+      "discarded_steps": [
+        {
+          "step": "Take the cube root of both sides: 3x - 2 = \u221b343",
+          "reason": "unsupported_extra_symbol"
+        },
+        {
+          "step": "Since \u221b343 = 7, we have: 3x - 2 = 7",
+          "reason": "parse_error: invalid syntax (<string>, line 1)"
+        },
+        {
+          "step": "Since \u221b343 = 7, we have: 3x - 2 = 7",
+          "reason": "parse_error: invalid syntax (<string>, line 1)"
+        }
+      ],
+      "trace_valid": true,
+      "answer_step": "x = 3",
+      "answer_correct": true,
+      "has_isolated_answer": true,
+      "first_error_node": null,
+      "error_type": ""
+    },
+    {
+      "trial": "seed_160500",
+      "problem": "(2x + 15)/(x - 4) = 7",
+      "seed": 176500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": true,
+      "steps": [
+        "2x + 15 = 7(x - 4)",
+        "2x + 15 = 7x - 28",
+        "15 = 5x - 28",
+        "43 = 5x",
+        "x = 43/5"
+      ],
+      "discarded_steps": [],
+      "trace_valid": true,
+      "answer_step": "x = 43/5",
+      "answer_correct": true,
+      "has_isolated_answer": true,
+      "first_error_node": null,
+      "error_type": ""
+    },
+    {
+      "trial": "seed_160500",
+      "problem": "(4x + 3)^3 = 729",
+      "seed": 189500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": false,
+      "steps": [],
+      "discarded_steps": [
+        {
+          "step": "Expand left side of the equation using the binomial theorem.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Simplify the equation by expanding (4x + 3)^3.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Rearrange the equation to isolate the variable term.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Divide both sides of the equation by the coefficient of x.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Take the cube root of both sides of the equation to solve for x.",
+          "reason": "not_one_equation"
+        }
+      ],
+      "trace_valid": false,
+      "answer_correct": false,
+      "has_isolated_answer": false,
+      "first_error_node": null,
+      "error_type": "parser_failure"
+    },
+    {
+      "trial": "seed_180500",
+      "problem": "(3x - 2)^3 = 343",
+      "seed": 191500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": false,
+      "steps": [],
+      "discarded_steps": [
+        {
+          "step": "Expand the left side of the equation",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Simplify the equation by combining like terms",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Isolate the variable term on one side of the equation",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Divide both sides of the equation by the coefficient of x",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Simplify the right side of the equation by finding the cube root of 343",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Isolate x by adding 2/3 to both sides of the equation",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Simplify the right side of the equation by combining the fractions",
+          "reason": "not_one_equation"
+        }
+      ],
+      "trace_valid": false,
+      "answer_correct": false,
+      "has_isolated_answer": false,
+      "first_error_node": null,
+      "error_type": "parser_failure"
+    },
+    {
+      "trial": "seed_180500",
+      "problem": "x^3 - 15x^2 + 75x - 125 = 0",
+      "seed": 193500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": true,
+      "steps": [
+        "5^3 - 15*5^2 + 75*5 - 125 = 125 - 375 + 375 - 125",
+        "125 - 375 + 375 - 125 = 0",
+        "x^2 - 10x + 25 = (x - 5)^2",
+        "(x - 5)^3 = 0",
+        "x - 5 = 0"
+      ],
+      "discarded_steps": [
+        {
+          "step": "Let's try to find a root by inspection or using the Rational Root Theorem.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Let's try to find a root by inspection or using the Rational Root Theorem.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "The Rational Root Theorem suggests that any rational root, p/q, is a factor of the constant term (-125) divided by a factor of the leading coefficient (1). Therefore, possible rational roots are: \u00b11, \u00b15, \u00b125, \u00b1125.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Let's test x = 5 (since 5 is a factor of 125):",
+          "reason": "parse_error: ('unterminated string literal (detected at line 1)', (1, 4))"
+        },
+        {
+          "step": "So, x = 5 is a root.",
+          "reason": "parse_error: invalid syntax (<string>, line 1)"
+        },
+        {
+          "step": "Now, we can factor the polynomial as (x - 5) times a quadratic polynomial. To find this quadratic polynomial, we can use polynomial division or synthetic division.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Now, we can factor the polynomial as (x - 5) times a quadratic polynomial. To find this quadratic polynomial, we can use polynomial division or synthetic division.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Using synthetic division with x = 5 (root we found):",
+          "reason": "parse_error: invalid syntax (<string>, line 1)"
+        },
+        {
+          "step": "5 | 1  -15   75  -125",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "|     5  -50  125",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "-----------------",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "| 1  -10   25    0",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "So, the quadratic polynomial is x^2 - 10x + 25.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "So, x = 5 (with multiplicity 3)",
+          "reason": "parse_error: invalid syntax (<string>, line 1)"
+        }
+      ],
+      "trace_valid": true,
+      "answer_step": "x - 5 = 0",
+      "answer_correct": true,
+      "has_isolated_answer": false,
+      "first_error_node": null,
+      "error_type": ""
+    },
+    {
+      "trial": "seed_180500",
+      "problem": "(8x - 3)/11 - (5x + 2)/16 = 7",
+      "seed": 205500,
+      "strict_failure": "list index out of range",
+      "recovered": true,
+      "steps": [
+        "128x - 48 - 55x - 22 = 1232",
+        "73x - 70 = 1232",
+        "73x = 1302",
+        "x = 1302 / 73"
+      ],
+      "discarded_steps": [
+        {
+          "step": "Multiply both sides by 176 (LCM of 11 and 16) to eliminate fractions",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "8x - 3)(16) - (5x + 2)(11) = 7 * 176",
+          "reason": "parse_error: list index out of range"
+        },
+        {
+          "step": "Add 70 to both sides",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Divide both sides by 73",
+          "reason": "not_one_equation"
+        }
+      ],
+      "trace_valid": true,
+      "answer_step": "x = 1302 / 73",
+      "answer_correct": true,
+      "has_isolated_answer": true,
+      "first_error_node": null,
+      "error_type": ""
+    },
+    {
+      "trial": "seed_200500",
+      "problem": "(x + 6)^4 = 0",
+      "seed": 208500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": false,
+      "steps": [],
+      "discarded_steps": [
+        {
+          "step": "Subtract 6 from both sides of the equation.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Divide both sides of the equation by 4.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Add 6 to both sides of the equation.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Divide both sides of the equation by 2.",
+          "reason": "not_one_equation"
+        }
+      ],
+      "trace_valid": false,
+      "answer_correct": false,
+      "has_isolated_answer": false,
+      "first_error_node": null,
+      "error_type": "parser_failure"
+    },
+    {
+      "trial": "seed_200500",
+      "problem": "(3x - 2)^3 = 343",
+      "seed": 211500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": false,
+      "steps": [],
+      "discarded_steps": [
+        {
+          "step": "Expand the left side using the binomial theorem or by direct multiplication.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Expand the left side using the binomial theorem or by direct multiplication.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Compare the expanded form with the right side to solve for x.",
+          "reason": "not_one_equation"
+        }
+      ],
+      "trace_valid": false,
+      "answer_correct": false,
+      "has_isolated_answer": false,
+      "first_error_node": null,
+      "error_type": "parser_failure"
+    },
+    {
+      "trial": "seed_200500",
+      "problem": "(x - 4)^5 = 0",
+      "seed": 226500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": false,
+      "steps": [],
+      "discarded_steps": [
+        {
+          "step": "Start with the given equation.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "To solve for x, we need to find the value that makes the equation true.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Notice that the only way for a number raised to the fifth power to be zero is if that number itself is zero.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "Therefore, we can set the expression inside the parentheses equal to zero.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "This gives us the equation x - 4 = 0.",
+          "reason": "unsupported_extra_symbol"
+        },
+        {
+          "step": "To solve for x, we add 4 to both sides of the equation.",
+          "reason": "not_one_equation"
+        },
+        {
+          "step": "This simplifies to x = 4.",
+          "reason": "unsupported_extra_symbol"
+        }
+      ],
+      "trace_valid": false,
+      "answer_correct": false,
+      "has_isolated_answer": false,
+      "first_error_node": null,
+      "error_type": "parser_failure"
+    },
+    {
+      "trial": "seed_200500",
+      "problem": "(5x - 6)/13 + (2x + 1)/8 = 9",
+      "seed": 235500,
+      "strict_failure": "Qwen response haina equation steps zinazoweza kusomwa.",
+      "recovered": true,
+      "steps": [
+        "(5x - 6) * 8 + (2x + 1) * 13 = 9 * 104",
+        "40x - 48 + 26x + 13 = 936",
+        "66x - 35 = 936",
+        "66x = 971",
+        "x = 971 / 66"
+      ],
+      "discarded_steps": [],
+      "trace_valid": true,
+      "answer_step": "x = 971 / 66",
+      "answer_correct": true,
+      "has_isolated_answer": true,
+      "first_error_node": null,
+      "error_type": ""
+    }
+  ],
+  "caveat": "This offline sensitivity analysis changes parser handling only. It does not replace the primary end-to-end comparison."
+}

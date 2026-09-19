@@ -1,0 +1,22 @@
+{
+  "audit": "research_artifacts",
+  "checks": {
+    "primary_protocol": true,
+    "primary_local_accuracy": true,
+    "profile_protocol": true,
+    "profile_failures": true,
+    "profile_normalized_accuracy": true,
+    "category_denominator": true,
+    "primary_7b_failure_count": true,
+    "comparison_candidate": true,
+    "chapter_contains_headlines": true
+  },
+  "all_checks_pass": true,
+  "sources": [
+    "expanded_heldout_model_problems_repeated_experiments/aggregate_report.json",
+    "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json/aggregate_report.json",
+    "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json/parser_sensitivity_report.json",
+    "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json/category_report.json",
+    "THESIS_RESULTS_CHAPTER.md"
+  ]
+}

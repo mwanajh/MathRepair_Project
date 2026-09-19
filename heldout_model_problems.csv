@@ -1,0 +1,19 @@
+problem,expected_answer,category
+19(2x - 7) - 3(5x + 4) = 7(x - 9) + 22,x = 13/2,large_coefficients
+8(4x + 3) - 5(3x - 11) = 2(6x + 7) + 9,x = -56/5,large_coefficients
+(7x - 9)/(3x + 2) = 4,x = -17/5,rational_equation
+(4x + 13)/(5x - 6) = -3,x = 5/19,rational_equation
+21 - (5 - (4 - (3 - x))) = 37,x = 20,nested_subtraction
+4(3(2x - 7) + 5) - 7(x - 4) = 81,x = 117/17,nested_distribution
+(3x + 2)/8 + (5x - 9)/12 = 17,x = 420/19,large_fractions
+(7x - 4)/15 - (2x + 5)/9 = 6,x = 307/11,large_fractions
+(x + 6)^4 = 0,x = -6,repeated_quartic_root
+x^4 - 12x^3 + 54x^2 - 108x + 81 = 0,x = 3,quartic_factorization
+16(x + 5)^2 = 0,x = -5,repeated_quadratic_root
+(3x - 2)^3 = 343,x = 3,cubic_transformation
+25(x - 7)^2 = 0,x = 7,repeated_quadratic_root
+x^3 - 15x^2 + 75x - 125 = 0,x = 5,cubic_factorization
+18 - (7 - (5 - (4 - x))) = 32,x = 20,nested_subtraction
+9(2(4x + 1) - 3) + 6(x - 5) = 117,x = 2,nested_distribution
+(2x + 15)/(x - 4) = 7,x = 43/5,rational_equation
+(4x - 7)/9 + (x + 5)/14 = 8,x = 1061/65,large_fractions

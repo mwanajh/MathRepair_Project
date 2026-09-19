@@ -1,0 +1,388 @@
+{
+  "generated_utc": "2026-09-19T03:44:05.680215+00:00",
+  "model": "qwen2-math:7b",
+  "temperature": 1.4,
+  "samples_per_problem": 1,
+  "prompt_profile": "qwen2_math_json",
+  "trial_count": 3,
+  "runs_per_trial": 36,
+  "problem_set": "expanded_heldout_model_problems.csv",
+  "problem_count": 36,
+  "problem_set_sha256": "c9b28990cd73d705bfc768e630c6d2897c8bea87583c6891487dd49c49b13124",
+  "base_seeds": [
+    160500,
+    180500,
+    200500
+  ],
+  "strategy_metrics": {
+    "no_repair": {
+      "answer_accuracy": {
+        "values": [
+          0.6944444444444444,
+          0.75,
+          0.8055555555555556
+        ],
+        "mean": 0.75,
+        "sample_standard_deviation": 0.05555555555555558,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.6119812106487243,
+          0.8880187893512757
+        ],
+        "trial_count": 3
+      },
+      "trace_valid_rate": {
+        "values": [
+          0.6944444444444444,
+          0.7777777777777778,
+          0.8055555555555556
+        ],
+        "mean": 0.7592592592592592,
+        "sample_standard_deviation": 0.057824055540725935,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.6156047487192449,
+          0.9029137697992735
+        ],
+        "trial_count": 3
+      },
+      "additional_model_calls": {
+        "values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "sample_standard_deviation": 0.0,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.0,
+          0.0
+        ],
+        "trial_count": 3
+      },
+      "additional_tokens": {
+        "values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "sample_standard_deviation": 0.0,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.0,
+          0.0
+        ],
+        "trial_count": 3
+      }
+    },
+    "verified_global_regeneration": {
+      "answer_accuracy": {
+        "values": [
+          0.7222222222222222,
+          0.75,
+          0.8055555555555556
+        ],
+        "mean": 0.7592592592592592,
+        "sample_standard_deviation": 0.04243125643477631,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.6538456676711949,
+          0.8646728508473235
+        ],
+        "trial_count": 3
+      },
+      "trace_valid_rate": {
+        "values": [
+          0.7222222222222222,
+          0.7777777777777778,
+          0.8055555555555556
+        ],
+        "mean": 0.7685185185185185,
+        "sample_standard_deviation": 0.04243125643477631,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.6631049269304542,
+          0.8739321101065828
+        ],
+        "trial_count": 3
+      },
+      "additional_model_calls": {
+        "values": [
+          18.0,
+          11.0,
+          8.0
+        ],
+        "mean": 12.333333333333334,
+        "sample_standard_deviation": 5.131601439446884,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          -0.41530019256966,
+          25.081966859236328
+        ],
+        "trial_count": 3
+      },
+      "additional_tokens": {
+        "values": [
+          3567.0,
+          2125.0,
+          1600.0
+        ],
+        "mean": 2430.6666666666665,
+        "sample_standard_deviation": 1018.5020045799288,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          -99.6367785647767,
+          4960.97011189811
+        ],
+        "trial_count": 3
+      }
+    },
+    "verified_local_repair": {
+      "answer_accuracy": {
+        "values": [
+          0.8055555555555556,
+          0.8611111111111112,
+          0.8888888888888888
+        ],
+        "mean": 0.8518518518518517,
+        "sample_standard_deviation": 0.042431256434776264,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.7464382602637877,
+          0.9572654434399158
+        ],
+        "trial_count": 3
+      },
+      "trace_valid_rate": {
+        "values": [
+          0.8055555555555556,
+          0.8888888888888888,
+          0.8888888888888888
+        ],
+        "mean": 0.861111111111111,
+        "sample_standard_deviation": 0.048112522432468774,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          0.7415833333333334,
+          0.9806388888888887
+        ],
+        "trial_count": 3
+      },
+      "additional_model_calls": {
+        "values": [
+          14.0,
+          7.0,
+          4.0
+        ],
+        "mean": 8.333333333333334,
+        "sample_standard_deviation": 5.131601439446884,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          -4.41530019256966,
+          21.081966859236328
+        ],
+        "trial_count": 3
+      },
+      "additional_tokens": {
+        "values": [
+          4316.0,
+          2346.0,
+          1769.0
+        ],
+        "mean": 2810.3333333333335,
+        "sample_standard_deviation": 1335.4798138996086,
+        "confidence_level": 0.95,
+        "confidence_interval": [
+          -507.45019478150016,
+          6128.116861448167
+        ],
+        "trial_count": 3
+      }
+    }
+  },
+  "paired_local_minus_global": {
+    "answer_accuracy_difference": {
+      "values": [
+        0.08333333333333337,
+        0.11111111111111116,
+        0.08333333333333326
+      ],
+      "mean": 0.0925925925925926,
+      "sample_standard_deviation": 0.016037507477489645,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        0.05274999999999991,
+        0.1324351851851853
+      ],
+      "trial_count": 3
+    },
+    "trace_validity_difference": {
+      "values": [
+        0.08333333333333337,
+        0.11111111111111105,
+        0.08333333333333326
+      ],
+      "mean": 0.09259259259259256,
+      "sample_standard_deviation": 0.01603750747748958,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        0.052750000000000026,
+        0.1324351851851851
+      ],
+      "trial_count": 3
+    },
+    "answer_advantage_excludes_zero_95": true,
+    "trace_advantage_excludes_zero_95": true
+  },
+  "all_budget_comparisons_valid": true,
+  "trial_summaries": [
+    {
+      "base_seed": 160500,
+      "model": "qwen2-math:7b",
+      "temperature": 1.4,
+      "samples_per_problem": 1,
+      "prompt_profile": "qwen2_math_json",
+      "run_count": 36,
+      "completed_count": 33,
+      "failure_count": 3,
+      "problem_set": "expanded_heldout_model_problems.csv",
+      "problem_count": 36,
+      "problem_set_sha256": "c9b28990cd73d705bfc768e630c6d2897c8bea87583c6891487dd49c49b13124",
+      "matched_budget_comparison_valid": true,
+      "global_budget_utilization_rate": 0.8264596848934198,
+      "strategies": [
+        {
+          "name": "no_repair",
+          "answer_correct": 25,
+          "answer_accuracy": 0.6944444444444444,
+          "trace_valid": 25,
+          "trace_valid_rate": 0.6944444444444444,
+          "additional_model_calls": 0,
+          "additional_tokens": 0
+        },
+        {
+          "name": "verified_global_regeneration",
+          "answer_correct": 26,
+          "answer_accuracy": 0.7222222222222222,
+          "trace_valid": 26,
+          "trace_valid_rate": 0.7222222222222222,
+          "accepted_repairs": 1,
+          "additional_model_calls": 18,
+          "additional_tokens": 3567
+        },
+        {
+          "name": "verified_local_repair",
+          "answer_correct": 29,
+          "answer_accuracy": 0.8055555555555556,
+          "trace_valid": 29,
+          "trace_valid_rate": 0.8055555555555556,
+          "accepted_repairs": 4,
+          "additional_model_calls": 14,
+          "additional_tokens": 4316
+        }
+      ]
+    },
+    {
+      "base_seed": 180500,
+      "model": "qwen2-math:7b",
+      "temperature": 1.4,
+      "samples_per_problem": 1,
+      "prompt_profile": "qwen2_math_json",
+      "run_count": 36,
+      "completed_count": 33,
+      "failure_count": 3,
+      "problem_set": "expanded_heldout_model_problems.csv",
+      "problem_count": 36,
+      "problem_set_sha256": "c9b28990cd73d705bfc768e630c6d2897c8bea87583c6891487dd49c49b13124",
+      "matched_budget_comparison_valid": true,
+      "global_budget_utilization_rate": 0.9057971014492754,
+      "strategies": [
+        {
+          "name": "no_repair",
+          "answer_correct": 27,
+          "answer_accuracy": 0.75,
+          "trace_valid": 28,
+          "trace_valid_rate": 0.7777777777777778,
+          "additional_model_calls": 0,
+          "additional_tokens": 0
+        },
+        {
+          "name": "verified_global_regeneration",
+          "answer_correct": 27,
+          "answer_accuracy": 0.75,
+          "trace_valid": 28,
+          "trace_valid_rate": 0.7777777777777778,
+          "accepted_repairs": 0,
+          "additional_model_calls": 11,
+          "additional_tokens": 2125
+        },
+        {
+          "name": "verified_local_repair",
+          "answer_correct": 31,
+          "answer_accuracy": 0.8611111111111112,
+          "trace_valid": 32,
+          "trace_valid_rate": 0.8888888888888888,
+          "accepted_repairs": 4,
+          "additional_model_calls": 7,
+          "additional_tokens": 2346
+        }
+      ]
+    },
+    {
+      "base_seed": 200500,
+      "model": "qwen2-math:7b",
+      "temperature": 1.4,
+      "samples_per_problem": 1,
+      "prompt_profile": "qwen2_math_json",
+      "run_count": 36,
+      "completed_count": 32,
+      "failure_count": 4,
+      "problem_set": "expanded_heldout_model_problems.csv",
+      "problem_count": 36,
+      "problem_set_sha256": "c9b28990cd73d705bfc768e630c6d2897c8bea87583c6891487dd49c49b13124",
+      "matched_budget_comparison_valid": true,
+      "global_budget_utilization_rate": 0.9044657998869418,
+      "strategies": [
+        {
+          "name": "no_repair",
+          "answer_correct": 29,
+          "answer_accuracy": 0.8055555555555556,
+          "trace_valid": 29,
+          "trace_valid_rate": 0.8055555555555556,
+          "additional_model_calls": 0,
+          "additional_tokens": 0
+        },
+        {
+          "name": "verified_global_regeneration",
+          "answer_correct": 29,
+          "answer_accuracy": 0.8055555555555556,
+          "trace_valid": 29,
+          "trace_valid_rate": 0.8055555555555556,
+          "accepted_repairs": 0,
+          "additional_model_calls": 8,
+          "additional_tokens": 1600
+        },
+        {
+          "name": "verified_local_repair",
+          "answer_correct": 32,
+          "answer_accuracy": 0.8888888888888888,
+          "trace_valid": 32,
+          "trace_valid_rate": 0.8888888888888888,
+          "accepted_repairs": 3,
+          "additional_model_calls": 4,
+          "additional_tokens": 1769
+        }
+      ]
+    }
+  ],
+  "caveats": [
+    "3 trials provide only a preliminary variance estimate.",
+    "Student-t intervals use 2 degrees of freedom.",
+    "The evaluation set has 36 problems and is not a benchmark.",
+    "Trials reuse the same problems, so intervals reflect seed variation rather than problem-sampling uncertainty.",
+    "GPU sampling may vary even when base seeds are recorded.",
+    "The problem-set hash is recorded to prevent cross-set aggregation."
+  ]
+}

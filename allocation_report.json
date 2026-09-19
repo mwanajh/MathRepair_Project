@@ -1,0 +1,53 @@
+{
+  "graph": "C:\\Users\\mwana\\Desktop\\MathRepair_Project\\reasoning_graph_example.json",
+  "problem": "2(x + 3) = 14",
+  "budget": 10,
+  "error_node": "n1",
+  "error_type": "algebraic_transformation_error",
+  "affected_nodes": [
+    "n2",
+    "n3"
+  ],
+  "plans": [
+    {
+      "node_id": "n1",
+      "uncertainty": 0.95,
+      "importance": 1.0,
+      "propagation_risk": 1.0,
+      "priority": 0.95,
+      "allocated_calls": 7
+    },
+    {
+      "node_id": "n4",
+      "uncertainty": 0.1,
+      "importance": 0.6666666666666666,
+      "propagation_risk": 0.0,
+      "priority": 0.0,
+      "allocated_calls": 0
+    },
+    {
+      "node_id": "n2",
+      "uncertainty": 0.7,
+      "importance": 0.6666666666666666,
+      "propagation_risk": 0.75,
+      "priority": 0.35,
+      "allocated_calls": 2
+    },
+    {
+      "node_id": "n5",
+      "uncertainty": 0.1,
+      "importance": 0.3333333333333333,
+      "propagation_risk": 0.0,
+      "priority": 0.0,
+      "allocated_calls": 0
+    },
+    {
+      "node_id": "n3",
+      "uncertainty": 0.7,
+      "importance": 0.3333333333333333,
+      "propagation_risk": 0.75,
+      "priority": 0.175,
+      "allocated_calls": 1
+    }
+  ]
+}

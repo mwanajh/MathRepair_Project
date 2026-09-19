@@ -1,0 +1,37 @@
+problem,expected_answer,category
+19(2x - 7) - 3(5x + 4) = 7(x - 9) + 22,x = 13/2,large_coefficients
+8(4x + 3) - 5(3x - 11) = 2(6x + 7) + 9,x = -56/5,large_coefficients
+(7x - 9)/(3x + 2) = 4,x = -17/5,rational_equation
+(4x + 13)/(5x - 6) = -3,x = 5/19,rational_equation
+21 - (5 - (4 - (3 - x))) = 37,x = 20,nested_subtraction
+4(3(2x - 7) + 5) - 7(x - 4) = 81,x = 117/17,nested_distribution
+(3x + 2)/8 + (5x - 9)/12 = 17,x = 420/19,large_fractions
+(7x - 4)/15 - (2x + 5)/9 = 6,x = 307/11,large_fractions
+(x + 6)^4 = 0,x = -6,repeated_quartic_root
+x^4 - 12x^3 + 54x^2 - 108x + 81 = 0,x = 3,quartic_factorization
+16(x + 5)^2 = 0,x = -5,repeated_quadratic_root
+(3x - 2)^3 = 343,x = 3,cubic_transformation
+25(x - 7)^2 = 0,x = 7,repeated_quadratic_root
+x^3 - 15x^2 + 75x - 125 = 0,x = 5,cubic_factorization
+18 - (7 - (5 - (4 - x))) = 32,x = 20,nested_subtraction
+9(2(4x + 1) - 3) + 6(x - 5) = 117,x = 2,nested_distribution
+(2x + 15)/(x - 4) = 7,x = 43/5,rational_equation
+(4x - 7)/9 + (x + 5)/14 = 8,x = 1061/65,large_fractions
+14(3x - 8) - 5(2x + 9) = 7(x - 6) + 17,x = 132/25,large_coefficients
+9(5x + 4) - 4(3x - 7) = 6(x + 8) + 11,x = -5/27,large_coefficients
+(6x + 5)/(2x - 7) = 4,x = 33/2,rational_equation
+(9x - 4)/(x + 5) = -2,x = -6/11,rational_equation
+27 - (8 - (6 - (5 - x))) = 41,x = 21,nested_subtraction
+5(2(3x - 4) + 7) - 4(x - 6) = 98,x = 79/26,nested_distribution
+(4x + 7)/9 + (3x - 5)/14 = 12,x = 1459/83,large_fractions
+(8x - 3)/11 - (5x + 2)/16 = 7,x = 1302/73,large_fractions
+(x - 4)^5 = 0,x = 4,repeated_quintic_root
+x^4 - 16x^3 + 96x^2 - 256x + 256 = 0,x = 4,quartic_factorization
+36(x - 2)^2 = 0,x = 2,repeated_quadratic_root
+(4x + 3)^3 = 729,x = 3/2,cubic_transformation
+49(x + 8)^2 = 0,x = -8,repeated_quadratic_root
+x^3 - 18x^2 + 108x - 216 = 0,x = 6,cubic_factorization
+31 - (9 - (7 - (6 - x))) = 45,x = 22,nested_subtraction
+7(3(2x + 5) - 4) + 2(x - 9) = 100,x = 41/44,nested_distribution
+(3x + 19)/(x - 2) = 8,x = 7,rational_equation
+(5x - 6)/13 + (2x + 1)/8 = 9,x = 971/66,large_fractions

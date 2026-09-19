@@ -1,0 +1,96 @@
+{
+  "baseline_model": "qwen2-math:1.5b",
+  "candidate_model": "qwen2-math:7b",
+  "problem_set": "expanded_heldout_model_problems.csv",
+  "problem_set_sha256": "c9b28990cd73d705bfc768e630c6d2897c8bea87583c6891487dd49c49b13124",
+  "problem_count": 36,
+  "runs_per_trial": 36,
+  "temperature": 1.4,
+  "samples_per_problem": 1,
+  "generation_failures": {
+    "baseline_total": 0,
+    "candidate_total": 91
+  },
+  "strategy_differences": {
+    "no_repair": {
+      "answer_accuracy_difference": -0.7777777777777778,
+      "trace_validity_difference": -0.75
+    },
+    "verified_global_regeneration": {
+      "answer_accuracy_difference": -0.7870370370370371,
+      "trace_validity_difference": -0.7870370370370371
+    },
+    "verified_local_repair": {
+      "answer_accuracy_difference": -0.8703703703703703,
+      "trace_validity_difference": -0.8703703703703703
+    }
+  },
+  "baseline_paired_local_minus_global": {
+    "answer_accuracy_difference": {
+      "values": [
+        0.08333333333333337,
+        0.08333333333333337,
+        0.05555555555555558
+      ],
+      "mean": 0.07407407407407411,
+      "sample_standard_deviation": 0.016037507477489613,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        0.034231481481481495,
+        0.11391666666666672
+      ],
+      "trial_count": 3
+    },
+    "trace_validity_difference": {
+      "values": [
+        0.08333333333333337,
+        0.08333333333333337,
+        0.05555555555555558
+      ],
+      "mean": 0.07407407407407411,
+      "sample_standard_deviation": 0.016037507477489613,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        0.034231481481481495,
+        0.11391666666666672
+      ],
+      "trial_count": 3
+    },
+    "answer_advantage_excludes_zero_95": true,
+    "trace_advantage_excludes_zero_95": true
+  },
+  "candidate_paired_local_minus_global": {
+    "answer_accuracy_difference": {
+      "values": [
+        0.0,
+        0.0,
+        -0.027777777777777762
+      ],
+      "mean": -0.009259259259259254,
+      "sample_standard_deviation": 0.016037507477489596,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.04910185185185182,
+        0.030583333333333317
+      ],
+      "trial_count": 3
+    },
+    "trace_validity_difference": {
+      "values": [
+        0.0,
+        0.0,
+        -0.027777777777777762
+      ],
+      "mean": -0.009259259259259254,
+      "sample_standard_deviation": 0.016037507477489596,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.04910185185185182,
+        0.030583333333333317
+      ],
+      "trial_count": 3
+    },
+    "answer_advantage_excludes_zero_95": false,
+    "trace_advantage_excludes_zero_95": false
+  }
+}

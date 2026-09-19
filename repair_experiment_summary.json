@@ -1,0 +1,199 @@
+{
+  "generated_utc": "2026-09-18T05:36:52.859379+00:00",
+  "source": {
+    "model": "qwen2-math:1.5b",
+    "runs": 36,
+    "problem_count": 12,
+    "samples_per_problem": 3,
+    "temperature": 1.4,
+    "base_seed": 500
+  },
+  "strategies": [
+    {
+      "name": "no_repair",
+      "answer_correct": 31,
+      "answer_accuracy": 0.8611111111111112,
+      "trace_valid": 29,
+      "trace_valid_rate": 0.8055555555555556,
+      "model_calls": 36,
+      "inference_tokens": 22469,
+      "prompt_tokens": 2790,
+      "completion_tokens": 19679
+    },
+    {
+      "name": "symbolic_oracle_repair",
+      "answer_correct": 36,
+      "answer_accuracy": 1.0,
+      "trace_valid": 36,
+      "trace_valid_rate": 1.0,
+      "model_calls": 36,
+      "inference_tokens": 22469,
+      "prompt_tokens": 2790,
+      "completion_tokens": 19679
+    },
+    {
+      "name": "verified_model_repair",
+      "answer_correct": 36,
+      "answer_accuracy": 1.0,
+      "trace_valid": 35,
+      "trace_valid_rate": 0.9722222222222222,
+      "model_calls": 44,
+      "inference_tokens": 28269,
+      "prompt_tokens": 4703,
+      "completion_tokens": 23566
+    }
+  ],
+  "repair_metrics": {
+    "detected_error_runs": 7,
+    "model_repair_candidate_calls": 8,
+    "model_repair_accepted": 6,
+    "model_repair_accept_rate": 0.8571428571428571,
+    "average_candidate_calls_per_detected_error": 1.1428571428571428,
+    "wrong_answers_before_repair": 5,
+    "wrong_answers_corrected": 5,
+    "wrong_answer_recovery_rate": 1.0,
+    "answer_regressions": 0
+  },
+  "efficiency_metrics": {
+    "base_prompt_tokens": 2790,
+    "base_completion_tokens": 19679,
+    "base_total_inference_tokens": 22469,
+    "model_repair_prompt_tokens": 1913,
+    "model_repair_completion_tokens": 3887,
+    "model_repair_total_inference_tokens": 5800,
+    "repair_token_overhead_rate": 0.25813342827896213,
+    "base_model_calls": 36,
+    "total_model_calls_with_repair": 44,
+    "repair_call_overhead_rate": 0.2222222222222222,
+    "average_repair_tokens_per_detected_error": 828.5714285714286,
+    "repair_tokens_per_corrected_wrong_answer": 1160.0,
+    "corrected_wrong_answers_per_1000_repair_tokens": 0.8620689655172413,
+    "answer_accuracy_gain_percentage_points": 13.88888888888889,
+    "trace_validity_gain_percentage_points": 16.666666666666664
+  },
+  "category_metrics": {
+    "cubic_factorization": {
+      "runs": 3,
+      "baseline_answer_correct": 3,
+      "model_answer_correct": 3,
+      "baseline_trace_valid": 3,
+      "model_trace_valid": 3
+    },
+    "cubic_transformation": {
+      "runs": 3,
+      "baseline_answer_correct": 3,
+      "model_answer_correct": 3,
+      "baseline_trace_valid": 3,
+      "model_trace_valid": 3
+    },
+    "large_coefficients": {
+      "runs": 6,
+      "baseline_answer_correct": 6,
+      "model_answer_correct": 6,
+      "baseline_trace_valid": 6,
+      "model_trace_valid": 6
+    },
+    "large_fractions": {
+      "runs": 6,
+      "baseline_answer_correct": 4,
+      "model_answer_correct": 6,
+      "baseline_trace_valid": 4,
+      "model_trace_valid": 6
+    },
+    "nested_distribution": {
+      "runs": 3,
+      "baseline_answer_correct": 0,
+      "model_answer_correct": 3,
+      "baseline_trace_valid": 0,
+      "model_trace_valid": 3
+    },
+    "nested_subtraction": {
+      "runs": 3,
+      "baseline_answer_correct": 3,
+      "model_answer_correct": 3,
+      "baseline_trace_valid": 2,
+      "model_trace_valid": 2
+    },
+    "rational_equation": {
+      "runs": 6,
+      "baseline_answer_correct": 6,
+      "model_answer_correct": 6,
+      "baseline_trace_valid": 5,
+      "model_trace_valid": 6
+    },
+    "repeated_cubic_root": {
+      "runs": 3,
+      "baseline_answer_correct": 3,
+      "model_answer_correct": 3,
+      "baseline_trace_valid": 3,
+      "model_trace_valid": 3
+    },
+    "repeated_quadratic_root": {
+      "runs": 3,
+      "baseline_answer_correct": 3,
+      "model_answer_correct": 3,
+      "baseline_trace_valid": 3,
+      "model_trace_valid": 3
+    }
+  },
+  "error_type_metrics": {
+    "algebraic_transformation_error": {
+      "detected": 5,
+      "accepted": 5,
+      "corrected_wrong": 4
+    },
+    "arithmetic_error": {
+      "detected": 1,
+      "accepted": 1,
+      "corrected_wrong": 1
+    },
+    "sign_error": {
+      "detected": 1,
+      "accepted": 0,
+      "corrected_wrong": 0
+    }
+  },
+  "matched_budget_comparison_available": true,
+  "caveats": [
+    "This is a small 12-problem stress set, not a benchmark result.",
+    "Symbolic oracle repair uses verifier-derived correct states.",
+    "Symbolic tool runtime is not converted into token cost.",
+    "Ollama GPU sampling may vary slightly even with recorded seeds."
+  ],
+  "matched_budget_results": {
+    "budget_definition": "Per error run, global prompt plus completion tokens may not exceed the prompt plus completion tokens used by local model repair.",
+    "global_budget_utilization_rate": 0.8346551724137931,
+    "budget_violation_count": 0,
+    "strategies": [
+      {
+        "name": "no_repair",
+        "answer_correct": 31,
+        "answer_accuracy": 0.8611111111111112,
+        "trace_valid": 29,
+        "trace_valid_rate": 0.8055555555555556,
+        "additional_model_calls": 0,
+        "additional_tokens": 0
+      },
+      {
+        "name": "verified_global_regeneration",
+        "answer_correct": 32,
+        "answer_accuracy": 0.8888888888888888,
+        "trace_valid": 32,
+        "trace_valid_rate": 0.8888888888888888,
+        "accepted_repairs": 3,
+        "additional_model_calls": 9,
+        "additional_tokens": 4841
+      },
+      {
+        "name": "verified_local_repair",
+        "answer_correct": 36,
+        "answer_accuracy": 1.0,
+        "trace_valid": 35,
+        "trace_valid_rate": 0.9722222222222222,
+        "accepted_repairs": 6,
+        "additional_model_calls": 8,
+        "additional_tokens": 5800
+      }
+    ]
+  }
+}

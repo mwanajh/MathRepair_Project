@@ -1,0 +1,30 @@
+{
+  "problem": "2(x + 3) = 14",
+  "nodes": [
+    {
+      "id": "n1",
+      "text": "2x + 3 = 14",
+      "depends_on": ["problem"]
+    },
+    {
+      "id": "n2",
+      "text": "2x = 11",
+      "depends_on": ["n1"]
+    },
+    {
+      "id": "n3",
+      "text": "x = 5.5",
+      "depends_on": ["n2"]
+    },
+    {
+      "id": "n4",
+      "text": "14 = 2(x + 3)",
+      "depends_on": ["problem"]
+    },
+    {
+      "id": "n5",
+      "text": "x = 4",
+      "depends_on": ["n4"]
+    }
+  ]
+}

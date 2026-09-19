@@ -1,0 +1,145 @@
+{
+  "analysis": "failure_replay_by_category",
+  "input_directory": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json",
+  "trial_count": 3,
+  "total_planned_runs": 108,
+  "failure_type_counts": {
+    "parser_failure": 5,
+    "recovered_valid_trace": 5
+  },
+  "categories": {
+    "cubic_factorization": {
+      "planned": 6,
+      "completed": 5,
+      "generation_failures": 1,
+      "strict_answer_correct": 5,
+      "strict_trace_valid": 5,
+      "local_answer_correct": 5,
+      "local_trace_valid": 5,
+      "normalized_recovered": 1,
+      "normalized_answer_correct": 1,
+      "normalized_trace_valid": 1
+    },
+    "cubic_transformation": {
+      "planned": 6,
+      "completed": 2,
+      "generation_failures": 4,
+      "strict_answer_correct": 2,
+      "strict_trace_valid": 2,
+      "local_answer_correct": 2,
+      "local_trace_valid": 2,
+      "normalized_recovered": 1,
+      "normalized_answer_correct": 1,
+      "normalized_trace_valid": 1
+    },
+    "large_coefficients": {
+      "planned": 12,
+      "completed": 12,
+      "generation_failures": 0,
+      "strict_answer_correct": 11,
+      "strict_trace_valid": 11,
+      "local_answer_correct": 12,
+      "local_trace_valid": 12,
+      "normalized_recovered": 0,
+      "normalized_answer_correct": 0,
+      "normalized_trace_valid": 0
+    },
+    "large_fractions": {
+      "planned": 18,
+      "completed": 16,
+      "generation_failures": 2,
+      "strict_answer_correct": 7,
+      "strict_trace_valid": 7,
+      "local_answer_correct": 14,
+      "local_trace_valid": 14,
+      "normalized_recovered": 2,
+      "normalized_answer_correct": 2,
+      "normalized_trace_valid": 2
+    },
+    "nested_distribution": {
+      "planned": 12,
+      "completed": 12,
+      "generation_failures": 0,
+      "strict_answer_correct": 8,
+      "strict_trace_valid": 8,
+      "local_answer_correct": 11,
+      "local_trace_valid": 11,
+      "normalized_recovered": 0,
+      "normalized_answer_correct": 0,
+      "normalized_trace_valid": 0
+    },
+    "nested_subtraction": {
+      "planned": 12,
+      "completed": 12,
+      "generation_failures": 0,
+      "strict_answer_correct": 11,
+      "strict_trace_valid": 11,
+      "local_answer_correct": 11,
+      "local_trace_valid": 11,
+      "normalized_recovered": 0,
+      "normalized_answer_correct": 0,
+      "normalized_trace_valid": 0
+    },
+    "quartic_factorization": {
+      "planned": 6,
+      "completed": 6,
+      "generation_failures": 0,
+      "strict_answer_correct": 4,
+      "strict_trace_valid": 6,
+      "local_answer_correct": 4,
+      "local_trace_valid": 6,
+      "normalized_recovered": 0,
+      "normalized_answer_correct": 0,
+      "normalized_trace_valid": 0
+    },
+    "rational_equation": {
+      "planned": 18,
+      "completed": 17,
+      "generation_failures": 1,
+      "strict_answer_correct": 17,
+      "strict_trace_valid": 17,
+      "local_answer_correct": 17,
+      "local_trace_valid": 17,
+      "normalized_recovered": 1,
+      "normalized_answer_correct": 1,
+      "normalized_trace_valid": 1
+    },
+    "repeated_quadratic_root": {
+      "planned": 12,
+      "completed": 12,
+      "generation_failures": 0,
+      "strict_answer_correct": 12,
+      "strict_trace_valid": 11,
+      "local_answer_correct": 12,
+      "local_trace_valid": 11,
+      "normalized_recovered": 0,
+      "normalized_answer_correct": 0,
+      "normalized_trace_valid": 0
+    },
+    "repeated_quartic_root": {
+      "planned": 3,
+      "completed": 2,
+      "generation_failures": 1,
+      "strict_answer_correct": 2,
+      "strict_trace_valid": 2,
+      "local_answer_correct": 2,
+      "local_trace_valid": 2,
+      "normalized_recovered": 0,
+      "normalized_answer_correct": 0,
+      "normalized_trace_valid": 0
+    },
+    "repeated_quintic_root": {
+      "planned": 3,
+      "completed": 2,
+      "generation_failures": 1,
+      "strict_answer_correct": 2,
+      "strict_trace_valid": 2,
+      "local_answer_correct": 2,
+      "local_trace_valid": 2,
+      "normalized_recovered": 0,
+      "normalized_answer_correct": 0,
+      "normalized_trace_valid": 0
+    }
+  },
+  "caveat": "Offline replay changes parser handling only for saved generation failures; it does not rerun model generation."
+}
