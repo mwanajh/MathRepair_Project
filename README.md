@@ -197,7 +197,13 @@ support.
 
 If a model does not return JSON, the adapter extracts equations from prose and
 LaTeX. Each trace stores the raw response, extracted steps, diagnosis, token
-counts, and generation timings for natural-error analysis.
+counts, and generation timings for natural-error analysis. It also stores the
+verified `reasoning_graph` used internally by MathRepair. Each graph node records
+its `node_id`, `subgoal`, `reasoning_state`, `parent_dependency`,
+`model_generated_reasoning`, `verification_result`, `error_type`,
+`affected_descendants`, `repair_action`, `repaired_state`, and `final_status`.
+The graph is therefore the pipeline's internal trace representation, not only a
+web-demo rendering.
 
 Run the supervisor demo using the mock pipeline and saved reports:
 

@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 
 from model_pipeline import (
@@ -6,6 +9,7 @@ from model_pipeline import (
     parse_model_steps,
     parse_qwen_json_steps,
     run_pipeline,
+    save_trace,
     select_model_answer_step,
 )
 from repair_policy import RepairAction
@@ -132,6 +136,80 @@ class ModelPipelineTests(unittest.TestCase):
         self.assertTrue(result.repair.success)
         self.assertEqual(result.repair.repaired_steps, ["2x + 6 = 14", "x = 4"])
         self.assertTrue(result.model_repair.accepted)
+
+    def test_model_trace_is_the_verified_reasoning_graph(self):
+        result = run_pipeline(
+            "2(x + 3) = 14",
+            MockMathModel(),
+            provider="mock",
+            model_name="test-mock",
+        )
+
+        self.assertIs(result.reasoning_graph, result.analysis.nodes)
+        error_node = next(
+            node for node in result.reasoning_graph if node.node_id == "n2"
+        )
+        self.assertEqual(error_node.depends_on, ["n1"])
+        self.assertEqual(error_node.model_reasoning, "2x + 3 = 14")
+        self.assertFalse(error_node.verification_result)
+        self.assertEqual(error_node.error_type, "algebraic_transformation_error")
+        self.assertEqual(error_node.affected_descendants, ["n3", "n4"])
+        self.assertEqual(error_node.repair_action, "REFORMALIZE")
+        self.assertEqual(error_node.repaired_state, "2x + 6 = 14")
+        self.assertEqual(error_node.final_status, "repaired")
+        self.assertEqual(
+            next(node for node in result.reasoning_graph if node.node_id == "n3").final_status,
+            "recomputed",
+        )
+
+    def test_saved_trace_contains_node_level_graph_record(self):
+        result = run_pipeline(
+            "2(x + 3) = 14",
+            MockMathModel(),
+            provider="mock",
+            model_name="test-mock",
+        )
+        with TemporaryDirectory() as directory:
+            trace_path = Path(directory) / "trace.jsonl"
+            save_trace(trace_path, result)
+            record = json.loads(trace_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(len(record["reasoning_graph"]), 4)
+        self.assertEqual(
+            set(record["reasoning_graph"][1]),
+            {
+                "node_id",
+                "subgoal",
+                "reasoning_state",
+                "parent_dependency",
+                "model_generated_reasoning",
+                "verification_result",
+                "error_type",
+                "affected_descendants",
+                "repair_action",
+                "repaired_state",
+                "final_status",
+            },
+        )
+
+    def test_repair_states_align_with_a_late_graph_error(self):
+        class LateErrorModel(MockMathModel):
+            def solve(self, problem):
+                return ["2x + 6 = 14", "2x = 11", "x = 5.5"]
+
+        result = run_pipeline(
+            "2(x + 3) = 14",
+            LateErrorModel(),
+            provider="mock",
+            model_name="late-error-mock",
+        )
+
+        self.assertEqual(result.analysis.error_node_id, "n3")
+        node_by_id = {node.node_id: node for node in result.reasoning_graph}
+        self.assertEqual(node_by_id["n2"].final_status, "verified")
+        self.assertEqual(node_by_id["n3"].repaired_state, "2x + 6 = 14")
+        self.assertEqual(node_by_id["n3"].final_status, "repaired")
+        self.assertEqual(node_by_id["n4"].repaired_state, "x = 4")
 
 
 if __name__ == "__main__":

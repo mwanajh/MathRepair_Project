@@ -190,7 +190,10 @@ python model_pipeline.py --provider ollama --model qwen2-math:1.5b --problem "2(
 ```
 
 Model output may be prose or LaTeX. The adapter extracts equations while the
-trace stores the raw response, extracted steps, token counts, and timings.
+trace stores the raw response, extracted steps, token counts, and timings. The
+same trace also contains the verified `reasoning_graph` used by the pipeline;
+each node records its state, parent dependency, model reasoning, verification
+result, error/impact fields, repair action, repaired state, and final status.
 
 ## 12. Batch model experiments
 

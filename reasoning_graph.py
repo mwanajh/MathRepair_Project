@@ -26,6 +26,54 @@ class GraphAnalysis:
     affected_node_ids: list[str]
 
 
+def serialize_reasoning_node(node: ReasoningNode) -> dict[str, object]:
+    """Return the stable experiment record for one reasoning-graph node."""
+    return {
+        "node_id": node.node_id,
+        "subgoal": node.subgoal,
+        "reasoning_state": node.text,
+        "parent_dependency": list(node.depends_on),
+        "model_generated_reasoning": node.model_reasoning or node.text,
+        "verification_result": node.verification_result,
+        "error_type": node.error_type or "",
+        "affected_descendants": list(node.affected_descendants),
+        "repair_action": node.repair_action,
+        "repaired_state": node.repaired_state,
+        "final_status": node.final_status,
+    }
+
+
+def record_repair_on_graph(
+    nodes: list[ReasoningNode],
+    error_node_id: str | None,
+    repaired_steps: list[str],
+    removed_node_ids: list[str],
+) -> None:
+    """Attach a verified local-repair outcome to the original graph nodes."""
+    if error_node_id is None:
+        return
+    try:
+        error_index = next(
+            index for index, node in enumerate(nodes) if node.node_id == error_node_id
+        )
+    except StopIteration:
+        return
+
+    for offset, repaired_state in enumerate(repaired_steps):
+        node_index = error_index + offset
+        if node_index >= len(nodes):
+            break
+        node = nodes[node_index]
+        node.repaired_state = repaired_state
+        node.final_status = "repaired" if offset == 0 else "recomputed"
+        if offset > 0:
+            node.repair_action = "recompute_descendant"
+
+    for node in nodes:
+        if node.node_id in removed_node_ids and not node.repaired_state:
+            node.final_status = "discarded_after_error"
+
+
 def topological_order(nodes: list[ReasoningNode]) -> list[ReasoningNode]:
     """Validate dependencies and order parents before their children."""
     node_by_id: dict[str, ReasoningNode] = {}
@@ -76,34 +124,68 @@ def find_descendants(nodes: list[ReasoningNode], node_id: str) -> list[str]:
 
 
 def analyze_graph(problem: str, nodes: list[ReasoningNode]) -> GraphAnalysis:
-    """Locate the first erroneous node and trace only its descendants."""
+    """Verify every node and record the graph-level impact of the first error."""
     ordered = topological_order(nodes)
     correct_answer = ""
+    first_error_answer = ""
+    first_error_node: ReasoningNode | None = None
+    first_error_repair = ""
 
     for node in ordered:
+        if not node.subgoal:
+            node.subgoal = (
+                "Represent the problem state"
+                if not node.depends_on
+                else f"Transform state from {', '.join(node.depends_on)}"
+            )
+        if not node.model_reasoning:
+            node.model_reasoning = node.text
+        node.verification_result = None
+        node.error_type = None
+        node.affected_descendants = []
+        node.repair_action = ""
+        node.repaired_state = ""
+        node.final_status = "unverified"
         ok, error_type, repair, answer = verify_reasoning_step(
             problem, node.text
         )
         correct_answer = answer
+        node.verification_result = ok
         if not ok:
             node.error_type = error_type
-            affected = find_descendants(ordered, node.node_id)
-            return GraphAnalysis(
-                ordered_nodes=ordered,
-                error_node_id=node.node_id,
-                error_type=error_type,
-                suggested_repair=repair,
-                correct_answer=answer,
-                affected_node_ids=affected,
-            )
+            node.final_status = "error"
+            if first_error_node is None:
+                first_error_node = node
+                first_error_answer = answer
+                first_error_repair = repair
+
+    error_node_id = first_error_node.node_id if first_error_node else None
+    error_type = (
+        first_error_node.error_type or "" if first_error_node else ""
+    )
+    suggested_repair = first_error_repair
+    affected: list[str] = []
+    if first_error_node is not None:
+        affected = find_descendants(ordered, first_error_node.node_id)
+        first_error_node.affected_descendants = affected
+        first_error_node.repaired_state = suggested_repair
+        first_error_node.repair_action = make_repair_decision(
+            error_type, suggested_repair
+        ).action.value
+        affected_set = set(affected)
+        for node in ordered:
+            if node.node_id in affected_set:
+                node.final_status = "affected"
+            elif node.node_id != first_error_node.node_id and node.verification_result:
+                node.final_status = "verified"
 
     return GraphAnalysis(
         ordered_nodes=ordered,
-        error_node_id=None,
-        error_type="",
-        suggested_repair="",
-        correct_answer=correct_answer,
-        affected_node_ids=[],
+        error_node_id=error_node_id,
+        error_type=error_type,
+        suggested_repair=suggested_repair,
+        correct_answer=first_error_answer or correct_answer,
+        affected_node_ids=affected,
     )
 
 

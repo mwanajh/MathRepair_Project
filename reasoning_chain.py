@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from mathrepair_demo import ReasoningNode, verify_reasoning_step
+from reasoning_graph import analyze_graph
 from repair_policy import make_repair_decision
 
 
@@ -19,36 +20,20 @@ class ChainAnalysis:
 
 
 def analyze_chain(original_text: str, steps: list[str]) -> ChainAnalysis:
-    """Find the first invalid step and its affected downstream nodes."""
+    """Analyze a linear model trace using the canonical reasoning graph."""
     nodes = [ReasoningNode("n1", original_text, [])]
     for index, step in enumerate(steps, start=2):
         nodes.append(ReasoningNode(f"n{index}", step, [f"n{index - 1}"]))
 
-    correct_answer = ""
-    for step_index, node in enumerate(nodes[1:], start=1):
-        ok, error_type, repair, answer = verify_reasoning_step(
-            original_text, node.text
-        )
-        correct_answer = answer
-        if not ok:
-            node.error_type = error_type
-            downstream = [item.node_id for item in nodes[step_index + 1 :]]
-            return ChainAnalysis(
-                nodes=nodes,
-                error_node_id=node.node_id,
-                error_type=error_type,
-                suggested_repair=repair,
-                correct_answer=answer,
-                affected_node_ids=downstream,
-            )
+    graph_analysis = analyze_graph(original_text, nodes)
 
     return ChainAnalysis(
-        nodes=nodes,
-        error_node_id=None,
-        error_type="",
-        suggested_repair="",
-        correct_answer=correct_answer,
-        affected_node_ids=[],
+        nodes=graph_analysis.ordered_nodes,
+        error_node_id=graph_analysis.error_node_id,
+        error_type=graph_analysis.error_type,
+        suggested_repair=graph_analysis.suggested_repair,
+        correct_answer=graph_analysis.correct_answer,
+        affected_node_ids=graph_analysis.affected_node_ids,
     )
 
 

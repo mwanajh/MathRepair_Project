@@ -1,6 +1,6 @@
 """A beginner-friendly, interactive MathRepair prototype."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import re
 
 import sympy as sp
@@ -24,6 +24,13 @@ class ReasoningNode:
     text: str
     depends_on: list[str]
     error_type: str | None = None
+    subgoal: str = ""
+    model_reasoning: str = ""
+    verification_result: bool | None = None
+    affected_descendants: list[str] = field(default_factory=list)
+    repair_action: str = ""
+    repaired_state: str = ""
+    final_status: str = "unverified"
 
 
 def verify_distribution() -> tuple[bool, str, str]:

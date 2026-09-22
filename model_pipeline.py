@@ -12,8 +12,10 @@ from urllib import error as url_error
 from urllib import request as url_request
 
 from local_repair import LocalRepairResult, apply_local_repair
+from mathrepair_demo import ReasoningNode
 from model_repair import ModelRepairResult, attempt_model_repair
 from reasoning_chain import ChainAnalysis, analyze_chain
+from reasoning_graph import record_repair_on_graph, serialize_reasoning_node
 from repair_policy import RepairDecision, make_repair_decision
 
 
@@ -38,6 +40,11 @@ class PipelineResult:
     model_repair: ModelRepairResult
     raw_response: str
     generation_metadata: dict[str, int | str]
+
+    @property
+    def reasoning_graph(self) -> list[ReasoningNode]:
+        """Return the graph used internally to verify the model trace."""
+        return self.analysis.nodes
 
 
 class MockMathModel:
@@ -428,6 +435,21 @@ def run_pipeline(
         model_client,
         model_repair_attempts,
     )
+    repaired_steps = repair.repaired_steps if repair.success else []
+    removed_node_ids = repair.removed_node_ids
+    if not repaired_steps and model_repair.accepted:
+        repaired_steps = model_repair.repaired_steps
+        removed_node_ids = list(analysis.affected_node_ids)
+    repaired_suffix: list[str] = []
+    if repaired_steps and analysis.error_node_id is not None:
+        error_step_index = int(analysis.error_node_id[1:]) - 2
+        repaired_suffix = repaired_steps[error_step_index:]
+    record_repair_on_graph(
+        analysis.nodes,
+        analysis.error_node_id,
+        repaired_suffix,
+        removed_node_ids,
+    )
     return PipelineResult(
         problem=problem,
         provider=provider,
@@ -461,6 +483,9 @@ def save_trace(
         "provider": result.provider,
         "model": result.model,
         "steps": result.steps,
+        "reasoning_graph": [
+            serialize_reasoning_node(node) for node in result.reasoning_graph
+        ],
         "raw_response": result.raw_response,
         "generation_metadata": result.generation_metadata,
         "error_node_id": result.analysis.error_node_id,
