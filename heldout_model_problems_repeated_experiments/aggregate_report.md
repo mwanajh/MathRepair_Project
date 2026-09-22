@@ -2,6 +2,7 @@
 
 Trials: 3 | Base seeds: 100500, 120500, 140500
 Model: `qwen2-math:1.5b`
+Prompt profile: `default`
 Temperature: `1.4` | Samples/problem: `1`
 Problem set: `heldout_model_problems.csv` (18 problems)
 

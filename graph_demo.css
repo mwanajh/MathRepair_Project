@@ -103,6 +103,7 @@ button { font: inherit; }
 .problem-node, .node-card { position: absolute; width: min(235px, 31%); transform: translate(-50%, -50%); }
 .problem-node { left: 50%; top: 10%; padding: 10px 13px; border: 1px solid #9db7bd; border-top: 3px solid var(--navy); color: #52707a; background: #f2f8f8; text-align: center; font-size: 0.68rem; font-weight: 700; z-index: 3; }
 .problem-node strong { color: var(--ink); font-family: "SFMono-Regular", Consolas, monospace; font-size: 0.78rem; }
+.graph-empty { position: absolute; left: 50%; top: 47%; width: min(360px, 80%); transform: translate(-50%, -50%); color: var(--muted); text-align: center; font-size: 0.82rem; }
 .node-card { min-height: 105px; padding: 12px 13px 10px; background: white; border: 1px solid var(--line); border-top: 4px solid var(--teal); box-shadow: 0 8px 16px rgba(41, 61, 69, 0.06); cursor: pointer; z-index: 3; transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease; }
 .node-card:hover, .node-card.selected { transform: translate(-50%, -50%) translateY(-3px); box-shadow: 0 13px 25px rgba(41, 61, 69, 0.14); }
 .node-card.node-error { border-top-color: var(--coral); }

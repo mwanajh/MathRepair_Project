@@ -2,6 +2,7 @@
 
 Trials: 5 | Base seeds: 500, 20500, 40500, 60500, 80500
 Model: `qwen2-math:1.5b`
+Prompt profile: `default`
 Temperature: `1.4` | Samples/problem: `3`
 Problem set: `stress_model_problems.csv` (12 problems)
 

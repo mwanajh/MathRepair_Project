@@ -17,6 +17,8 @@ let nodeCards = [...document.querySelectorAll(".node-card")];
 let graphEdges = [["problemNode", "n1"], ["n1", "n2"], ["n2", "n3"], ["problemNode", "n4"], ["n4", "n5"]];
 let currentAnalysis = null;
 let analysisTimer = null;
+let traceProblem = problemInput.value.trim();
+let requestVersion = 0;
 
 function nodeElement(id) {
   return id === "problemNode" ? document.getElementById(id) : document.querySelector(`[data-node="${id}"]`);
@@ -84,13 +86,23 @@ function escapeHTML(value) {
 }
 
 function updateInspector(data) {
+  if (!data.nodes.length) {
+    document.getElementById("diagnosisTitle").textContent = "Awaiting reasoning steps";
+    document.getElementById("diagnosisCopy").textContent = "Complete the problem equation to generate and verify its reasoning graph.";
+    document.getElementById("answerText").textContent = "Pending verification";
+    document.getElementById("repairText").textContent = "No analysis yet";
+    document.getElementById("actionPill").textContent = "PENDING";
+    document.getElementById("policyReason").textContent = "No repair decision is made until the trace is verified.";
+  }
   const hasError = Boolean(data.error_node_id);
-  document.getElementById("diagnosisTitle").textContent = hasError ? String(data.error_type || "Verification error").replaceAll("_", " ") : "No error detected";
-  document.getElementById("diagnosisCopy").textContent = hasError ? `First invalid state: ${data.error_node_id}. ${data.repair_reason || "The verifier rejected this transformation."}` : "Every submitted state is equivalent to the problem or a valid transformation.";
-  document.getElementById("answerText").textContent = data.correct_answer || "Not isolated";
-  document.getElementById("repairText").textContent = data.suggested_repair || "No repair needed";
-  document.getElementById("actionPill").textContent = data.repair_action || "CONTINUE";
-  document.getElementById("policyReason").textContent = data.repair_reason || "The verified chain can continue.";
+  if (data.nodes.length) {
+    document.getElementById("diagnosisTitle").textContent = hasError ? String(data.error_type || "Verification error").replaceAll("_", " ") : "No error detected";
+    document.getElementById("diagnosisCopy").textContent = hasError ? `First invalid state: ${data.error_node_id}. ${data.repair_reason || "The verifier rejected this transformation."}` : "Every submitted state is equivalent to the problem or a valid transformation.";
+    document.getElementById("answerText").textContent = data.correct_answer || "Not isolated";
+    document.getElementById("repairText").textContent = data.suggested_repair || "No repair needed";
+    document.getElementById("actionPill").textContent = data.repair_action || "CONTINUE";
+    document.getElementById("policyReason").textContent = data.repair_reason || "The verified chain can continue.";
+  }
   document.getElementById("affectedCount").textContent = (data.affected_node_ids || []).length;
   document.getElementById("clearCount").textContent = data.nodes.filter((node) => node.status === "clear").length;
   document.getElementById("nodeCount").textContent = data.nodes.length;
@@ -136,9 +148,16 @@ function renderDraftPreview() {
   inputFeedback.textContent = "Draft preview updated. Complete the trace or click Analyze trace for symbolic verification.";
 }
 
+function clearTraceForProblem(problem) {
+  stepsInput.value = "";
+  renderGraph(draftAnalysis(problem, []));
+  inputFeedback.classList.remove("feedback-error");
+  inputFeedback.textContent = "The previous trace was cleared. Generating reasoning steps for this problem...";
+}
+
 function renderGraph(data) {
   document.getElementById("problemText").textContent = data.problem;
-  document.querySelectorAll(".node-card, .problem-node").forEach((element) => element.remove());
+  document.querySelectorAll(".node-card, .problem-node, .graph-empty").forEach((element) => element.remove());
   const problemNode = document.createElement("div");
   problemNode.className = "problem-node";
   problemNode.id = "problemNode";
@@ -157,12 +176,19 @@ function renderGraph(data) {
     card.innerHTML = `<div class="node-top"><span class="node-id">${escapeHTML(node.id)}</span><span class="node-status">${escapeHTML(node.status.toUpperCase())}</span></div><div class="equation">${escapeHTML(node.text)}</div><div class="node-foot">depends on ${escapeHTML(node.depends_on.join(", "))}</div>`;
     board.appendChild(card);
   });
+  if (!data.nodes.length) {
+    const emptyState = document.createElement("div");
+    emptyState.className = "graph-empty";
+    emptyState.textContent = "Enter a complete equation to generate its reasoning graph.";
+    board.appendChild(emptyState);
+  }
   board.style.minHeight = `${Math.max(515, 180 + data.nodes.length * 125)}px`;
   graphEdges = data.nodes.flatMap((node) => node.depends_on.map((parent) => [parent === "problem" ? "problemNode" : parent, node.id]));
   currentAnalysis = data;
   wireNodeEvents();
   updateInspector(data);
   drawEdges();
+  selectedNode.textContent = data.nodes.length ? (data.error_node_id || data.nodes[0].id) : "none";
   selectNode(data.error_node_id || data.nodes[0]?.id);
 }
 
@@ -185,6 +211,8 @@ async function analyzeTrace(event) {
   event?.preventDefault();
   const problem = problemInput.value.trim();
   const steps = stepsInput.value.split(/\r?\n/).map((step) => step.trim()).filter(Boolean);
+  const version = ++requestVersion;
+  traceProblem = problem;
   renderGraph(draftAnalysis(problem, steps));
   inputFeedback.classList.remove("feedback-error");
   inputFeedback.textContent = "Sending trace to the symbolic verifier...";
@@ -192,6 +220,7 @@ async function analyzeTrace(event) {
     const response = await fetch("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ problem, steps }) });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Trace analysis failed.");
+    if (version !== requestVersion || problem !== problemInput.value.trim()) return;
     renderGraph(data);
     setStage(0);
     inputFeedback.textContent = `Analyzed ${data.nodes.length} submitted states. Click Run verification for the staged presentation sequence.`;
@@ -201,6 +230,42 @@ async function analyzeTrace(event) {
     inputFeedback.textContent = `${error.message} Start the Python Graph Lab server first.`;
     updateLog("Analysis unavailable", inputFeedback.textContent);
   }
+}
+
+async function generateTrace(problem, version) {
+  try {
+    const response = await fetch("/api/generate-trace", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ problem }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Reasoning-step generation failed.");
+    if (version !== requestVersion || problem !== problemInput.value.trim()) return;
+    traceProblem = problem;
+    stepsInput.value = data.steps.join("\n");
+    await analyzeTrace();
+  } catch (error) {
+    if (version !== requestVersion || problem !== problemInput.value.trim()) return;
+    inputFeedback.classList.add("feedback-error");
+    inputFeedback.textContent = `${error.message} You can still enter reasoning steps manually.`;
+    updateLog("Trace generation unavailable", inputFeedback.textContent);
+  }
+}
+
+function scheduleProblemGeneration() {
+  window.clearTimeout(analysisTimer);
+  const problem = problemInput.value.trim();
+  const version = ++requestVersion;
+  if (problem !== traceProblem) {
+    traceProblem = "";
+    clearTraceForProblem(problem);
+  }
+  if (!problem || !problem.includes("=")) {
+    inputFeedback.textContent = "Enter a complete equation with one '=' sign.";
+    return;
+  }
+  analysisTimer = window.setTimeout(() => generateTrace(problem, version), 550);
 }
 
 function scheduleDraftAnalysis() {
@@ -243,14 +308,20 @@ async function runVerification() {
 }
 
 sampleButton.addEventListener("click", () => {
+  ++requestVersion;
   problemInput.value = "2(x + 3) = 14";
   stepsInput.value = "2x + 3 = 14\n2x = 11\nx = 5.5";
+  traceProblem = problemInput.value;
   inputFeedback.classList.remove("feedback-error");
-  inputFeedback.textContent = "Sample loaded. Click Analyze trace.";
+  inputFeedback.textContent = "Sample loaded. Analyzing the trace...";
+  analyzeTrace();
 });
 traceForm.addEventListener("submit", analyzeTrace);
-problemInput.addEventListener("input", scheduleDraftAnalysis);
-stepsInput.addEventListener("input", scheduleDraftAnalysis);
+problemInput.addEventListener("input", scheduleProblemGeneration);
+stepsInput.addEventListener("input", () => {
+  traceProblem = problemInput.value.trim();
+  scheduleDraftAnalysis();
+});
 runButton.addEventListener("click", runVerification);
 resetButton.addEventListener("click", resetView);
 window.addEventListener("resize", drawEdges);
