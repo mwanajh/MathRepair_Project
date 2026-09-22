@@ -1,0 +1,3062 @@
+[
+  {
+    "example_id": "controlled-sign_error-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "x - 2 = 3",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 2 = 3",
+        "model_generated_reasoning": "x - 2 = 3",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 5",
+        "model_generated_reasoning": "x = 5",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 2 = 3",
+        "model_generated_reasoning": "x - 2 = 3",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 1",
+        "model_generated_reasoning": "x = 1",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "sign_error",
+    "corruption_variant": "wrong_sign",
+    "corrupted_step": "x = 1",
+    "correct_step": "x = 5",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REFORMALIZE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 1
+  },
+  {
+    "example_id": "controlled-algebraic_transformation_error-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "5(x + 1) = 40",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "5(x + 1) = 40",
+        "model_generated_reasoning": "5(x + 1) = 40",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "5x + 5 = 40",
+        "model_generated_reasoning": "5x + 5 = 40",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 7",
+        "model_generated_reasoning": "x = 7",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "5(x + 1) = 40",
+        "model_generated_reasoning": "5(x + 1) = 40",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "5x + 1 = 40",
+        "model_generated_reasoning": "5x + 1 = 40",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 7",
+        "model_generated_reasoning": "x = 7",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "algebraic_transformation_error",
+    "corruption_variant": "invalid_expansion",
+    "corrupted_step": "5x + 1 = 40",
+    "correct_step": "5x + 5 = 40",
+    "preferred_repair_action": "REFORMALIZE",
+    "allowed_repair_actions": [
+      "REFORMALIZE",
+      "BACKTRACK"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 2
+  },
+  {
+    "example_id": "controlled-dependency_error-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "x + 1 = 3",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 1 = 3",
+        "model_generated_reasoning": "x + 1 = 3",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 1 = 3",
+        "model_generated_reasoning": "x + 1 = 3",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 1 = 3",
+        "model_generated_reasoning": "x + 1 = 3",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 1 = 3",
+        "model_generated_reasoning": "x + 1 = 3",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n4"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n3",
+    "error_type": "dependency_error",
+    "corruption_variant": "wrong_parent_dependency",
+    "corrupted_step": "x = 2",
+    "correct_step": "x = 2",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 3
+  },
+  {
+    "example_id": "controlled-incomplete_solution-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "4x = 24",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "4x = 24",
+        "model_generated_reasoning": "4x = 24",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 6",
+        "model_generated_reasoning": "x = 6",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "4x = 24",
+        "model_generated_reasoning": "4x = 24",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "4x = 24",
+        "model_generated_reasoning": "4x = 24",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "corruption_variant": "missing_final_isolation",
+    "corrupted_step": "4x = 24",
+    "correct_step": "x = 6",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 4
+  },
+  {
+    "example_id": "controlled-missing_assumption-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "Solve x^2 = 7 for x given x >= 0.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 7 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 7 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = sqrt(7)",
+        "model_generated_reasoning": "x = sqrt(7)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": [
+          "x >= 0"
+        ]
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 7 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 7 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = +/-sqrt(7)",
+        "model_generated_reasoning": "x = +/-sqrt(7)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "missing_assumption",
+    "corruption_variant": "dropped_assumption",
+    "corrupted_step": "x = +/-sqrt(7)",
+    "correct_step": "x = sqrt(7)",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 5
+  },
+  {
+    "example_id": "controlled-missing_assumption-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "Solve x^2 = 6 for x given x >= 0.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 6 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 6 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = sqrt(6)",
+        "model_generated_reasoning": "x = sqrt(6)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": [
+          "x >= 0"
+        ]
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 6 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 6 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = +/-sqrt(6)",
+        "model_generated_reasoning": "x = +/-sqrt(6)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "missing_assumption",
+    "corruption_variant": "dropped_assumption",
+    "corrupted_step": "x = +/-sqrt(6)",
+    "correct_step": "x = sqrt(6)",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 6
+  },
+  {
+    "example_id": "controlled-logical_inference_error-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "n is even and n divides 12.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 12.",
+        "model_generated_reasoning": "n is even and n divides 12.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n in {2, 12}",
+        "model_generated_reasoning": "n in {2, 12}",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 12.",
+        "model_generated_reasoning": "n is even and n divides 12.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n = 2",
+        "model_generated_reasoning": "n = 2",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "logical_inference_error",
+    "corruption_variant": "unsupported_single_conclusion",
+    "corrupted_step": "n = 2",
+    "correct_step": "n in {2, 12}",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 7
+  },
+  {
+    "example_id": "controlled-dependency_error-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "x + 2 = 4",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 2 = 4",
+        "model_generated_reasoning": "x + 2 = 4",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 2 = 4",
+        "model_generated_reasoning": "x + 2 = 4",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 2 = 4",
+        "model_generated_reasoning": "x + 2 = 4",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 2 = 4",
+        "model_generated_reasoning": "x + 2 = 4",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n4"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n3",
+    "error_type": "dependency_error",
+    "corruption_variant": "wrong_parent_dependency",
+    "corrupted_step": "x = 2",
+    "correct_step": "x = 2",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 8
+  },
+  {
+    "example_id": "controlled-missing_assumption-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "Solve x^2 = 4 for x given x >= 0.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 4 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 4 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = sqrt(4)",
+        "model_generated_reasoning": "x = sqrt(4)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": [
+          "x >= 0"
+        ]
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 4 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 4 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = +/-sqrt(4)",
+        "model_generated_reasoning": "x = +/-sqrt(4)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "missing_assumption",
+    "corruption_variant": "dropped_assumption",
+    "corrupted_step": "x = +/-sqrt(4)",
+    "correct_step": "x = sqrt(4)",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 9
+  },
+  {
+    "example_id": "controlled-logical_inference_error-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "n is even and n divides 16.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 16.",
+        "model_generated_reasoning": "n is even and n divides 16.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n in {2, 16}",
+        "model_generated_reasoning": "n in {2, 16}",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 16.",
+        "model_generated_reasoning": "n is even and n divides 16.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n = 2",
+        "model_generated_reasoning": "n = 2",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "logical_inference_error",
+    "corruption_variant": "unsupported_single_conclusion",
+    "corrupted_step": "n = 2",
+    "correct_step": "n in {2, 16}",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 10
+  },
+  {
+    "example_id": "controlled-incomplete_solution-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "5x = 35",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "5x = 35",
+        "model_generated_reasoning": "5x = 35",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 7",
+        "model_generated_reasoning": "x = 7",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "5x = 35",
+        "model_generated_reasoning": "5x = 35",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "5x = 35",
+        "model_generated_reasoning": "5x = 35",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "corruption_variant": "missing_final_isolation",
+    "corrupted_step": "5x = 35",
+    "correct_step": "x = 7",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 11
+  },
+  {
+    "example_id": "controlled-algebraic_transformation_error-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "2(x + 3) = 14",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "2(x + 3) = 14",
+        "model_generated_reasoning": "2(x + 3) = 14",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "2x + 6 = 14",
+        "model_generated_reasoning": "2x + 6 = 14",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 4",
+        "model_generated_reasoning": "x = 4",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "2(x + 3) = 14",
+        "model_generated_reasoning": "2(x + 3) = 14",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "2x + 3 = 14",
+        "model_generated_reasoning": "2x + 3 = 14",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 4",
+        "model_generated_reasoning": "x = 4",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "algebraic_transformation_error",
+    "corruption_variant": "invalid_expansion",
+    "corrupted_step": "2x + 3 = 14",
+    "correct_step": "2x + 6 = 14",
+    "preferred_repair_action": "REFORMALIZE",
+    "allowed_repair_actions": [
+      "REFORMALIZE",
+      "BACKTRACK"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 12
+  },
+  {
+    "example_id": "controlled-arithmetic_error-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "27/9 = 3",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "27/9 = 3",
+        "model_generated_reasoning": "27/9 = 3",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "27/9 = 4",
+        "model_generated_reasoning": "27/9 = 4",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n1",
+    "error_type": "arithmetic_error",
+    "corruption_variant": "arithmetic_calculation",
+    "corrupted_step": "27/9 = 4",
+    "correct_step": "27/9 = 3",
+    "preferred_repair_action": "TOOL_EXECUTE",
+    "allowed_repair_actions": [
+      "TOOL_EXECUTE",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 13
+  },
+  {
+    "example_id": "controlled-logical_inference_error-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "n is even and n divides 6.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 6.",
+        "model_generated_reasoning": "n is even and n divides 6.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n in {2, 6}",
+        "model_generated_reasoning": "n in {2, 6}",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 6.",
+        "model_generated_reasoning": "n is even and n divides 6.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n = 2",
+        "model_generated_reasoning": "n = 2",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "logical_inference_error",
+    "corruption_variant": "unsupported_single_conclusion",
+    "corrupted_step": "n = 2",
+    "correct_step": "n in {2, 6}",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 14
+  },
+  {
+    "example_id": "controlled-semantic_interpretation_error-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "Find integers at least 5.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 5.",
+        "model_generated_reasoning": "Find integers at least 5.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x >= 5",
+        "model_generated_reasoning": "x >= 5",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 5.",
+        "model_generated_reasoning": "Find integers at least 5.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x > 5",
+        "model_generated_reasoning": "x > 5",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "corruption_variant": "strict_quantifier",
+    "corrupted_step": "x > 5",
+    "correct_step": "x >= 5",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 15
+  },
+  {
+    "example_id": "controlled-dependency_error-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "x + 6 = 8",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 6 = 8",
+        "model_generated_reasoning": "x + 6 = 8",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 6 = 8",
+        "model_generated_reasoning": "x + 6 = 8",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 6 = 8",
+        "model_generated_reasoning": "x + 6 = 8",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 6 = 8",
+        "model_generated_reasoning": "x + 6 = 8",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n4"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n3",
+    "error_type": "dependency_error",
+    "corruption_variant": "wrong_parent_dependency",
+    "corrupted_step": "x = 2",
+    "correct_step": "x = 2",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 16
+  },
+  {
+    "example_id": "controlled-semantic_interpretation_error-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "Find integers at least 4.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 4.",
+        "model_generated_reasoning": "Find integers at least 4.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x >= 4",
+        "model_generated_reasoning": "x >= 4",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 4.",
+        "model_generated_reasoning": "Find integers at least 4.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x > 4",
+        "model_generated_reasoning": "x > 4",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "corruption_variant": "strict_quantifier",
+    "corrupted_step": "x > 4",
+    "correct_step": "x >= 4",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 17
+  },
+  {
+    "example_id": "controlled-arithmetic_error-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "15/3 = 5",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "15/3 = 5",
+        "model_generated_reasoning": "15/3 = 5",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "16/3 = 5",
+        "model_generated_reasoning": "16/3 = 5",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n1",
+    "error_type": "arithmetic_error",
+    "corruption_variant": "incorrect_number",
+    "corrupted_step": "16/3 = 5",
+    "correct_step": "15/3 = 5",
+    "preferred_repair_action": "TOOL_EXECUTE",
+    "allowed_repair_actions": [
+      "TOOL_EXECUTE",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 18
+  },
+  {
+    "example_id": "controlled-dependency_error-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "x + 3 = 5",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 3 = 5",
+        "model_generated_reasoning": "x + 3 = 5",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 3 = 5",
+        "model_generated_reasoning": "x + 3 = 5",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 3 = 5",
+        "model_generated_reasoning": "x + 3 = 5",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 3 = 5",
+        "model_generated_reasoning": "x + 3 = 5",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n4"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n3",
+    "error_type": "dependency_error",
+    "corruption_variant": "wrong_parent_dependency",
+    "corrupted_step": "x = 2",
+    "correct_step": "x = 2",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 19
+  },
+  {
+    "example_id": "controlled-arithmetic_error-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "18/6 = 3",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "18/6 = 3",
+        "model_generated_reasoning": "18/6 = 3",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "19/6 = 3",
+        "model_generated_reasoning": "19/6 = 3",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n1",
+    "error_type": "arithmetic_error",
+    "corruption_variant": "incorrect_number",
+    "corrupted_step": "19/6 = 3",
+    "correct_step": "18/6 = 3",
+    "preferred_repair_action": "TOOL_EXECUTE",
+    "allowed_repair_actions": [
+      "TOOL_EXECUTE",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 20
+  },
+  {
+    "example_id": "controlled-missing_assumption-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "Solve x^2 = 5 for x given x >= 0.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 5 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 5 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = sqrt(5)",
+        "model_generated_reasoning": "x = sqrt(5)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": [
+          "x >= 0"
+        ]
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 5 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 5 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = +/-sqrt(5)",
+        "model_generated_reasoning": "x = +/-sqrt(5)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "missing_assumption",
+    "corruption_variant": "dropped_assumption",
+    "corrupted_step": "x = +/-sqrt(5)",
+    "correct_step": "x = sqrt(5)",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 21
+  },
+  {
+    "example_id": "controlled-algebraic_transformation_error-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "6(x + 3) = 66",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "6(x + 3) = 66",
+        "model_generated_reasoning": "6(x + 3) = 66",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "6x + 18 = 66",
+        "model_generated_reasoning": "6x + 18 = 66",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 8",
+        "model_generated_reasoning": "x = 8",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "6(x + 3) = 66",
+        "model_generated_reasoning": "6(x + 3) = 66",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "6x + 3 = 66",
+        "model_generated_reasoning": "6x + 3 = 66",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 8",
+        "model_generated_reasoning": "x = 8",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "algebraic_transformation_error",
+    "corruption_variant": "invalid_expansion",
+    "corrupted_step": "6x + 3 = 66",
+    "correct_step": "6x + 18 = 66",
+    "preferred_repair_action": "REFORMALIZE",
+    "allowed_repair_actions": [
+      "REFORMALIZE",
+      "BACKTRACK"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 22
+  },
+  {
+    "example_id": "controlled-logical_inference_error-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "n is even and n divides 10.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 10.",
+        "model_generated_reasoning": "n is even and n divides 10.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n in {2, 10}",
+        "model_generated_reasoning": "n in {2, 10}",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 10.",
+        "model_generated_reasoning": "n is even and n divides 10.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n = 2",
+        "model_generated_reasoning": "n = 2",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "logical_inference_error",
+    "corruption_variant": "unsupported_single_conclusion",
+    "corrupted_step": "n = 2",
+    "correct_step": "n in {2, 10}",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 23
+  },
+  {
+    "example_id": "controlled-semantic_interpretation_error-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "Find integers at least 7.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 7.",
+        "model_generated_reasoning": "Find integers at least 7.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x >= 7",
+        "model_generated_reasoning": "x >= 7",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 7.",
+        "model_generated_reasoning": "Find integers at least 7.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x > 7",
+        "model_generated_reasoning": "x > 7",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "corruption_variant": "strict_quantifier",
+    "corrupted_step": "x > 7",
+    "correct_step": "x >= 7",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 24
+  },
+  {
+    "example_id": "controlled-arithmetic_error-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "24/8 = 3",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "24/8 = 3",
+        "model_generated_reasoning": "24/8 = 3",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "24/8 = 4",
+        "model_generated_reasoning": "24/8 = 4",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n1",
+    "error_type": "arithmetic_error",
+    "corruption_variant": "arithmetic_calculation",
+    "corrupted_step": "24/8 = 4",
+    "correct_step": "24/8 = 3",
+    "preferred_repair_action": "TOOL_EXECUTE",
+    "allowed_repair_actions": [
+      "TOOL_EXECUTE",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 25
+  },
+  {
+    "example_id": "controlled-missing_assumption-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "Solve x^2 = 9 for x given x >= 0.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 9 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 9 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = sqrt(9)",
+        "model_generated_reasoning": "x = sqrt(9)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": [
+          "x >= 0"
+        ]
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 9 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 9 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = +/-sqrt(9)",
+        "model_generated_reasoning": "x = +/-sqrt(9)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "missing_assumption",
+    "corruption_variant": "dropped_assumption",
+    "corrupted_step": "x = +/-sqrt(9)",
+    "correct_step": "x = sqrt(9)",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 26
+  },
+  {
+    "example_id": "controlled-semantic_interpretation_error-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "Find integers at least 8.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 8.",
+        "model_generated_reasoning": "Find integers at least 8.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x >= 8",
+        "model_generated_reasoning": "x >= 8",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 8.",
+        "model_generated_reasoning": "Find integers at least 8.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x > 8",
+        "model_generated_reasoning": "x > 8",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "corruption_variant": "strict_quantifier",
+    "corrupted_step": "x > 8",
+    "correct_step": "x >= 8",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 27
+  },
+  {
+    "example_id": "controlled-incomplete_solution-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "6x = 48",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "6x = 48",
+        "model_generated_reasoning": "6x = 48",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 8",
+        "model_generated_reasoning": "x = 8",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "6x = 48",
+        "model_generated_reasoning": "6x = 48",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "6x = 48",
+        "model_generated_reasoning": "6x = 48",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "corruption_variant": "missing_final_isolation",
+    "corrupted_step": "6x = 48",
+    "correct_step": "x = 8",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 28
+  },
+  {
+    "example_id": "controlled-algebraic_transformation_error-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "3(x + 4) = 27",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "3(x + 4) = 27",
+        "model_generated_reasoning": "3(x + 4) = 27",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "3x + 12 = 27",
+        "model_generated_reasoning": "3x + 12 = 27",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 5",
+        "model_generated_reasoning": "x = 5",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "3(x + 4) = 27",
+        "model_generated_reasoning": "3(x + 4) = 27",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "3x + 4 = 27",
+        "model_generated_reasoning": "3x + 4 = 27",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 5",
+        "model_generated_reasoning": "x = 5",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "algebraic_transformation_error",
+    "corruption_variant": "invalid_expansion",
+    "corrupted_step": "3x + 4 = 27",
+    "correct_step": "3x + 12 = 27",
+    "preferred_repair_action": "REFORMALIZE",
+    "allowed_repair_actions": [
+      "REFORMALIZE",
+      "BACKTRACK"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 29
+  },
+  {
+    "example_id": "controlled-semantic_interpretation_error-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "Find integers at least 3.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 3.",
+        "model_generated_reasoning": "Find integers at least 3.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x >= 3",
+        "model_generated_reasoning": "x >= 3",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 3.",
+        "model_generated_reasoning": "Find integers at least 3.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x > 3",
+        "model_generated_reasoning": "x > 3",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "corruption_variant": "strict_quantifier",
+    "corrupted_step": "x > 3",
+    "correct_step": "x >= 3",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 30
+  },
+  {
+    "example_id": "controlled-sign_error-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "x - 8 = 1",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 8 = 1",
+        "model_generated_reasoning": "x - 8 = 1",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 9",
+        "model_generated_reasoning": "x = 9",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 8 = 1",
+        "model_generated_reasoning": "x - 8 = 1",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = -7",
+        "model_generated_reasoning": "x = -7",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "sign_error",
+    "corruption_variant": "wrong_sign",
+    "corrupted_step": "x = -7",
+    "correct_step": "x = 9",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REFORMALIZE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 31
+  },
+  {
+    "example_id": "controlled-dependency_error-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "x + 4 = 6",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 4 = 6",
+        "model_generated_reasoning": "x + 4 = 6",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 4 = 6",
+        "model_generated_reasoning": "x + 4 = 6",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 4 = 6",
+        "model_generated_reasoning": "x + 4 = 6",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 4 = 6",
+        "model_generated_reasoning": "x + 4 = 6",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n4"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n3",
+    "error_type": "dependency_error",
+    "corruption_variant": "wrong_parent_dependency",
+    "corrupted_step": "x = 2",
+    "correct_step": "x = 2",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 32
+  },
+  {
+    "example_id": "controlled-incomplete_solution-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "2x = 8",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "2x = 8",
+        "model_generated_reasoning": "2x = 8",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 4",
+        "model_generated_reasoning": "x = 4",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "2x = 8",
+        "model_generated_reasoning": "2x = 8",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "2x = 8",
+        "model_generated_reasoning": "2x = 8",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "corruption_variant": "missing_final_isolation",
+    "corrupted_step": "2x = 8",
+    "correct_step": "x = 4",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 33
+  },
+  {
+    "example_id": "controlled-incomplete_solution-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "3x = 15",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "3x = 15",
+        "model_generated_reasoning": "3x = 15",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 5",
+        "model_generated_reasoning": "x = 5",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "3x = 15",
+        "model_generated_reasoning": "3x = 15",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "3x = 15",
+        "model_generated_reasoning": "3x = 15",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "corruption_variant": "missing_final_isolation",
+    "corrupted_step": "3x = 15",
+    "correct_step": "x = 5",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 34
+  },
+  {
+    "example_id": "controlled-sign_error-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "x - 9 = 6",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 9 = 6",
+        "model_generated_reasoning": "x - 9 = 6",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 15",
+        "model_generated_reasoning": "x = 15",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 9 = 6",
+        "model_generated_reasoning": "x - 9 = 6",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = -3",
+        "model_generated_reasoning": "x = -3",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "sign_error",
+    "corruption_variant": "wrong_sign",
+    "corrupted_step": "x = -3",
+    "correct_step": "x = 15",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REFORMALIZE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 35
+  },
+  {
+    "example_id": "controlled-sign_error-004",
+    "source": "controlled_synthetic",
+    "sample_index": 4,
+    "problem": "x - 4 = 5",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 4 = 5",
+        "model_generated_reasoning": "x - 4 = 5",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 9",
+        "model_generated_reasoning": "x = 9",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 4 = 5",
+        "model_generated_reasoning": "x - 4 = 5",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 1",
+        "model_generated_reasoning": "x = 1",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "sign_error",
+    "corruption_variant": "wrong_sign",
+    "corrupted_step": "x = 1",
+    "correct_step": "x = 9",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REFORMALIZE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 36
+  },
+  {
+    "example_id": "controlled-arithmetic_error-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "12/4 = 3",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "12/4 = 3",
+        "model_generated_reasoning": "12/4 = 3",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "13/4 = 3",
+        "model_generated_reasoning": "13/4 = 3",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n1",
+    "error_type": "arithmetic_error",
+    "corruption_variant": "incorrect_number",
+    "corrupted_step": "13/4 = 3",
+    "correct_step": "12/4 = 3",
+    "preferred_repair_action": "TOOL_EXECUTE",
+    "allowed_repair_actions": [
+      "TOOL_EXECUTE",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 37
+  },
+  {
+    "example_id": "controlled-missing_assumption-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "Solve x^2 = 8 for x given x >= 0.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 8 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 8 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = sqrt(8)",
+        "model_generated_reasoning": "x = sqrt(8)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": [
+          "x >= 0"
+        ]
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Solve x^2 = 8 for x given x >= 0.",
+        "model_generated_reasoning": "Solve x^2 = 8 for x given x >= 0.",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": [
+          "x >= 0"
+        ]
+      },
+      {
+        "node_id": "n2",
+        "state": "x = +/-sqrt(8)",
+        "model_generated_reasoning": "x = +/-sqrt(8)",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "take the principal root",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "missing_assumption",
+    "corruption_variant": "dropped_assumption",
+    "corrupted_step": "x = +/-sqrt(8)",
+    "correct_step": "x = sqrt(8)",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 38
+  },
+  {
+    "example_id": "controlled-logical_inference_error-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "n is even and n divides 14.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 14.",
+        "model_generated_reasoning": "n is even and n divides 14.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n in {2, 14}",
+        "model_generated_reasoning": "n in {2, 14}",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 14.",
+        "model_generated_reasoning": "n is even and n divides 14.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n = 2",
+        "model_generated_reasoning": "n = 2",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "logical_inference_error",
+    "corruption_variant": "unsupported_single_conclusion",
+    "corrupted_step": "n = 2",
+    "correct_step": "n in {2, 14}",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 39
+  },
+  {
+    "example_id": "controlled-algebraic_transformation_error-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "4(x + 2) = 32",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "4(x + 2) = 32",
+        "model_generated_reasoning": "4(x + 2) = 32",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "4x + 8 = 32",
+        "model_generated_reasoning": "4x + 8 = 32",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 6",
+        "model_generated_reasoning": "x = 6",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "4(x + 2) = 32",
+        "model_generated_reasoning": "4(x + 2) = 32",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "4x + 2 = 32",
+        "model_generated_reasoning": "4x + 2 = 32",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 6",
+        "model_generated_reasoning": "x = 6",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "algebraic_transformation_error",
+    "corruption_variant": "invalid_expansion",
+    "corrupted_step": "4x + 2 = 32",
+    "correct_step": "4x + 8 = 32",
+    "preferred_repair_action": "REFORMALIZE",
+    "allowed_repair_actions": [
+      "REFORMALIZE",
+      "BACKTRACK"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 40
+  },
+  {
+    "example_id": "controlled-dependency_error-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "x + 5 = 7",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 5 = 7",
+        "model_generated_reasoning": "x + 5 = 7",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 5 = 7",
+        "model_generated_reasoning": "x + 5 = 7",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x + 5 = 7",
+        "model_generated_reasoning": "x + 5 = 7",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x + 5 = 7",
+        "model_generated_reasoning": "x + 5 = 7",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "preserve the equation",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 2",
+        "model_generated_reasoning": "x = 2",
+        "depends_on": [
+          "n4"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      },
+      {
+        "node_id": "n4",
+        "state": "2 = x",
+        "model_generated_reasoning": "2 = x",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "state an equivalent answer",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n3",
+    "error_type": "dependency_error",
+    "corruption_variant": "wrong_parent_dependency",
+    "corrupted_step": "x = 2",
+    "correct_step": "x = 2",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 41
+  },
+  {
+    "example_id": "controlled-semantic_interpretation_error-003",
+    "source": "controlled_synthetic",
+    "sample_index": 3,
+    "problem": "Find integers at least 6.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 6.",
+        "model_generated_reasoning": "Find integers at least 6.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x >= 6",
+        "model_generated_reasoning": "x >= 6",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "Find integers at least 6.",
+        "model_generated_reasoning": "Find integers at least 6.",
+        "depends_on": [],
+        "subgoal": "interpret the quantifier",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x > 6",
+        "model_generated_reasoning": "x > 6",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "formalize the condition",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "corruption_variant": "strict_quantifier",
+    "corrupted_step": "x > 6",
+    "correct_step": "x >= 6",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 42
+  },
+  {
+    "example_id": "controlled-sign_error-002",
+    "source": "controlled_synthetic",
+    "sample_index": 2,
+    "problem": "x - 7 = 4",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 7 = 4",
+        "model_generated_reasoning": "x - 7 = 4",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 11",
+        "model_generated_reasoning": "x = 11",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 7 = 4",
+        "model_generated_reasoning": "x - 7 = 4",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = -3",
+        "model_generated_reasoning": "x = -3",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "sign_error",
+    "corruption_variant": "wrong_sign",
+    "corrupted_step": "x = -3",
+    "correct_step": "x = 11",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REFORMALIZE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 43
+  },
+  {
+    "example_id": "controlled-incomplete_solution-005",
+    "source": "controlled_synthetic",
+    "sample_index": 5,
+    "problem": "7x = 63",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "7x = 63",
+        "model_generated_reasoning": "7x = 63",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 9",
+        "model_generated_reasoning": "x = 9",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "7x = 63",
+        "model_generated_reasoning": "7x = 63",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "7x = 63",
+        "model_generated_reasoning": "7x = 63",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "corruption_variant": "missing_final_isolation",
+    "corrupted_step": "7x = 63",
+    "correct_step": "x = 9",
+    "preferred_repair_action": "REPLAN",
+    "allowed_repair_actions": [
+      "REPLAN",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 44
+  },
+  {
+    "example_id": "controlled-sign_error-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "x - 6 = 2",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 6 = 2",
+        "model_generated_reasoning": "x - 6 = 2",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = 8",
+        "model_generated_reasoning": "x = 8",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "x - 6 = 2",
+        "model_generated_reasoning": "x - 6 = 2",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "x = -4",
+        "model_generated_reasoning": "x = -4",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "move the constant",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "sign_error",
+    "corruption_variant": "wrong_sign",
+    "corrupted_step": "x = -4",
+    "correct_step": "x = 8",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REFORMALIZE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 45
+  },
+  {
+    "example_id": "controlled-logical_inference_error-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "n is even and n divides 8.",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 8.",
+        "model_generated_reasoning": "n is even and n divides 8.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n in {2, 8}",
+        "model_generated_reasoning": "n in {2, 8}",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "n is even and n divides 8.",
+        "model_generated_reasoning": "n is even and n divides 8.",
+        "depends_on": [],
+        "subgoal": "state the premises",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "n = 2",
+        "model_generated_reasoning": "n = 2",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "enumerate the permitted values",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "logical_inference_error",
+    "corruption_variant": "unsupported_single_conclusion",
+    "corrupted_step": "n = 2",
+    "correct_step": "n in {2, 8}",
+    "preferred_repair_action": "BACKTRACK",
+    "allowed_repair_actions": [
+      "BACKTRACK",
+      "REPLAN"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 46
+  },
+  {
+    "example_id": "controlled-algebraic_transformation_error-006",
+    "source": "controlled_synthetic",
+    "sample_index": 6,
+    "problem": "7(x + 2) = 77",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "7(x + 2) = 77",
+        "model_generated_reasoning": "7(x + 2) = 77",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "7x + 14 = 77",
+        "model_generated_reasoning": "7x + 14 = 77",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 9",
+        "model_generated_reasoning": "x = 9",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "7(x + 2) = 77",
+        "model_generated_reasoning": "7(x + 2) = 77",
+        "depends_on": [],
+        "subgoal": "state the problem",
+        "assumptions": []
+      },
+      {
+        "node_id": "n2",
+        "state": "7x + 2 = 77",
+        "model_generated_reasoning": "7x + 2 = 77",
+        "depends_on": [
+          "n1"
+        ],
+        "subgoal": "expand the product",
+        "assumptions": []
+      },
+      {
+        "node_id": "n3",
+        "state": "x = 9",
+        "model_generated_reasoning": "x = 9",
+        "depends_on": [
+          "n2"
+        ],
+        "subgoal": "isolate x",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n2",
+    "error_type": "algebraic_transformation_error",
+    "corruption_variant": "invalid_expansion",
+    "corrupted_step": "7x + 2 = 77",
+    "correct_step": "7x + 14 = 77",
+    "preferred_repair_action": "REFORMALIZE",
+    "allowed_repair_actions": [
+      "REFORMALIZE",
+      "BACKTRACK"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 47
+  },
+  {
+    "example_id": "controlled-arithmetic_error-001",
+    "source": "controlled_synthetic",
+    "sample_index": 1,
+    "problem": "21/7 = 3",
+    "correct_trace": [
+      {
+        "node_id": "n1",
+        "state": "21/7 = 3",
+        "model_generated_reasoning": "21/7 = 3",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "corrupted_trace": [
+      {
+        "node_id": "n1",
+        "state": "21/7 = 4",
+        "model_generated_reasoning": "21/7 = 4",
+        "depends_on": [],
+        "subgoal": "evaluate the arithmetic expression",
+        "assumptions": []
+      }
+    ],
+    "error_location": "n1",
+    "error_type": "arithmetic_error",
+    "corruption_variant": "arithmetic_calculation",
+    "corrupted_step": "21/7 = 4",
+    "correct_step": "21/7 = 3",
+    "preferred_repair_action": "TOOL_EXECUTE",
+    "allowed_repair_actions": [
+      "TOOL_EXECUTE",
+      "LOCAL_RESAMPLE"
+    ],
+    "label_source": "controlled_corruption",
+    "dataset_index": 48
+  }
+]

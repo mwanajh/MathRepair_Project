@@ -131,6 +131,16 @@ Run `python mathrepair_demo.py`, `python reasoning_chain.py`, or
 See [ERROR_TAXONOMY.md](ERROR_TAXONOMY.md) for the frozen definitions,
 examples, detection contracts, and operational-label boundary.
 
+Generate the first typed-verifier supervision pilot with:
+
+```powershell
+python generate_verifier_dataset.py --count-per-type 6 --seed 42
+```
+
+This creates paired correct/corrupted traces with node-level labels. The pilot
+is controlled synthetic data for testing the supervision schema, not a natural
+error-rate estimate.
+
 ## 8. Adaptive compute allocation
 
 `python reasoning_graph.py` also prints a compute plan with a budget of 10

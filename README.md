@@ -89,6 +89,24 @@ and secondary actions, is in [ERROR_TAXONOMY.md](ERROR_TAXONOMY.md) and the
 machine-readable [error_taxonomy.py](error_taxonomy.py). A learned repair policy
 must use these codes rather than introducing synonyms.
 
+## Typed verifier pilot data
+
+`generate_verifier_dataset.py` creates paired clean/corrupted reasoning graphs
+for verifier supervision. Each record contains the correct trace, one controlled
+corruption, error location/type, corrupted and correct states, dependency or
+assumption metadata, and the preferred repair action. The checked-in pilot has
+48 examples: six for each of the eight frozen reasoning-error types.
+
+Regenerate it deterministically with:
+
+```powershell
+python generate_verifier_dataset.py --count-per-type 6 --seed 42
+```
+
+The dataset is intentionally controlled synthetic data for validating the label
+contract. It is not yet a claim of natural model-error prevalence; later work
+should add model-generated traces and independently reviewed labels.
+
 ## Adaptive compute allocation
 
 `compute_allocator.py` uses the proposal heuristic:
