@@ -30,6 +30,18 @@ class RepairPolicyTests(unittest.TestCase):
             RepairAction.LOCAL_RESAMPLE,
         )
 
+    def test_missing_assumption_uses_backtrack(self):
+        self.assertEqual(
+            choose_repair_action("missing_assumption"),
+            RepairAction.BACKTRACK,
+        )
+
+    def test_incomplete_solution_uses_replan(self):
+        self.assertEqual(
+            choose_repair_action("incomplete_solution"),
+            RepairAction.REPLAN,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

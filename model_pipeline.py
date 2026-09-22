@@ -11,6 +11,7 @@ from typing import Protocol
 from urllib import error as url_error
 from urllib import request as url_request
 
+from error_taxonomy import INCOMPLETE_SOLUTION
 from local_repair import LocalRepairResult, apply_local_repair
 from mathrepair_demo import ReasoningNode
 from model_repair import ModelRepairResult, attempt_model_repair
@@ -237,7 +238,7 @@ class OllamaMathModel:
         error_type: str,
         attempt_index: int,
     ) -> list[str]:
-        if error_type == "incomplete_solution":
+        if error_type == INCOMPLETE_SOLUTION:
             task = (
                 "Continue from the final verified equation and isolate the "
                 "problem variable. Do not repeat the verified prefix."

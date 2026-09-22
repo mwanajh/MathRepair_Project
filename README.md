@@ -77,10 +77,17 @@ repair-action selection accuracy, and repair success rate.
 - `arithmetic_error` -> `TOOL_EXECUTE`
 - `sign_error` -> `BACKTRACK`
 - `algebraic_transformation_error` -> `REFORMALIZE`
+- `missing_assumption` -> `BACKTRACK`
+- `logical_inference_error` -> `BACKTRACK`
+- `semantic_interpretation_error` -> `REPLAN`
+- `dependency_error` -> `BACKTRACK`
+- `incomplete_solution` -> `REPLAN`
 - unknown error -> `LOCAL_RESAMPLE`
 
-This is a rule-based baseline. A learned repair policy can be added after the
-dataset includes more examples and error types.
+The complete frozen contract, including definitions, examples, detection rules,
+and secondary actions, is in [ERROR_TAXONOMY.md](ERROR_TAXONOMY.md) and the
+machine-readable [error_taxonomy.py](error_taxonomy.py). A learned repair policy
+must use these codes rather than introducing synonyms.
 
 ## Adaptive compute allocation
 

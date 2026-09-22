@@ -10,6 +10,11 @@ from sympy.parsing.sympy_parser import (
     standard_transformations,
 )
 
+from error_taxonomy import (
+    ALGEBRAIC_TRANSFORMATION_ERROR,
+    ARITHMETIC_ERROR,
+    SIGN_ERROR,
+)
 from repair_policy import make_repair_decision
 
 
@@ -41,7 +46,7 @@ def verify_distribution() -> tuple[bool, str, str]:
     expected_left = sp.expand(original_left)
 
     if sp.simplify(proposed_left - expected_left) != 0:
-        return False, "algebraic_transformation_error", str(expected_left)
+        return False, ALGEBRAIC_TRANSFORMATION_ERROR, str(expected_left)
     return True, "", str(proposed_left)
 
 
@@ -149,7 +154,7 @@ def verify_user_step(
         proposed_true = sp.simplify(proposed.lhs - proposed.rhs) == 0
         ok = original_true == proposed_true
         answer = "true" if original_true else "false"
-        error_type = "" if ok else "arithmetic_error"
+        error_type = "" if ok else ARITHMETIC_ERROR
         repair = original_text.strip()
         return ok, error_type, repair, answer
 
@@ -166,10 +171,10 @@ def verify_user_step(
         error_type = ""
         repair = corrected_equation(original)
     elif is_sign_error(original, variable, original_solutions, proposed_solutions):
-        error_type = "sign_error"
+        error_type = SIGN_ERROR
         repair = answer
     else:
-        error_type = "algebraic_transformation_error"
+        error_type = ALGEBRAIC_TRANSFORMATION_ERROR
         repair = corrected_equation(original)
 
     return ok, error_type, repair, answer
@@ -190,7 +195,7 @@ def verify_reasoning_step(
         left_text = step_text.split("=", maxsplit=1)[0].strip()
         corrected_value = format_expression(sp.simplify(step.lhs))
         repair = f"{left_text} = {corrected_value}"
-        return False, "arithmetic_error", repair, answer
+        return False, ARITHMETIC_ERROR, repair, answer
 
     return verify_user_step(problem_text, step_text)
 

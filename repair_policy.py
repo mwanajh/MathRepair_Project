@@ -3,6 +3,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from error_taxonomy import get_error_spec
+
 
 class RepairAction(str, Enum):
     """Repair operations currently supported by the prototype."""
@@ -12,6 +14,7 @@ class RepairAction(str, Enum):
     BACKTRACK = "BACKTRACK"
     REFORMALIZE = "REFORMALIZE"
     LOCAL_RESAMPLE = "LOCAL_RESAMPLE"
+    REPLAN = "REPLAN"
 
 
 @dataclass(frozen=True)
@@ -25,13 +28,12 @@ class RepairDecision:
 
 def choose_repair_action(error_type: str) -> RepairAction:
     """Map an error diagnosis to a targeted repair operation."""
-    actions = {
-        "": RepairAction.CONTINUE,
-        "arithmetic_error": RepairAction.TOOL_EXECUTE,
-        "sign_error": RepairAction.BACKTRACK,
-        "algebraic_transformation_error": RepairAction.REFORMALIZE,
-    }
-    return actions.get(error_type, RepairAction.LOCAL_RESAMPLE)
+    if not error_type:
+        return RepairAction.CONTINUE
+    spec = get_error_spec(error_type)
+    if spec is None:
+        return RepairAction.LOCAL_RESAMPLE
+    return RepairAction(spec.recommended_actions[0])
 
 
 def make_repair_decision(error_type: str, replacement: str) -> RepairDecision:
@@ -43,5 +45,6 @@ def make_repair_decision(error_type: str, replacement: str) -> RepairDecision:
         RepairAction.BACKTRACK: "Return to the parent node and check the operation sign.",
         RepairAction.REFORMALIZE: "Expand or simplify the equation symbolically.",
         RepairAction.LOCAL_RESAMPLE: "Regenerate only this node.",
+        RepairAction.REPLAN: "Reconstruct the missing assumptions or reasoning plan.",
     }
     return RepairDecision(action, reasons[action], replacement)

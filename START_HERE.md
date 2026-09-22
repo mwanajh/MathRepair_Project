@@ -118,10 +118,18 @@ After detecting an error, the system selects an action based on the error type:
 arithmetic_error               -> TOOL_EXECUTE
 sign_error                     -> BACKTRACK
 algebraic_transformation_error -> REFORMALIZE
+missing_assumption             -> BACKTRACK
+logical_inference_error        -> BACKTRACK
+semantic_interpretation_error  -> REPLAN
+dependency_error               -> BACKTRACK
+incomplete_solution             -> REPLAN
 ```
 
 Run `python mathrepair_demo.py`, `python reasoning_chain.py`, or
 `python reasoning_graph.py` to see the `Repair action` in the output.
+
+See [ERROR_TAXONOMY.md](ERROR_TAXONOMY.md) for the frozen definitions,
+examples, detection contracts, and operational-label boundary.
 
 ## 8. Adaptive compute allocation
 

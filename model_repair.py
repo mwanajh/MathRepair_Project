@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from typing import Protocol
 
+from error_taxonomy import INCOMPLETE_SOLUTION
 from mathrepair_demo import parse_equation
 from reasoning_chain import ChainAnalysis, analyze_chain
 
@@ -210,6 +211,6 @@ def attempt_model_repair(
                 active_error_type = error_type or analysis.error_type
             else:
                 active_trigger_step = repaired_steps[-1]
-                active_error_type = "incomplete_solution"
+                active_error_type = INCOMPLETE_SOLUTION
 
     return ModelRepairResult(True, False, [], attempts)
