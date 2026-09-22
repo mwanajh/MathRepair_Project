@@ -8,6 +8,7 @@ from model_pipeline import (
     extract_equation_steps,
     parse_model_steps,
     parse_qwen_json_steps,
+    parse_text_steps,
     run_pipeline,
     save_trace,
     select_model_answer_step,
@@ -28,6 +29,12 @@ class ModelPipelineTests(unittest.TestCase):
     def test_rejects_a_step_without_an_equation(self):
         with self.assertRaisesRegex(ValueError, "equation"):
             parse_model_steps('{"steps": ["Expand the brackets"]}')
+
+    def test_parses_open_ended_text_reasoning_steps(self):
+        self.assertEqual(
+            parse_text_steps('{"steps": ["Count the cases", "Answer: 9"]}'),
+            ["Count the cases", "Answer: 9"],
+        )
 
     def test_qwen_profile_discards_explanatory_step_entries(self):
         response = (

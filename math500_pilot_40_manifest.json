@@ -1,0 +1,23 @@
+{
+  "benchmark": "MATH-500",
+  "source_dataset": "HuggingFaceH4/MATH-500",
+  "source_url": "https://huggingface.co/datasets/HuggingFaceH4/MATH-500",
+  "selection_rule": "40 deterministic level 4-5 records stratified by subject",
+  "subject_quotas": {
+    "Algebra": 6,
+    "Intermediate Algebra": 6,
+    "Number Theory": 6,
+    "Geometry": 6,
+    "Counting & Probability": 6,
+    "Prealgebra": 5,
+    "Precalculus": 5
+  },
+  "problem_count": 40,
+  "level_counts": {
+    "4": 17,
+    "5": 23
+  },
+  "sha256": "2b60b577ffb185633542f402ae9b93bb073fdbd7ff3eb0d3c5d3a0c583f19f14",
+  "generated_at_utc": "2026-09-22T15:49:16.202458+00:00",
+  "reference_solutions_included": false
+}

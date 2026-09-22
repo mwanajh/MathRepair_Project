@@ -220,6 +220,32 @@ Identities such as `45/5 = 9` or `6x - 15 + 4 = 6x - 11` are checked with SymPy
 and accepted without requiring the identity's solution set to match the full
 problem.
 
+## Hard benchmark pilot
+
+Task 2 uses a small, reproducible subset of [MATH-500](https://huggingface.co/datasets/HuggingFaceH4/MATH-500):
+`math500_pilot_40.json` contains 40 level 4-5 problems stratified across all
+seven subjects. `math500_pilot_40_manifest.json` records the selection rule,
+source, subject/level counts, and file hash. The subset intentionally excludes
+reference solutions so they are not exposed to the model.
+
+Regenerate the subset from the public dataset-server API with:
+
+```powershell
+python prepare_math500_pilot.py
+```
+
+Run an offline pipeline smoke test across all 40 problems:
+
+```powershell
+python benchmark_pilot.py --provider mock
+```
+
+For a real model, use `--provider ollama --model <model-name>`. These problems
+use the pipeline's text mode. Their reasoning graphs are recorded, but their
+nodes are marked `verification_mode: text_unverified` until a domain-general
+verifier is added; equation-mode symbolic metrics must not be mixed with this
+pilot.
+
 ## Batch natural-model experiment
 
 Start with three problems:

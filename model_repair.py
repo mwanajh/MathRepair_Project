@@ -107,7 +107,12 @@ def attempt_model_repair(
     if max_attempts < 0:
         raise ValueError("Model repair attempts cannot be negative.")
     repair_method = getattr(model, "repair", None)
-    if analysis.error_node_id is None or max_attempts == 0 or repair_method is None:
+    if (
+        analysis.verification_mode != "symbolic"
+        or analysis.error_node_id is None
+        or max_attempts == 0
+        or repair_method is None
+    ):
         return ModelRepairResult(False, False, [], [])
 
     error_step_index = int(analysis.error_node_id[1:]) - 2

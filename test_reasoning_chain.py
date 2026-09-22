@@ -91,6 +91,18 @@ class AnalyzeChainTests(unittest.TestCase):
             analysis.error_type, "algebraic_transformation_error"
         )
 
+    def test_builds_unverified_graph_for_open_ended_problem(self):
+        analysis = analyze_chain(
+            "How many positive divisors does 196 have?",
+            ["Factor 196 as 2^2 * 7^2", "Answer: 9"],
+        )
+
+        self.assertEqual(analysis.verification_mode, "text_unverified")
+        self.assertIsNone(analysis.error_node_id)
+        self.assertEqual(len(analysis.nodes), 3)
+        self.assertIsNone(analysis.nodes[1].verification_result)
+        self.assertEqual(analysis.nodes[1].final_status, "unverified")
+
 
 if __name__ == "__main__":
     unittest.main()

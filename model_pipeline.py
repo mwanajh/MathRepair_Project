@@ -20,7 +20,7 @@ from repair_policy import RepairDecision, make_repair_decision
 
 
 class MathModel(Protocol):
-    """A model that returns equation-only reasoning steps."""
+    """A model that returns ordered reasoning states."""
 
     def solve(self, problem: str) -> list[str]:
         """Generate ordered solution steps for one problem."""
@@ -86,6 +86,7 @@ class OllamaMathModel:
         temperature: float = 0.0,
         max_output_tokens: int | None = None,
         prompt_profile: str = "default",
+        problem_format: str = "equation",
     ) -> None:
         if not model.strip():
             raise ValueError("Ollama model name cannot be empty.")
@@ -95,6 +96,8 @@ class OllamaMathModel:
             raise ValueError(
                 "prompt_profile must be 'default' or 'qwen2_math_json'."
             )
+        if problem_format not in {"equation", "text"}:
+            raise ValueError("problem_format must be 'equation' or 'text'.")
         self.model = model
         self.endpoint = f"{base_url.rstrip('/')}/api/generate"
         self.timeout_seconds = timeout_seconds
@@ -102,6 +105,7 @@ class OllamaMathModel:
         self.temperature = temperature
         self.max_output_tokens = max_output_tokens
         self.prompt_profile = prompt_profile
+        self.problem_format = problem_format
         self.last_raw_response = ""
         self.last_metadata: dict[str, int | str] = {}
         self.last_repair_raw_response = ""
@@ -125,6 +129,7 @@ class OllamaMathModel:
                 **(
                     {"format": "json"}
                     if self.prompt_profile == "qwen2_math_json"
+                    or self.problem_format == "text"
                     else {}
                 ),
             }
@@ -163,6 +168,7 @@ class OllamaMathModel:
         metadata["seed"] = seed
         metadata["temperature"] = self.temperature
         metadata["prompt_profile"] = self.prompt_profile
+        metadata["problem_format"] = self.problem_format
         return raw_response, metadata
 
     def _parse_equation_response(self, problem: str, response: str) -> list[str]:
@@ -184,8 +190,20 @@ class OllamaMathModel:
                 allowed_symbols=allowed_symbols,
             )
 
+    def _parse_text_response(self, response: str) -> list[str]:
+        return parse_text_steps(response)
+
     def solve(self, problem: str) -> list[str]:
-        if self.prompt_profile == "qwen2_math_json":
+        if self.problem_format == "text":
+            prompt = (
+                "Solve this mathematical problem step by step. Output exactly "
+                "one JSON object with one field named steps. steps must be a "
+                "non-empty array of concise reasoning states, in order, with "
+                "the final state containing the answer. Do not include prose "
+                "outside the JSON object. Do not use Markdown code fences.\n\n"
+                f"Problem: {problem}"
+            )
+        elif self.prompt_profile == "qwen2_math_json":
             prompt = (
                 "Solve the equation. Output exactly one JSON object with one "
                 "field named steps. steps must contain only complete equation "
@@ -207,6 +225,8 @@ class OllamaMathModel:
         self.last_raw_response, self.last_metadata = self._generate_response(
             prompt, self.seed
         )
+        if self.problem_format == "text":
+            return self._parse_text_response(self.last_raw_response)
         return self._parse_equation_response(problem, self.last_raw_response)
 
     def repair(
@@ -271,6 +291,26 @@ def parse_model_steps(response_text: str) -> list[str]:
         raise ValueError("Every model step must be a non-empty string.")
     if not all(step.count("=") == 1 for step in steps):
         raise ValueError("Every model step must be an equation with exactly one '=' sign.")
+    return [step.strip() for step in steps]
+
+
+def parse_text_steps(response_text: str) -> list[str]:
+    """Validate a JSON reasoning trace for open-ended benchmark problems."""
+    candidate = response_text.strip()
+    if candidate.startswith("```"):
+        candidate = re.sub(
+            r"^```(?:json)?\s*|\s*```$", "", candidate, flags=re.I | re.S
+        )
+    try:
+        data = json.loads(candidate)
+    except json.JSONDecodeError as error:
+        raise ValueError("Model did not return valid JSON reasoning steps.") from error
+
+    steps = data.get("steps") if isinstance(data, dict) else None
+    if not isinstance(steps, list) or not steps:
+        raise ValueError("Model JSON must contain a non-empty 'steps' list.")
+    if not all(isinstance(step, str) and step.strip() for step in steps):
+        raise ValueError("Every reasoning step must be a non-empty string.")
     return [step.strip() for step in steps]
 
 
@@ -488,6 +528,7 @@ def save_trace(
         ],
         "raw_response": result.raw_response,
         "generation_metadata": result.generation_metadata,
+        "verification_mode": result.analysis.verification_mode,
         "error_node_id": result.analysis.error_node_id,
         "error_type": result.analysis.error_type,
         "suggested_repair": result.analysis.suggested_repair,
@@ -529,13 +570,21 @@ def main() -> None:
         choices=["default", "qwen2_math_json"],
         default="default",
     )
+    parser.add_argument(
+        "--problem-format",
+        choices=["equation", "text"],
+        default="equation",
+        help="Use equation verification or an open-ended text trace.",
+    )
     args = parser.parse_args()
 
     if args.provider == "ollama":
         if not args.model:
             parser.error("--model is required when using --provider ollama.")
         model_client: MathModel = OllamaMathModel(
-            args.model, prompt_profile=args.prompt_profile
+            args.model,
+            prompt_profile=args.prompt_profile,
+            problem_format=args.problem_format,
         )
         model_name = args.model
     else:

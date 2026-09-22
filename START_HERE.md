@@ -195,6 +195,15 @@ same trace also contains the verified `reasoning_graph` used by the pipeline;
 each node records its state, parent dependency, model reasoning, verification
 result, error/impact fields, repair action, repaired state, and final status.
 
+For the harder benchmark pilot, use the 40-problem MATH-500 subset:
+
+```powershell
+python benchmark_pilot.py --provider mock
+```
+
+It uses text-mode traces and labels them `text_unverified`; this is a pipeline
+processing smoke test, not a symbolic-verifier result.
+
 ## 12. Batch model experiments
 
 Start with three problems:

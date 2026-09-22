@@ -1,0 +1,369 @@
+{
+  "benchmark": "MATH-500",
+  "provider": "mock",
+  "model": "qwen2-math:1.5b",
+  "problem_count": 40,
+  "verification_mode": "text_unverified",
+  "results": [
+    {
+      "benchmark_id": "test/algebra/101.json",
+      "subject": "Algebra",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/algebra/1031.json",
+      "subject": "Algebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/algebra/1072.json",
+      "subject": "Algebra",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/algebra/1078.json",
+      "subject": "Algebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/algebra/1082.json",
+      "subject": "Algebra",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/algebra/1143.json",
+      "subject": "Algebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/intermediate_algebra/102.json",
+      "subject": "Intermediate Algebra",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/intermediate_algebra/1063.json",
+      "subject": "Intermediate Algebra",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/intermediate_algebra/1111.json",
+      "subject": "Intermediate Algebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/intermediate_algebra/1126.json",
+      "subject": "Intermediate Algebra",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/intermediate_algebra/1166.json",
+      "subject": "Intermediate Algebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/intermediate_algebra/117.json",
+      "subject": "Intermediate Algebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/number_theory/1000.json",
+      "subject": "Number Theory",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/number_theory/1002.json",
+      "subject": "Number Theory",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/number_theory/1055.json",
+      "subject": "Number Theory",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/number_theory/1065.json",
+      "subject": "Number Theory",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/number_theory/109.json",
+      "subject": "Number Theory",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/number_theory/1090.json",
+      "subject": "Number Theory",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/geometry/1097.json",
+      "subject": "Geometry",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/geometry/1140.json",
+      "subject": "Geometry",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/geometry/172.json",
+      "subject": "Geometry",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/geometry/183.json",
+      "subject": "Geometry",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/geometry/229.json",
+      "subject": "Geometry",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/geometry/283.json",
+      "subject": "Geometry",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/counting_and_probability/10.json",
+      "subject": "Counting & Probability",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/counting_and_probability/1003.json",
+      "subject": "Counting & Probability",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/counting_and_probability/1009.json",
+      "subject": "Counting & Probability",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/counting_and_probability/1014.json",
+      "subject": "Counting & Probability",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/counting_and_probability/1114.json",
+      "subject": "Counting & Probability",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/counting_and_probability/119.json",
+      "subject": "Counting & Probability",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/prealgebra/1003.json",
+      "subject": "Prealgebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/prealgebra/1044.json",
+      "subject": "Prealgebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/prealgebra/1128.json",
+      "subject": "Prealgebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/prealgebra/1139.json",
+      "subject": "Prealgebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/prealgebra/1203.json",
+      "subject": "Prealgebra",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/precalculus/1056.json",
+      "subject": "Precalculus",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/precalculus/1133.json",
+      "subject": "Precalculus",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/precalculus/1146.json",
+      "subject": "Precalculus",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/precalculus/1172.json",
+      "subject": "Precalculus",
+      "level": 5,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    },
+    {
+      "benchmark_id": "test/precalculus/1199.json",
+      "subject": "Precalculus",
+      "level": 4,
+      "step_count": 2,
+      "verification_mode": "text_unverified",
+      "graph_node_count": 3,
+      "processed": true
+    }
+  ]
+}

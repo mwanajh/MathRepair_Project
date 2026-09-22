@@ -1,8 +1,9 @@
 """Verify a sequence of dependent mathematical reasoning steps."""
 
 from dataclasses import dataclass
+from tokenize import TokenError
 
-from mathrepair_demo import ReasoningNode, verify_reasoning_step
+from mathrepair_demo import ReasoningNode, parse_equation
 from reasoning_graph import analyze_graph
 from repair_policy import make_repair_decision
 
@@ -17,10 +18,52 @@ class ChainAnalysis:
     suggested_repair: str
     correct_answer: str
     affected_node_ids: list[str]
+    verification_mode: str = "symbolic"
+
+
+def analyze_text_chain(original_text: str, steps: list[str]) -> ChainAnalysis:
+    """Build a graph for open-ended benchmark traces without fake verification."""
+    nodes = [
+        ReasoningNode(
+            "n1",
+            original_text,
+            [],
+            subgoal="Represent the benchmark problem",
+            model_reasoning=original_text,
+            verification_result=None,
+            final_status="unverified",
+        )
+    ]
+    for index, step in enumerate(steps, start=2):
+        nodes.append(
+            ReasoningNode(
+                f"n{index}",
+                step,
+                [f"n{index - 1}"],
+                subgoal=f"Advance the solution from n{index - 1}",
+                model_reasoning=step,
+                verification_result=None,
+                final_status="unverified",
+            )
+        )
+    return ChainAnalysis(
+        nodes=nodes,
+        error_node_id=None,
+        error_type="",
+        suggested_repair="",
+        correct_answer="",
+        affected_node_ids=[],
+        verification_mode="text_unverified",
+    )
 
 
 def analyze_chain(original_text: str, steps: list[str]) -> ChainAnalysis:
     """Analyze a linear model trace using the canonical reasoning graph."""
+    try:
+        parse_equation(original_text)
+    except (ValueError, TypeError, SyntaxError, TokenError):
+        return analyze_text_chain(original_text, steps)
+
     nodes = [ReasoningNode("n1", original_text, [])]
     for index, step in enumerate(steps, start=2):
         nodes.append(ReasoningNode(f"n{index}", step, [f"n{index - 1}"]))
