@@ -7,6 +7,9 @@ from update_supervisor_progress_report import (
     remove_existing_update,
     replace_experimental_design_section,
     replace_next_steps_section,
+    replace_output_contract_section,
+    replace_status_text,
+    update_implemented_system_table,
 )
 
 
@@ -50,6 +53,37 @@ class SupervisorProgressReportTests(unittest.TestCase):
         self.assertIn("5.3 Interpretation Boundary", design_text)
         self.assertIn("6. Earlier Expanded Evaluation Results", design_text)
         self.assertEqual(len(design_document.tables), 2)
+
+        system_document = Document()
+        system_table = system_document.add_table(rows=1, cols=2)
+        system_table.rows[0].cells[0].text = "Component"
+        system_table.rows[0].cells[1].text = "Implemented capability"
+        update_implemented_system_table(system_document)
+        components = [row.cells[0].text for row in system_table.rows]
+        self.assertIn("Typed-error taxonomy", components)
+        self.assertIn("Experiment evidence", components)
+
+        contract_document = Document()
+        contract_document.add_heading("7. Model and Output-Contract Findings", level=1)
+        contract_document.add_table(rows=1, cols=2)
+        contract_document.add_heading("8. Completed Deliverables", level=1)
+        replace_output_contract_section(contract_document)
+        contract_text = "\n".join(
+            paragraph.text for paragraph in contract_document.paragraphs
+        )
+        self.assertIn("7.1 Strict End-to-End Model Comparison", contract_text)
+        self.assertIn("7.2 Parser-Normalized Sensitivity", contract_text)
+        self.assertEqual(len(contract_document.tables), 2)
+
+        wording_document = Document()
+        wording_document.add_paragraph(
+            "The result has a 95% Candidate Interval of [+3.4, +11.4]."
+        )
+        replace_status_text(wording_document)
+        self.assertIn(
+            "95% confidence interval",
+            wording_document.paragraphs[0].text,
+        )
 
 
 if __name__ == "__main__":

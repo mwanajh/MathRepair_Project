@@ -13,6 +13,6 @@
     "arithmetic_error": 6,
     "semantic_interpretation_error": 6
   },
-  "sha256": "eb2bcec8d34fceff0529e9c380355bae81cc807cb09b9e8426ee01b0d652aa48",
+  "sha256": "7a4fc482effabecbc2b1e2d1e2751ff6e8721e7b39e0cd4cbe10906681fc340a",
   "reference_solution_leakage": false
 }

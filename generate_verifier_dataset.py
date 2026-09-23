@@ -285,8 +285,9 @@ def _assumption_examples() -> list[tuple[str, tuple[NodeTemplate, ...], Corrupti
 
 def _logical_examples() -> list[tuple[str, tuple[NodeTemplate, ...], Corruption]]:
     examples = []
-    for divisor in [6, 8, 10, 12, 14, 16]:
-        problem = f"n is even and n divides {divisor}."
+    # Each 2*p value below has exactly two positive even divisors: 2 and itself.
+    for divisor in [6, 10, 14, 22, 26, 34]:
+        problem = f"n is a positive even divisor of {divisor}."
         correct = (
             NodeTemplate("n1", problem, (), "state the premises"),
             NodeTemplate(

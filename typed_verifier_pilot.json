@@ -423,20 +423,20 @@
     "example_id": "controlled-logical_inference_error-002",
     "source": "controlled_synthetic",
     "sample_index": 2,
-    "problem": "n is even and n divides 12.",
+    "problem": "n is a positive even divisor of 22.",
     "correct_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 12.",
-        "model_generated_reasoning": "n is even and n divides 12.",
+        "state": "n is a positive even divisor of 22.",
+        "model_generated_reasoning": "n is a positive even divisor of 22.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
       },
       {
         "node_id": "n2",
-        "state": "n in {2, 12}",
-        "model_generated_reasoning": "n in {2, 12}",
+        "state": "n in {2, 22}",
+        "model_generated_reasoning": "n in {2, 22}",
         "depends_on": [
           "n1"
         ],
@@ -447,8 +447,8 @@
     "corrupted_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 12.",
-        "model_generated_reasoning": "n is even and n divides 12.",
+        "state": "n is a positive even divisor of 22.",
+        "model_generated_reasoning": "n is a positive even divisor of 22.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
@@ -468,7 +468,7 @@
     "error_type": "logical_inference_error",
     "corruption_variant": "unsupported_single_conclusion",
     "corrupted_step": "n = 2",
-    "correct_step": "n in {2, 12}",
+    "correct_step": "n in {2, 22}",
     "preferred_repair_action": "BACKTRACK",
     "allowed_repair_actions": [
       "BACKTRACK",
@@ -643,20 +643,20 @@
     "example_id": "controlled-logical_inference_error-005",
     "source": "controlled_synthetic",
     "sample_index": 5,
-    "problem": "n is even and n divides 16.",
+    "problem": "n is a positive even divisor of 34.",
     "correct_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 16.",
-        "model_generated_reasoning": "n is even and n divides 16.",
+        "state": "n is a positive even divisor of 34.",
+        "model_generated_reasoning": "n is a positive even divisor of 34.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
       },
       {
         "node_id": "n2",
-        "state": "n in {2, 16}",
-        "model_generated_reasoning": "n in {2, 16}",
+        "state": "n in {2, 34}",
+        "model_generated_reasoning": "n in {2, 34}",
         "depends_on": [
           "n1"
         ],
@@ -667,8 +667,8 @@
     "corrupted_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 16.",
-        "model_generated_reasoning": "n is even and n divides 16.",
+        "state": "n is a positive even divisor of 34.",
+        "model_generated_reasoning": "n is a positive even divisor of 34.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
@@ -688,7 +688,7 @@
     "error_type": "logical_inference_error",
     "corruption_variant": "unsupported_single_conclusion",
     "corrupted_step": "n = 2",
-    "correct_step": "n in {2, 16}",
+    "correct_step": "n in {2, 34}",
     "preferred_repair_action": "BACKTRACK",
     "allowed_repair_actions": [
       "BACKTRACK",
@@ -875,12 +875,12 @@
     "example_id": "controlled-logical_inference_error-004",
     "source": "controlled_synthetic",
     "sample_index": 4,
-    "problem": "n is even and n divides 6.",
+    "problem": "n is a positive even divisor of 6.",
     "correct_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 6.",
-        "model_generated_reasoning": "n is even and n divides 6.",
+        "state": "n is a positive even divisor of 6.",
+        "model_generated_reasoning": "n is a positive even divisor of 6.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
@@ -899,8 +899,8 @@
     "corrupted_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 6.",
-        "model_generated_reasoning": "n is even and n divides 6.",
+        "state": "n is a positive even divisor of 6.",
+        "model_generated_reasoning": "n is a positive even divisor of 6.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
@@ -1463,20 +1463,20 @@
     "example_id": "controlled-logical_inference_error-003",
     "source": "controlled_synthetic",
     "sample_index": 3,
-    "problem": "n is even and n divides 10.",
+    "problem": "n is a positive even divisor of 14.",
     "correct_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 10.",
-        "model_generated_reasoning": "n is even and n divides 10.",
+        "state": "n is a positive even divisor of 14.",
+        "model_generated_reasoning": "n is a positive even divisor of 14.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
       },
       {
         "node_id": "n2",
-        "state": "n in {2, 10}",
-        "model_generated_reasoning": "n in {2, 10}",
+        "state": "n in {2, 14}",
+        "model_generated_reasoning": "n in {2, 14}",
         "depends_on": [
           "n1"
         ],
@@ -1487,8 +1487,8 @@
     "corrupted_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 10.",
-        "model_generated_reasoning": "n is even and n divides 10.",
+        "state": "n is a positive even divisor of 14.",
+        "model_generated_reasoning": "n is a positive even divisor of 14.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
@@ -1508,7 +1508,7 @@
     "error_type": "logical_inference_error",
     "corruption_variant": "unsupported_single_conclusion",
     "corrupted_step": "n = 2",
-    "correct_step": "n in {2, 10}",
+    "correct_step": "n in {2, 14}",
     "preferred_repair_action": "BACKTRACK",
     "allowed_repair_actions": [
       "BACKTRACK",
@@ -2423,20 +2423,20 @@
     "example_id": "controlled-logical_inference_error-006",
     "source": "controlled_synthetic",
     "sample_index": 6,
-    "problem": "n is even and n divides 14.",
+    "problem": "n is a positive even divisor of 26.",
     "correct_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 14.",
-        "model_generated_reasoning": "n is even and n divides 14.",
+        "state": "n is a positive even divisor of 26.",
+        "model_generated_reasoning": "n is a positive even divisor of 26.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
       },
       {
         "node_id": "n2",
-        "state": "n in {2, 14}",
-        "model_generated_reasoning": "n in {2, 14}",
+        "state": "n in {2, 26}",
+        "model_generated_reasoning": "n in {2, 26}",
         "depends_on": [
           "n1"
         ],
@@ -2447,8 +2447,8 @@
     "corrupted_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 14.",
-        "model_generated_reasoning": "n is even and n divides 14.",
+        "state": "n is a positive even divisor of 26.",
+        "model_generated_reasoning": "n is a positive even divisor of 26.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
@@ -2468,7 +2468,7 @@
     "error_type": "logical_inference_error",
     "corruption_variant": "unsupported_single_conclusion",
     "corrupted_step": "n = 2",
-    "correct_step": "n in {2, 14}",
+    "correct_step": "n in {2, 26}",
     "preferred_repair_action": "BACKTRACK",
     "allowed_repair_actions": [
       "BACKTRACK",
@@ -2889,20 +2889,20 @@
     "example_id": "controlled-logical_inference_error-001",
     "source": "controlled_synthetic",
     "sample_index": 1,
-    "problem": "n is even and n divides 8.",
+    "problem": "n is a positive even divisor of 10.",
     "correct_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 8.",
-        "model_generated_reasoning": "n is even and n divides 8.",
+        "state": "n is a positive even divisor of 10.",
+        "model_generated_reasoning": "n is a positive even divisor of 10.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
       },
       {
         "node_id": "n2",
-        "state": "n in {2, 8}",
-        "model_generated_reasoning": "n in {2, 8}",
+        "state": "n in {2, 10}",
+        "model_generated_reasoning": "n in {2, 10}",
         "depends_on": [
           "n1"
         ],
@@ -2913,8 +2913,8 @@
     "corrupted_trace": [
       {
         "node_id": "n1",
-        "state": "n is even and n divides 8.",
-        "model_generated_reasoning": "n is even and n divides 8.",
+        "state": "n is a positive even divisor of 10.",
+        "model_generated_reasoning": "n is a positive even divisor of 10.",
         "depends_on": [],
         "subgoal": "state the premises",
         "assumptions": []
@@ -2934,7 +2934,7 @@
     "error_type": "logical_inference_error",
     "corruption_variant": "unsupported_single_conclusion",
     "corrupted_step": "n = 2",
-    "correct_step": "n in {2, 8}",
+    "correct_step": "n in {2, 10}",
     "preferred_repair_action": "BACKTRACK",
     "allowed_repair_actions": [
       "BACKTRACK",

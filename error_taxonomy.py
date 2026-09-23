@@ -88,8 +88,11 @@ ERROR_TAXONOMY: dict[str, ErrorTypeSpec] = {
             "The conclusion does not follow from the parent premises even "
             "though the individual statements may be well-formed."
         ),
-        positive_example="n is even and n divides 6 -> n = 2 (n = 6 is also possible).",
-        negative_example="n is even and n divides 6 -> n in {2, 6}.",
+        positive_example=(
+            "n is a positive even divisor of 6 -> n = 2 "
+            "(n = 6 is also possible)."
+        ),
+        negative_example="n is a positive even divisor of 6 -> n in {2, 6}.",
         detection=(
             "Use a logical entailment check over parent states and the proposed "
             "conclusion; a counterexample makes the node invalid."

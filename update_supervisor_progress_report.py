@@ -103,10 +103,10 @@ def replace_status_text(document: Document) -> None:
             "percentage points in the fresh total-token-matched pilot."
         ),
         "Executable symbolic verifier and repair pipeline with": (
-            "Executable graph-based verifier and repair pipeline with 129 passing tests."
+            "Executable graph-based verifier and repair pipeline with 130 passing tests."
         ),
         "Executable graph-based verifier and repair pipeline with": (
-            "Executable graph-based verifier and repair pipeline with 129 passing tests."
+            "Executable graph-based verifier and repair pipeline with 130 passing tests."
         ),
         "The complete proposal experiment is not yet finished.": (
             "The complete proposal experiment is not yet finished. The project now "
@@ -117,6 +117,14 @@ def replace_status_text(document: Document) -> None:
             "three ablation cells remain unmeasured; and the fresh matched-budget "
             "result is based on only 36 runs and seven detected errors."
         ),
+        "For the problem 2(x + 3) = 14, the graph contains": (
+            "For the pipeline demonstration 2(x + 3) = 14, n1 stores the problem "
+            "state, n2 stores the model's invalid 2x + 3 = 14 transformation, and "
+            "n3-n4 are affected descendants. The graph records REFORMALIZE, the "
+            "repaired state 2x + 6 = 14, recomputed x = 4, and final node statuses. "
+            "A separate branching fixture retains an independent valid branch to "
+            "test selective descendant propagation and zero allocation to unaffected nodes."
+        ),
     }
     for paragraph in document.paragraphs:
         original = paragraph.text.strip()
@@ -124,6 +132,64 @@ def replace_status_text(document: Document) -> None:
             if original.startswith(prefix):
                 paragraph.text = replacement
                 break
+        if "95% Candidate Interval" in paragraph.text:
+            paragraph.text = paragraph.text.replace(
+                "95% Candidate Interval", "95% confidence interval"
+            )
+
+
+def update_implemented_system_table(document: Document) -> None:
+    """Bring the component table in line with the Task 1-7 implementation."""
+    table = next(
+        table
+        for table in document.tables
+        if [cell.text for cell in table.rows[0].cells]
+        == ["Component", "Implemented capability"]
+    )
+    for row in list(table.rows[1:]):
+        table._element.remove(row._element)
+    rows = [
+        (
+            "Symbolic verifier",
+            "Rule-based equation equivalence, supporting identities, arithmetic, sign, and algebraic-transformation checks; learned verifier remains deferred.",
+        ),
+        (
+            "Typed-error taxonomy",
+            "Eight frozen supervision labels with definitions, examples, detection contracts, and allowed repair actions.",
+        ),
+        (
+            "Reasoning graph",
+            "The model pipeline's internal representation, recording node state, parents, model reasoning, verification, affected descendants, repair, repaired state, and final status.",
+        ),
+        (
+            "Repair policy",
+            "TOOL_EXECUTE, BACKTRACK, REFORMALIZE, LOCAL_RESAMPLE, REPLAN, and CONTINUE actions.",
+        ),
+        (
+            "Local repair",
+            "Preserves the verified prefix, regenerates the affected suffix, and writes accepted repairs back to graph nodes.",
+        ),
+        (
+            "Adaptive compute",
+            "Heuristic risk allocation plus measured uniform-local and adaptive-local arms under a shared token ceiling.",
+        ),
+        (
+            "Benchmark and supervision data",
+            "A 40-problem MATH-500 hard pilot and 48 controlled typed-verifier training examples.",
+        ),
+        (
+            "Experiment evidence",
+            "Matched-budget reports, a six-row ablation matrix, versioned output contracts, raw outputs, and artifact hashes.",
+        ),
+        (
+            "Web demo",
+            "Retained as a secondary interactive graph view; methodology and experiments are the current priority.",
+        ),
+    ]
+    for component, capability in rows:
+        cells = table.add_row().cells
+        set_cell_text(cells[0], component)
+        set_cell_text(cells[1], capability)
 
 
 def insert_table_before(document: Document, paragraph: Paragraph, rows: list[tuple[str, str]]) -> None:
@@ -217,6 +283,85 @@ def replace_experimental_design_section(document: Document) -> None:
         "reported 86.1% adaptive local repair versus 88.9% global regeneration. "
         "Because the protocols answer different questions, neither result replaces "
         "the other and no universal superiority claim is made."
+    )
+
+
+def insert_matrix_before(
+    document: Document,
+    paragraph: Paragraph,
+    headers: list[str],
+    rows: list[tuple[str, ...]],
+) -> None:
+    table = document.add_table(rows=1, cols=len(headers))
+    table.style = "Table Grid"
+    for cell, header in zip(table.rows[0].cells, headers):
+        set_cell_text(cell, header, bold=True)
+    for row in rows:
+        cells = table.add_row().cells
+        for cell, value in zip(cells, row):
+            set_cell_text(cell, value)
+    paragraph._element.addprevious(table._element)
+
+
+def replace_output_contract_section(document: Document) -> None:
+    """Show strict results and parser sensitivity as separate evidence."""
+    body = document._element.body
+    children = list(body)
+    start = next(
+        index
+        for index, child in enumerate(children)
+        if child.tag == qn("w:p")
+        and Paragraph(child, document).text.strip().startswith(
+            "7. Model and Output-Contract Findings"
+        )
+    )
+    end = next(
+        index
+        for index, child in enumerate(children[start + 1 :], start + 1)
+        if child.tag == qn("w:p")
+        and Paragraph(child, document).text.strip().startswith("8. ")
+    )
+    heading = Paragraph(children[start], document)
+    next_section = Paragraph(children[end], document)
+    for child in children[start + 1 : end]:
+        body.remove(child)
+
+    paragraph = next_section.insert_paragraph_before(
+        "7.1 Strict End-to-End Model Comparison"
+    )
+    paragraph.style = "Heading 2"
+    insert_matrix_before(
+        document,
+        next_section,
+        ["Configuration", "No repair", "Global", "Local", "Failures"],
+        [
+            ("1.5B / default", "90.7%", "92.6%", "100.0%", "0/108"),
+            ("3B / default", "47.2%", "56.5%", "48.1%", "24/108"),
+            ("7B / default", "13.0%", "13.9%", "13.0%", "91/108"),
+            ("7B / JSON contract", "75.0%", "75.9%", "85.2%", "10/108"),
+        ],
+    )
+
+    paragraph = next_section.insert_paragraph_before(
+        "7.2 Parser-Normalized Sensitivity"
+    )
+    paragraph.style = "Heading 2"
+    insert_matrix_before(
+        document,
+        next_section,
+        ["Configuration", "Strict", "Normalized", "Delta", "Recovered failures"],
+        [
+            ("1.5B / default", "90.7%", "90.7%", "+0.0 pp", "0/0"),
+            ("3B / default", "47.2%", "59.3%", "+12.0 pp", "24/24"),
+            ("7B / default", "13.0%", "41.7%", "+28.7 pp", "36/91"),
+            ("7B / JSON contract", "75.0%", "79.6%", "+4.6 pp", "5/10"),
+        ],
+    )
+    next_section.insert_paragraph_before(
+        "Both 7B rows use the same model artifact but change the prompt and parser "
+        "profile together. Therefore this is output-contract sensitivity, not a "
+        "pure prompt ablation. Normalized accuracy is supporting evidence and does "
+        "not replace strict end-to-end accuracy."
     )
 
 
@@ -330,14 +475,22 @@ def add_task_update(document: Document) -> None:
         "seven error cases, and applied an approximately 5,800 additional-token "
         "ceiling to each repair strategy."
     )
-    budget_table = document.add_table(rows=1, cols=6)
+    budget_table = document.add_table(rows=1, cols=7)
     budget_table.style = "Table Grid"
-    headers = ["Strategy", "Answer", "Valid trace", "Repair", "Avg calls", "Avg tokens"]
+    headers = [
+        "Strategy",
+        "Answer",
+        "Valid trace",
+        "Repair",
+        "Avg calls",
+        "Avg tokens",
+        "Total cost",
+    ]
     rows = [
-        ("No repair", "86.1%", "80.6%", "0.0%", "1.00", "624.1"),
-        ("Global regeneration", "88.9%", "88.9%", "42.9%", "1.25", "757.4"),
-        ("Uniform local", "86.1%", "83.3%", "14.3%", "1.25", "772.1"),
-        ("Adaptive local", "86.1%", "86.1%", "28.6%", "1.17", "721.5"),
+        ("No repair", "86.1%", "80.6%", "0.0%", "1.00", "624.1", "22,469"),
+        ("Global regeneration", "88.9%", "88.9%", "42.9%", "1.25", "757.4", "27,265"),
+        ("Uniform local", "86.1%", "83.3%", "14.3%", "1.25", "772.1", "27,796"),
+        ("Adaptive local", "86.1%", "86.1%", "28.6%", "1.17", "721.5", "25,975"),
     ]
     for cell, header in zip(budget_table.rows[0].cells, headers):
         set_cell_text(cell, header, bold=True)
@@ -362,14 +515,21 @@ def add_task_update(document: Document) -> None:
     )
 
     document.add_heading("12.3 Output-Contract Sensitivity", level=2)
-    contract_table = document.add_table(rows=1, cols=4)
+    contract_table = document.add_table(rows=1, cols=6)
     contract_table.style = "Table Grid"
-    headers = ["Configuration", "Failures", "Strict", "Normalized"]
+    headers = [
+        "Model",
+        "Prompt version",
+        "Parser version",
+        "Failures",
+        "Strict",
+        "Normalized",
+    ]
     rows = [
-        ("qwen2-math:1.5b / default", "0/108", "90.7%", "90.7%"),
-        ("qwen2.5:3b / default", "24/108", "47.2%", "59.3%"),
-        ("qwen2-math:7b / default", "91/108", "13.0%", "41.7%"),
-        ("qwen2-math:7b / JSON contract", "10/108", "75.0%", "79.6%"),
+        ("qwen2-math:1.5b", "equation_json_default_v1", "equation_parser_default_v1", "0/108", "90.7%", "90.7%"),
+        ("qwen2.5:3b", "equation_json_default_v1", "equation_parser_default_v1", "24/108", "47.2%", "59.3%"),
+        ("qwen2-math:7b", "equation_json_default_v1", "equation_parser_default_v1", "91/108", "13.0%", "41.7%"),
+        ("qwen2-math:7b", "equation_json_qwen2_v1", "equation_parser_qwen2_v1", "10/108", "75.0%", "79.6%"),
     ]
     for cell, header in zip(contract_table.rows[0].cells, headers):
         set_cell_text(cell, header, bold=True)
@@ -399,7 +559,7 @@ def add_task_update(document: Document) -> None:
         run.font.size = Pt(9)
 
     document.add_paragraph(
-        "Current automated verification: 129/129 tests passing. The immediate "
+        "Current automated verification: 130/130 tests passing. The immediate "
         "research priority is the learned verifier and completion of the pending "
         "controlled ablations, not additional web-interface work."
     )
@@ -409,7 +569,9 @@ def main() -> None:
     document = Document(REPORT_PATH)
     remove_existing_update(document)
     replace_status_text(document)
+    update_implemented_system_table(document)
     replace_experimental_design_section(document)
+    replace_output_contract_section(document)
     replace_next_steps_section(document)
     add_task_update(document)
 

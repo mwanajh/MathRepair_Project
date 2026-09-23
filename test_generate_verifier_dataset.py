@@ -80,6 +80,19 @@ class VerifierDatasetGenerationTests(unittest.TestCase):
             self.assertFalse(ok, example["example_id"])
             self.assertEqual(error_type, example["error_type"])
 
+    def test_logical_examples_have_complete_positive_even_divisor_sets(self):
+        examples = generate_examples(count_per_type=6, seed=42)
+        logical_examples = [
+            example
+            for example in examples
+            if example["error_type"] == "logical_inference_error"
+        ]
+        for example in logical_examples:
+            divisor = int(str(example["problem"]).split()[-1].rstrip("."))
+            expected = f"n in {{2, {divisor}}}"
+            self.assertIn("positive even divisor", example["problem"])
+            self.assertEqual(example["correct_step"], expected)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -33,12 +33,12 @@ answer different questions, so neither result replaces the other.
 
 ## Task 5 Matched-Budget Result
 
-| Strategy | Answer accuracy | Valid-trace rate | Repair success | Average calls | Average tokens |
-|---|---:|---:|---:|---:|---:|
-| No repair | 86.1% | 80.6% | 0.0% | 1.00 | 624.1 |
-| Global regeneration | 88.9% | 88.9% | 42.9% | 1.25 | 757.4 |
-| Uniform local repair | 86.1% | 83.3% | 14.3% | 1.25 | 772.1 |
-| Adaptive local repair | 86.1% | 86.1% | 28.6% | 1.17 | 721.5 |
+| Strategy | Answer accuracy | Valid-trace rate | Repair success | Average calls | Average tokens | Total compute cost |
+|---|---:|---:|---:|---:|---:|---:|
+| No repair | 86.1% | 80.6% | 0.0% | 1.00 | 624.1 | 22,469 tokens |
+| Global regeneration | 88.9% | 88.9% | 42.9% | 1.25 | 757.4 | 27,265 tokens |
+| Uniform local repair | 86.1% | 83.3% | 14.3% | 1.25 | 772.1 | 27,796 tokens |
+| Adaptive local repair | 86.1% | 86.1% | 28.6% | 1.17 | 721.5 | 25,975 tokens |
 
 This pilot does not show a local-repair accuracy advantage. Adaptive allocation
 used fewer actual tokens and improved trace validity over uniform allocation,
@@ -63,12 +63,12 @@ row is not the final Full MathRepair system until the learned verifier exists.
 
 ## Task 7 Output-Contract Evidence
 
-| Model and prompt | Generation failures | Strict accuracy | Normalized accuracy |
-|---|---:|---:|---:|
-| qwen2-math:1.5b, default | 0/108 | 90.7% | 90.7% |
-| qwen2.5:3b, default | 24/108 | 47.2% | 59.3% |
-| qwen2-math:7b, default | 91/108 | 13.0% | 41.7% |
-| qwen2-math:7b, JSON contract | 10/108 | 75.0% | 79.6% |
+| Model | Prompt version | Parser version | Generation failures | Strict accuracy | Normalized accuracy |
+|---|---|---|---:|---:|---:|
+| qwen2-math:1.5b | equation_json_default_v1 | equation_parser_default_v1 | 0/108 | 90.7% | 90.7% |
+| qwen2.5:3b | equation_json_default_v1 | equation_parser_default_v1 | 24/108 | 47.2% | 59.3% |
+| qwen2-math:7b | equation_json_default_v1 | equation_parser_default_v1 | 91/108 | 13.0% | 41.7% |
+| qwen2-math:7b | equation_json_qwen2_v1 | equation_parser_qwen2_v1 | 10/108 | 75.0% | 79.6% |
 
 Normalized accuracy is a parser-only sensitivity result. It does not replace
 strict end-to-end accuracy. The two 7B rows show directly that the output
@@ -115,4 +115,4 @@ python output_contract_evidence.py
 python -m unittest discover -q
 ```
 
-Current automated verification: 129/129 tests passing.
+Current automated verification: 130/130 tests passing.
