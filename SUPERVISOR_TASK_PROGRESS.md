@@ -17,6 +17,20 @@ the ablation structure had not been prepared.
 | 6. Ablation table | Completed within requested scope | The requested six-row structure is frozen. As explicitly allowed, two rows are measured, Full MathRepair is a rule-based proxy, and three future cells remain unfilled. |
 | 7. Preserve model/output-contract evidence | Completed | Four experiment configurations preserve exact model digests, prompt/parser versions, 432 raw-output records, failures, trace hashes, and normalized accuracy. No additional model optimization was performed. |
 
+## Experimental Design Alignment
+
+The report now separates two protocols that must not be pooled:
+
+| Protocol | Design | Result role |
+|---|---|---|
+| Earlier expanded repeated-seed evaluation | 36 algebra problems, three seeds, 108 completed runs, and matched per-error repair budgets | Earlier evidence: local 100.0%, global 92.6% |
+| Fresh Task 5 total-budget pilot | 36 initial runs, seven detected errors, and an approximately 5,800 additional-token ceiling shared by global, uniform-local, and adaptive-local strategies | Current compute-controlled pilot: global 88.9%, both local arms 86.1% |
+
+The Task 1-7 methodology also records the graph node schema, MATH-500 pilot
+selection, frozen taxonomy, typed-verifier supervision schema, ablation evidence
+states, and versioned output-contract archive. The two performance protocols
+answer different questions, so neither result replaces the other.
+
 ## Task 5 Matched-Budget Result
 
 | Strategy | Answer accuracy | Valid-trace rate | Repair success | Average calls | Average tokens |

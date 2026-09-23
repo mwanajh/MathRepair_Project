@@ -5,6 +5,7 @@ from docx import Document
 from update_supervisor_progress_report import (
     UPDATE_HEADING,
     remove_existing_update,
+    replace_experimental_design_section,
     replace_next_steps_section,
 )
 
@@ -35,6 +36,20 @@ class SupervisorProgressReportTests(unittest.TestCase):
         self.assertIn("10.2 Explicitly Deferred Work", text)
         self.assertIn("10.3 Proposed Follow-Up Experiments", text)
         self.assertNotIn("Old recommendation", text)
+
+        design_document = Document()
+        design_document.add_heading("5. Experimental Design", level=1)
+        design_document.add_table(rows=1, cols=2)
+        design_document.add_heading("6. Primary Results", level=1)
+        replace_experimental_design_section(design_document)
+        design_text = "\n".join(
+            paragraph.text for paragraph in design_document.paragraphs
+        )
+        self.assertIn("5.1 Earlier Expanded Repeated-Seed Evaluation", design_text)
+        self.assertIn("5.2 Supervisor Task 1-7 Methodology", design_text)
+        self.assertIn("5.3 Interpretation Boundary", design_text)
+        self.assertIn("6. Earlier Expanded Evaluation Results", design_text)
+        self.assertEqual(len(design_document.tables), 2)
 
 
 if __name__ == "__main__":

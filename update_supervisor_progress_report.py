@@ -103,7 +103,10 @@ def replace_status_text(document: Document) -> None:
             "percentage points in the fresh total-token-matched pilot."
         ),
         "Executable symbolic verifier and repair pipeline with": (
-            "Executable graph-based verifier and repair pipeline with 128 passing tests."
+            "Executable graph-based verifier and repair pipeline with 129 passing tests."
+        ),
+        "Executable graph-based verifier and repair pipeline with": (
+            "Executable graph-based verifier and repair pipeline with 129 passing tests."
         ),
         "The complete proposal experiment is not yet finished.": (
             "The complete proposal experiment is not yet finished. The project now "
@@ -121,6 +124,100 @@ def replace_status_text(document: Document) -> None:
             if original.startswith(prefix):
                 paragraph.text = replacement
                 break
+
+
+def insert_table_before(document: Document, paragraph: Paragraph, rows: list[tuple[str, str]]) -> None:
+    table = document.add_table(rows=1, cols=2)
+    table.style = "Table Grid"
+    set_cell_text(table.rows[0].cells[0], "Field", bold=True)
+    set_cell_text(table.rows[0].cells[1], "Protocol", bold=True)
+    for field, protocol in rows:
+        cells = table.add_row().cells
+        set_cell_text(cells[0], field)
+        set_cell_text(cells[1], protocol)
+    paragraph._element.addprevious(table._element)
+
+
+def replace_experimental_design_section(document: Document) -> None:
+    """Document the earlier and current protocols without mixing estimands."""
+    body = document._element.body
+    children = list(body)
+    start = next(
+        index
+        for index, child in enumerate(children)
+        if child.tag == qn("w:p")
+        and Paragraph(child, document).text.strip().startswith("5. Experimental Design")
+    )
+    end = next(
+        index
+        for index, child in enumerate(children[start + 1 :], start + 1)
+        if child.tag == qn("w:p")
+        and Paragraph(child, document).text.strip().startswith("6. ")
+    )
+    design_heading = Paragraph(children[start], document)
+    results_heading = Paragraph(children[end], document)
+    design_heading.text = "5. Experimental Design and Protocol Separation"
+    design_heading.style = "Heading 1"
+    results_heading.text = "6. Earlier Expanded Evaluation Results"
+    results_heading.style = "Heading 1"
+
+    for child in children[start + 1 : end]:
+        body.remove(child)
+
+    paragraph = results_heading.insert_paragraph_before(
+        "The report contains two complementary experimental protocols. They use "
+        "different budget definitions and must not be pooled into one performance claim."
+    )
+    paragraph.style = "Normal"
+
+    paragraph = results_heading.insert_paragraph_before(
+        "5.1 Earlier Expanded Repeated-Seed Evaluation"
+    )
+    paragraph.style = "Heading 2"
+    insert_table_before(
+        document,
+        results_heading,
+        [
+            ("Purpose", "Earlier evidence for local versus global repair on symbolic algebra."),
+            ("Model", "qwen2-math:1.5b through the local Ollama API."),
+            ("Dataset", "36 algebra problems: 18 earlier held-out and 18 new."),
+            ("Trials", "Three seeds and 36 runs per seed; 108 completed runs."),
+            ("Strategies", "No repair, verified global regeneration, and verified local repair."),
+            ("Budget", "Matched per detected-error case under the earlier protocol."),
+            ("Metrics", "Answer accuracy, valid-trace rate, calls, tokens, and paired confidence intervals."),
+        ],
+    )
+
+    paragraph = results_heading.insert_paragraph_before(
+        "5.2 Supervisor Task 1-7 Methodology"
+    )
+    paragraph.style = "Heading 2"
+    insert_table_before(
+        document,
+        results_heading,
+        [
+            ("Internal representation", "Model traces are verified and repaired as reasoning graphs with node state, parents, error impact, repair, and final status."),
+            ("Hard pilot", "A deterministic 40-problem MATH-500 subset: 17 level-4 and 23 level-5 problems across seven subjects; processing check only."),
+            ("Typed errors", "Eight frozen error classes with definitions, examples, detection contracts, and allowed repair actions."),
+            ("Verifier supervision", "48 controlled corrupted/correct trace pairs, balanced at six examples per error type."),
+            ("Fresh matched budget", "Thirty-six initial runs and seven detected-error cases; global, uniform-local, and adaptive-local arms share an approximately 5,800 additional-token ceiling."),
+            ("Ablations", "Six frozen variants with explicit measured, proxy, planned, and learned-verifier-dependent evidence states."),
+            ("Output contracts", "Four saved configurations preserve model digests, prompt/parser versions, 432 raw outputs, failures, and strict/normalized accuracy."),
+            ("Primary fresh metric", "Answer accuracy over all scheduled runs; secondary metrics include valid traces, repair success, calls, tokens, and budget violations."),
+        ],
+    )
+
+    paragraph = results_heading.insert_paragraph_before(
+        "5.3 Interpretation Boundary"
+    )
+    paragraph.style = "Heading 2"
+    results_heading.insert_paragraph_before(
+        "The earlier expanded experiment reported 100.0% local repair versus "
+        "92.6% global regeneration. The stricter fresh total-token-matched pilot "
+        "reported 86.1% adaptive local repair versus 88.9% global regeneration. "
+        "Because the protocols answer different questions, neither result replaces "
+        "the other and no universal superiority claim is made."
+    )
 
 
 def replace_next_steps_section(document: Document) -> None:
@@ -312,6 +409,7 @@ def main() -> None:
     document = Document(REPORT_PATH)
     remove_existing_update(document)
     replace_status_text(document)
+    replace_experimental_design_section(document)
     replace_next_steps_section(document)
     add_task_update(document)
 
