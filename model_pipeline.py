@@ -20,6 +20,16 @@ from reasoning_graph import record_repair_on_graph, serialize_reasoning_node
 from repair_policy import RepairDecision, make_repair_decision
 
 
+PROMPT_VERSION_BY_PROFILE = {
+    "default": "equation_json_default_v1",
+    "qwen2_math_json": "equation_json_qwen2_v1",
+}
+PARSER_VERSION_BY_PROFILE = {
+    "default": "equation_parser_default_v1",
+    "qwen2_math_json": "equation_parser_qwen2_v1",
+}
+
+
 class MathModel(Protocol):
     """A model that returns ordered reasoning states."""
 
@@ -169,6 +179,12 @@ class OllamaMathModel:
         metadata["seed"] = seed
         metadata["temperature"] = self.temperature
         metadata["prompt_profile"] = self.prompt_profile
+        metadata["prompt_version"] = PROMPT_VERSION_BY_PROFILE[
+            self.prompt_profile
+        ]
+        metadata["parser_version"] = PARSER_VERSION_BY_PROFILE[
+            self.prompt_profile
+        ]
         metadata["problem_format"] = self.problem_format
         return raw_response, metadata
 

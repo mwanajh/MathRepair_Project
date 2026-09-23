@@ -1,0 +1,148 @@
+{
+  "generated_utc": "2026-09-23T02:32:05.136220+00:00",
+  "table_status": "structure_frozen_partial_results",
+  "primary_comparison_metric": "answer_accuracy",
+  "source": {
+    "artifact": "matched_budget_report.json",
+    "model": "qwen2-math:1.5b",
+    "run_count": 36,
+    "detected_error_runs": 7,
+    "matched_additional_token_budget": 5800,
+    "local_evaluation_mode": "live"
+  },
+  "rows": [
+    {
+      "variant_id": "full_mathrepair",
+      "variant": "Full MathRepair",
+      "graph": "on",
+      "typed_error": "rule_based_proxy",
+      "adaptive_compute": "on",
+      "repair_scope": "local",
+      "symbolic_tool": "on",
+      "status": "proxy_result",
+      "result_source": "verified_local_repair_adaptive",
+      "metrics": {
+        "answer_accuracy": 0.8611111111111112,
+        "trace_valid_rate": 0.8611111111111112,
+        "repair_success_rate": 0.2857142857142857,
+        "average_model_calls": 1.1666666666666667,
+        "average_tokens": 721.5277777777778,
+        "total_compute_cost": 25975
+      },
+      "delta_answer_accuracy_pp": 0.0,
+      "note": "Pipeline-complete proxy only; learned typed verifier is not trained yet."
+    },
+    {
+      "variant_id": "no_graph",
+      "variant": "No graph",
+      "graph": "off",
+      "typed_error": "rule_based_proxy",
+      "adaptive_compute": "on",
+      "repair_scope": "local",
+      "symbolic_tool": "on",
+      "status": "planned",
+      "result_source": "",
+      "metrics": {
+        "answer_accuracy": null,
+        "trace_valid_rate": null,
+        "repair_success_rate": null,
+        "average_model_calls": null,
+        "average_tokens": null,
+        "total_compute_cost": null
+      },
+      "delta_answer_accuracy_pp": null,
+      "note": "Flatten nodes into a sequence and disable dependency impact propagation."
+    },
+    {
+      "variant_id": "no_typed_error",
+      "variant": "No typed error",
+      "graph": "on",
+      "typed_error": "off_binary_only",
+      "adaptive_compute": "on",
+      "repair_scope": "local",
+      "symbolic_tool": "on",
+      "status": "planned",
+      "result_source": "",
+      "metrics": {
+        "answer_accuracy": null,
+        "trace_valid_rate": null,
+        "repair_success_rate": null,
+        "average_model_calls": null,
+        "average_tokens": null,
+        "total_compute_cost": null
+      },
+      "delta_answer_accuracy_pp": null,
+      "note": "Use only valid/invalid labels and one generic local-resample action."
+    },
+    {
+      "variant_id": "no_adaptive_compute",
+      "variant": "No adaptive compute",
+      "graph": "on",
+      "typed_error": "rule_based_proxy",
+      "adaptive_compute": "off_uniform",
+      "repair_scope": "local",
+      "symbolic_tool": "on",
+      "status": "measured",
+      "result_source": "verified_local_repair_uniform",
+      "metrics": {
+        "answer_accuracy": 0.8611111111111112,
+        "trace_valid_rate": 0.8333333333333334,
+        "repair_success_rate": 0.14285714285714285,
+        "average_model_calls": 1.25,
+        "average_tokens": 772.1111111111111,
+        "total_compute_cost": 27796
+      },
+      "delta_answer_accuracy_pp": 0.0,
+      "note": "Uses the fresh-call uniform arm from the matched-budget pilot."
+    },
+    {
+      "variant_id": "global_instead_of_local",
+      "variant": "Global regeneration instead of local repair",
+      "graph": "on",
+      "typed_error": "rule_based_proxy",
+      "adaptive_compute": "off_global",
+      "repair_scope": "global",
+      "symbolic_tool": "on",
+      "status": "measured",
+      "result_source": "verified_global_regeneration",
+      "metrics": {
+        "answer_accuracy": 0.8888888888888888,
+        "trace_valid_rate": 0.8888888888888888,
+        "repair_success_rate": 0.42857142857142855,
+        "average_model_calls": 1.25,
+        "average_tokens": 757.3611111111111,
+        "total_compute_cost": 27265
+      },
+      "delta_answer_accuracy_pp": 2.777777777777768,
+      "note": "Uses the fresh-call global arm under the matched ceiling."
+    },
+    {
+      "variant_id": "no_symbolic_tool",
+      "variant": "No symbolic tool",
+      "graph": "on",
+      "typed_error": "learned_pending",
+      "adaptive_compute": "on",
+      "repair_scope": "local",
+      "symbolic_tool": "off",
+      "status": "blocked_by_learned_verifier",
+      "result_source": "",
+      "metrics": {
+        "answer_accuracy": null,
+        "trace_valid_rate": null,
+        "repair_success_rate": null,
+        "average_model_calls": null,
+        "average_tokens": null,
+        "total_compute_cost": null
+      },
+      "delta_answer_accuracy_pp": null,
+      "note": "Requires the learned verifier before symbolic acceptance can be removed."
+    }
+  ],
+  "completion": {
+    "row_count": 6,
+    "measured_count": 2,
+    "proxy_count": 1,
+    "planned_count": 3
+  },
+  "interpretation_rule": "Only rows marked measured may support an ablation claim. The full row is a rule-based proxy until the learned verifier is trained."
+}

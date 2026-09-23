@@ -285,6 +285,15 @@ uniform (`86.1%` versus `83.3%`) but did not improve answer accuracy. See
 `MATCHED_BUDGET_PROTOCOL.md`; this is a small stress pilot, not a benchmark
 conclusion.
 
+Create the planned component-ablation table with:
+
+```powershell
+python ablation_table.py
+```
+
+The output distinguishes measured Task 5 arms, the current rule-based proxy,
+and unrun cells. The frozen design and controls are in `ABLATION_PROTOCOL.md`.
+
 Run the repeated-seed evaluation:
 
 ```powershell
@@ -325,6 +334,16 @@ the `qwen2-math:1.5b` model.
 The stress, held-out, and expanded summaries are in
 `RESEARCH_RESULTS_SUMMARY.md`. Ollama model status is in `MODEL_STATUS.md`.
 
+Freeze the existing 1.5B, 3B, and 7B output-contract evidence with:
+
+```powershell
+python output_contract_evidence.py
+```
+
+The command uses saved traces only. It preserves model digests, prompt/parser
+versions, raw responses, generation failures, and normalized accuracy without
+running or optimizing the models again.
+
 ## File guide
 
 - `mathrepair_demo.py`: first interactive example
@@ -332,6 +351,9 @@ The stress, held-out, and expanded summaries are in
 - `model_repair.py`: generates repair candidates accepted or rejected by the verifier
 - `analyze_repair_experiment.py`: creates research evaluation tables
 - `matched_budget_experiment.py`: compares local and global regeneration
+- `ablation_table.py`: creates the six-row ablation matrix
+- `ABLATION_PROTOCOL.md`: freezes ablation controls and evidence labels
+- `output_contract_evidence.py`: saves versioned output-contract evidence
 - `run_repeated_experiments.py`: repeats seeds and reports confidence intervals
 - `README.md`: project overview and usage guide
 - `START_HERE.md`: this step-by-step introduction

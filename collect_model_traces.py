@@ -13,6 +13,8 @@ from urllib import error as url_error
 from mathrepair_demo import normalize_solution_set, parse_equation
 from model_pipeline import (
     OllamaMathModel,
+    PARSER_VERSION_BY_PROFILE,
+    PROMPT_VERSION_BY_PROFILE,
     append_jsonl_record,
     run_pipeline,
     select_model_answer_step,
@@ -173,6 +175,8 @@ def main() -> None:
                 "seed": str(run_seed),
                 "temperature": str(args.temperature),
                 "prompt_profile": args.prompt_profile,
+                "prompt_version": PROMPT_VERSION_BY_PROFILE[args.prompt_profile],
+                "parser_version": PARSER_VERSION_BY_PROFILE[args.prompt_profile],
             }
             infrastructure_retry_count = 0
             model_client = OllamaMathModel(
@@ -428,6 +432,8 @@ def main() -> None:
         "run_count": len(results),
         "temperature": args.temperature,
         "prompt_profile": args.prompt_profile,
+        "prompt_version": PROMPT_VERSION_BY_PROFILE[args.prompt_profile],
+        "parser_version": PARSER_VERSION_BY_PROFILE[args.prompt_profile],
         "base_seed": args.seed,
         "completed_count": len(completed),
         "failure_count": failures,

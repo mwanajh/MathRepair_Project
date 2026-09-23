@@ -14,6 +14,9 @@ from model_repair import has_isolated_answer
 from reasoning_chain import analyze_chain
 
 
+NORMALIZED_PARSER_VERSION = "offline_parser_normalization_v1"
+
+
 def load_tolerant_steps(raw_response: str) -> list[str]:
     """Load a model steps array while repairing unescaped LaTeX commands."""
     repaired = re.sub(
@@ -247,6 +250,7 @@ def analyze_directory(input_dir: Path) -> dict[str, object]:
     )
     return {
         "analysis": "parser_normalized_sensitivity",
+        "parser_version": NORMALIZED_PARSER_VERSION,
         "input_directory": str(input_dir),
         "trial_count": len(trial_results),
         "total_runs": total_runs,

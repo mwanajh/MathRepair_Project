@@ -1,0 +1,209 @@
+{
+  "schema_version": "mathrepair_output_contract_evidence_v1",
+  "generated_utc": "2026-09-23T03:09:12.491389+00:00",
+  "source_code_commit": "36820e1324e69865ed33e3c71e329789441292d5",
+  "version_note": "Historical runs predate explicit version fields. Versions are reconstructed from their saved prompt_profile and the source commit.",
+  "prompt_contracts": {
+    "default": {
+      "version": "equation_json_default_v1",
+      "request_format": "text",
+      "template": "Solve this equation step by step. Return only a JSON object with one field named steps. steps must be a non-empty array of strings. Every string must be a complete equation with exactly one '=' sign. Do not include prose or Markdown.\n\nProblem: {problem}"
+    },
+    "qwen2_math_json": {
+      "version": "equation_json_qwen2_v1",
+      "request_format": "json",
+      "template": "Solve the equation. Output exactly one JSON object with one field named steps. steps must contain only complete equation strings, in order; do not put explanations, labels, or prose inside steps. Every string must contain exactly one '=' sign. Use plain ASCII math only: / for fractions, * for products, and ^ for powers. Do not use LaTeX, Markdown, code fences, or any text outside the JSON object.\n\nProblem: {problem}"
+    }
+  },
+  "primary_parsers": {
+    "default": {
+      "version": "equation_parser_default_v1",
+      "behavior": "strict JSON first, then equation extraction fallback"
+    },
+    "qwen2_math_json": {
+      "version": "equation_parser_qwen2_v1",
+      "behavior": "JSON-object recovery plus equation-only step filtering"
+    }
+  },
+  "normalized_parser": {
+    "version": "offline_parser_normalization_v1",
+    "source": "parser_sensitivity_analysis.py",
+    "behavior": "offline tolerant JSON and equation normalization"
+  },
+  "experiments": [
+    {
+      "experiment_id": "qwen2_math_1_5b_default",
+      "experiment_directory": "expanded_heldout_model_problems_repeated_experiments",
+      "model_version": {
+        "ollama_tag": "qwen2-math:1.5b",
+        "digest": "a4fdda0c6cc5d11e7d865ffc124a7dbbe3daa3d8304e6677027da9baf457a032",
+        "size_bytes": 934964386,
+        "format": "gguf",
+        "family": "qwen2",
+        "parameter_size": "1.5B",
+        "quantization": "Q4_0"
+      },
+      "prompt_profile": "default",
+      "prompt_version": "equation_json_default_v1",
+      "primary_parser_version": "equation_parser_default_v1",
+      "normalized_parser_version": "offline_parser_normalization_v1",
+      "run_count": 108,
+      "raw_output_count": 108,
+      "empty_raw_output_count": 0,
+      "generation_failure_count": 0,
+      "strict_answer_accuracy": 0.9074074074074074,
+      "normalized_answer_accuracy": 0.9074074074074074,
+      "normalization_delta_percentage_points": 0.0,
+      "normalized_accuracy_source": "identity_no_generation_failures",
+      "trace_files": [
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments/seed_160500/traces.jsonl",
+          "sha256": "184a6f9871e208a2ce5ab94b64a3b3fdba85d77ca3d2564d850a35fc998e0e86",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments/seed_180500/traces.jsonl",
+          "sha256": "293f1edf044e87d6e51c7d93552a4fbd9a35b99496335f52095379a023fe1ed9",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments/seed_200500/traces.jsonl",
+          "sha256": "5b740569ea4eb35aa54bdd892ad6557da292589c6c0eeaeaeb0236cdba3b529b",
+          "record_count": 36
+        }
+      ]
+    },
+    {
+      "experiment_id": "qwen2_5_3b_default",
+      "experiment_directory": "expanded_heldout_model_problems_repeated_experiments_qwen2.5_3b",
+      "model_version": {
+        "ollama_tag": "qwen2.5:3b",
+        "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+        "size_bytes": 1929912432,
+        "format": "gguf",
+        "family": "qwen2",
+        "parameter_size": "3.1B",
+        "quantization": "Q4_K_M"
+      },
+      "prompt_profile": "default",
+      "prompt_version": "equation_json_default_v1",
+      "primary_parser_version": "equation_parser_default_v1",
+      "normalized_parser_version": "offline_parser_normalization_v1",
+      "run_count": 108,
+      "raw_output_count": 108,
+      "empty_raw_output_count": 0,
+      "generation_failure_count": 24,
+      "strict_answer_accuracy": 0.47222222222222215,
+      "normalized_answer_accuracy": 0.5925925925925927,
+      "normalization_delta_percentage_points": 12.037037037037052,
+      "normalized_accuracy_source": "expanded_heldout_model_problems_repeated_experiments_qwen2.5_3b/parser_sensitivity_report.json",
+      "trace_files": [
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2.5_3b/seed_160500/traces.jsonl",
+          "sha256": "8ed5df1b970e072a917da9715c2738dd271556e091c0479a79bfe78a08b5c1a7",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2.5_3b/seed_180500/traces.jsonl",
+          "sha256": "fe023da3d57d2acd57a7b2e6ee0ee3ee25a7c58310432d5ec6e0192b8f9acbfd",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2.5_3b/seed_200500/traces.jsonl",
+          "sha256": "9831283de998bc323507ace6f94ee0b39d037f8934b8b0b98127b942a5ec52bc",
+          "record_count": 36
+        }
+      ]
+    },
+    {
+      "experiment_id": "qwen2_math_7b_default",
+      "experiment_directory": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b",
+      "model_version": {
+        "ollama_tag": "qwen2-math:7b",
+        "digest": "28cc3a337734d0db9326604d931ccce1c9379f2310b60dee03ef76440b37bb65",
+        "size_bytes": 4431400514,
+        "format": "gguf",
+        "family": "qwen2",
+        "parameter_size": "7.6B",
+        "quantization": "Q4_0"
+      },
+      "prompt_profile": "default",
+      "prompt_version": "equation_json_default_v1",
+      "primary_parser_version": "equation_parser_default_v1",
+      "normalized_parser_version": "offline_parser_normalization_v1",
+      "run_count": 108,
+      "raw_output_count": 108,
+      "empty_raw_output_count": 1,
+      "generation_failure_count": 91,
+      "strict_answer_accuracy": 0.12962962962962962,
+      "normalized_answer_accuracy": 0.4166666666666667,
+      "normalization_delta_percentage_points": 28.70370370370371,
+      "normalized_accuracy_source": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b/parser_sensitivity_report.json",
+      "trace_files": [
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b/seed_160500/traces.jsonl",
+          "sha256": "897958dfdedfc4d1fb7ffce8f4c258e812f9af08e8070d0fa71f527705160afd",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b/seed_180500/traces.jsonl",
+          "sha256": "d5c4d3ac657367371b0d65fcd1ab98d8adcdaf8fd588c96c22f6aad51fc72383",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b/seed_200500/traces.jsonl",
+          "sha256": "e7e09ee54648331e24780a9a0f7e76e512973e31cfc6c045ae79f0a5b9818e01",
+          "record_count": 36
+        }
+      ]
+    },
+    {
+      "experiment_id": "qwen2_math_7b_qwen_json",
+      "experiment_directory": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json",
+      "model_version": {
+        "ollama_tag": "qwen2-math:7b",
+        "digest": "28cc3a337734d0db9326604d931ccce1c9379f2310b60dee03ef76440b37bb65",
+        "size_bytes": 4431400514,
+        "format": "gguf",
+        "family": "qwen2",
+        "parameter_size": "7.6B",
+        "quantization": "Q4_0"
+      },
+      "prompt_profile": "qwen2_math_json",
+      "prompt_version": "equation_json_qwen2_v1",
+      "primary_parser_version": "equation_parser_qwen2_v1",
+      "normalized_parser_version": "offline_parser_normalization_v1",
+      "run_count": 108,
+      "raw_output_count": 108,
+      "empty_raw_output_count": 0,
+      "generation_failure_count": 10,
+      "strict_answer_accuracy": 0.75,
+      "normalized_answer_accuracy": 0.7962962962962963,
+      "normalization_delta_percentage_points": 4.629629629629628,
+      "normalized_accuracy_source": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json/parser_sensitivity_report.json",
+      "trace_files": [
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json/seed_160500/traces.jsonl",
+          "sha256": "9d4ab395a2c48dfc6255f4c3657d828e342ea21a923dca5169ffdf84ba5dd41d",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json/seed_180500/traces.jsonl",
+          "sha256": "40736c28c07d3ddcbccbdadd6020045be5fdd720f528eb943b2bcbd8816c2e6b",
+          "record_count": 36
+        },
+        {
+          "path": "expanded_heldout_model_problems_repeated_experiments_qwen2-math_7b_prompt_json/seed_200500/traces.jsonl",
+          "sha256": "5547873d98317829d80de427b60482d4d203a452b5c33145caa414a2a967244b",
+          "record_count": 36
+        }
+      ]
+    }
+  ],
+  "interpretation": "Normalized accuracy is a parser-only sensitivity result. It does not replace strict end-to-end accuracy or establish model superiority.",
+  "raw_output_archive": {
+    "path": "output_contract_raw_outputs.json",
+    "sha256": "090b252ac4a88da2a9b48544237f51948c7f6baacac97e88afc9f20de3d2d31e",
+    "record_count": 432
+  }
+}

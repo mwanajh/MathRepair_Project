@@ -411,6 +411,18 @@ See
 budget rules, metrics, and confirmatory-run requirements. These are results from
 a 12-problem stress pilot, not a benchmark conclusion.
 
+Build the frozen six-row ablation structure with:
+
+```powershell
+python ablation_table.py
+```
+
+The generated `ablation_table.md` includes the available uniform and global
+Task 5 arms, explicit null cells for unrun variants, and a rule-based proxy row
+for the current full pipeline. See [ABLATION_PROTOCOL.md](ABLATION_PROTOCOL.md)
+for controlled variables and the remaining run order. Only rows marked
+`measured` support ablation claims.
+
 ## Repeated-seed experiment
 
 ```powershell
@@ -536,6 +548,18 @@ primary end-to-end comparison.
 The full model-to-model comparison protocol is in
 `MODEL_COMPARISON_PROTOCOL.md`.
 
+Archive the current output-contract evidence without new model calls:
+
+```powershell
+python output_contract_evidence.py
+```
+
+This saves prompt and parser versions, exact Ollama model digests, all 432
+raw-output records (including one observed empty response), generation
+failures, trace-file hashes, and parser-normalized accuracy. See
+`output_contract_evidence.md` for the compact table. Normalized accuracy remains
+a sensitivity result and does not replace primary accuracy.
+
 Each aggregate stores the problem-set SHA-256, includes generation failures in
 the denominator, rejects trials with missing runs, and rejects mixing reports
 from different problem sets.
@@ -585,6 +609,9 @@ This example contains a distribution error: `2(x + 3)` should become
 - `model_repair.py`: generates local candidates and accepts only verified repairs
 - `analyze_repair_experiment.py`: creates research metrics and tables
 - `matched_budget_experiment.py`: compares local and global repair budgets
+- `ablation_table.py`: builds the frozen component-ablation table
+- `ABLATION_PROTOCOL.md`: defines ablation controls and evidence states
+- `output_contract_evidence.py`: archives model/prompt/parser sensitivity data
 - `run_repeated_experiments.py`: runs multiple seeds and confidence intervals
 - `compute_allocator.py`: assigns test-time compute to important nodes
 - `generate_dataset.py`: creates controlled synthetic error data

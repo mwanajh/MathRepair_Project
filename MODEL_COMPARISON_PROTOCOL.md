@@ -65,6 +65,25 @@ python compare_model_reports.py `
 The script rejects reports when the problem-set hash, temperature, samples per
 problem, or run count do not match.
 
+## Output-contract evidence
+
+Freeze the existing model and parser-sensitivity runs without making new model
+calls:
+
+```powershell
+python output_contract_evidence.py
+```
+
+This command records the exact Ollama tag and digest, prompt-contract version,
+primary and normalized parser versions, raw response, generation failure, and
+strict and normalized accuracy. It covers the 1.5B and 3B default runs plus both
+the default and JSON-contract 7B runs.
+
+The portable raw-response archive is `output_contract_raw_outputs.json`. Its
+SHA-256 is stored in `output_contract_evidence.json`; per-seed source trace
+hashes are also retained. This makes later output-contract analysis possible
+even though the large local `seed_*` working directories are ignored by Git.
+
 ## 5. Metrics to report
 
 - Baseline, global-regeneration, and local-repair answer accuracy
@@ -87,3 +106,6 @@ caused the improvement. Separate these questions:
 Do not mix different problem sets or different seeds in one comparison. A new
 model report should preserve the model name, dataset SHA-256, temperature,
 samples per problem, and run count.
+
+Parser-normalized accuracy is a sensitivity analysis, not a replacement for
+the strict end-to-end result. Generation failures remain in both denominators.
