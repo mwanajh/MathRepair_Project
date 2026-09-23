@@ -2,7 +2,11 @@ import unittest
 
 from docx import Document
 
-from update_supervisor_progress_report import UPDATE_HEADING, remove_existing_update
+from update_supervisor_progress_report import (
+    UPDATE_HEADING,
+    remove_existing_update,
+    replace_next_steps_section,
+)
 
 
 class SupervisorProgressReportTests(unittest.TestCase):
@@ -21,6 +25,16 @@ class SupervisorProgressReportTests(unittest.TestCase):
             ["Original report"],
         )
         self.assertEqual(len(document.tables), 0)
+
+        document.add_heading("10. Recommended Next Steps", level=1)
+        document.add_paragraph("Old recommendation")
+        document.add_heading("11. Demonstration Commands", level=1)
+        replace_next_steps_section(document)
+        text = "\n".join(paragraph.text for paragraph in document.paragraphs)
+        self.assertIn("10.1 Completed Supervisor Tasks", text)
+        self.assertIn("10.2 Explicitly Deferred Work", text)
+        self.assertIn("10.3 Proposed Follow-Up Experiments", text)
+        self.assertNotIn("Old recommendation", text)
 
 
 if __name__ == "__main__":

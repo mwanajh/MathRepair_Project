@@ -10,11 +10,11 @@ the ablation structure had not been prepared.
 | Task | Status | Evidence and current result |
 |---|---|---|
 | 1. Connect graph to model pipeline | Completed | Every model trace now uses the reasoning graph internally. Nodes record ID, subgoal/state, parents, model reasoning, verification, typed error, affected descendants, repair, repaired state, and final status. |
-| 2. Hard benchmark pilot | Completed as a processing pilot | A deterministic 40-problem MATH-500 subset contains 17 level-4 and 23 level-5 problems across seven subjects. The text-mode smoke test processed 40/40; it is not yet an accuracy result. |
+| 2. Hard benchmark pilot | Completed within requested scope | A deterministic 40-problem MATH-500 subset contains 17 level-4 and 23 level-5 problems across seven subjects. The text-mode smoke test processed 40/40; it is not yet an accuracy result. |
 | 3. Freeze typed-error taxonomy | Completed | Eight error types have definitions, positive/negative examples, detection contracts, and repair actions in `ERROR_TAXONOMY.md`. |
-| 4. Typed-verifier data pipeline | Completed for the first controlled pilot | The generator produced 48 examples, six per error type, with correct/corrupted traces, error location/type, corrected step, and preferred action. This is synthetic supervision, not a natural error-rate estimate. |
-| 5. Matched-budget experiment | Completed as a small pilot | Across 36 runs and seven detected-error cases, global regeneration reached 88.9% answer accuracy; uniform and adaptive local repair reached 86.1%. The shared additional-token ceiling was about 5,800, with zero budget violations. |
-| 6. Ablation table | Structure frozen; partial results | Six variants are defined. Two ablations are measured, Full MathRepair is explicitly a rule-based proxy, and three cells remain unrun or dependent on the learned verifier. |
+| 4. Typed-verifier data pipeline | Completed within requested scope | The generator produced 48 examples, six per error type, with correct/corrupted traces, error location/type, corrected step, and preferred action. This is synthetic supervision, not a natural error-rate estimate. |
+| 5. Matched-budget experiment | Completed | Across 36 runs and seven detected-error cases, global regeneration reached 88.9% answer accuracy; uniform and adaptive local repair reached 86.1%. The shared additional-token ceiling was about 5,800, with zero budget violations. |
+| 6. Ablation table | Completed within requested scope | The requested six-row structure is frozen. As explicitly allowed, two rows are measured, Full MathRepair is a rule-based proxy, and three future cells remain unfilled. |
 | 7. Preserve model/output-contract evidence | Completed | Four experiment configurations preserve exact model digests, prompt/parser versions, 432 raw-output records, failures, trace hashes, and normalized accuracy. No additional model optimization was performed. |
 
 ## Task 5 Matched-Budget Result
@@ -60,6 +60,27 @@ Normalized accuracy is a parser-only sensitivity result. It does not replace
 strict end-to-end accuracy. The two 7B rows show directly that the output
 contract materially changes pipeline success for the same model artifact.
 
+## Explicitly Deferred Work
+
+The following items were explicitly outside this week's completion scope:
+
+- Training and calibrating the learned verifier. Task 4 required starting the
+  data-generation pipeline, not completing large-model training.
+- Running a full real-model MATH-500 accuracy evaluation. Task 2 required a
+  difficult 30-50 problem pilot and pipeline-processing check.
+- Filling every ablation cell. Task 6 explicitly allowed unfinished cells while
+  requiring the table structure to be created now.
+
+These are not incomplete Task 1-7 deliverables.
+
+## Proposed Follow-Up Experiments
+
+- Repeat the three-arm matched-budget comparison on the hard benchmark pilot
+  and report paired uncertainty.
+- Add natural model errors to the controlled verifier dataset before training.
+- Keep prompt/parser sensitivity as supporting evidence rather than the primary
+  contribution.
+
 ## Current Methodological Boundary
 
 The project now has the proposal-level data structures, controlled typed-error
@@ -80,4 +101,4 @@ python output_contract_evidence.py
 python -m unittest discover -q
 ```
 
-Current automated verification: 128/128 tests passing.
+Current automated verification: 129/129 tests passing.

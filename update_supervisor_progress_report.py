@@ -21,7 +21,7 @@ TASK_ROWS = [
     ),
     (
         "2",
-        "Processing pilot completed",
+        "Completed within requested scope",
         "A deterministic 40-problem MATH-500 subset has 17 level-4 and 23 level-5 problems across seven subjects. The smoke test processed 40/40 in text_unverified mode.",
         "math500_pilot_40_manifest.json",
     ),
@@ -33,20 +33,20 @@ TASK_ROWS = [
     ),
     (
         "4",
-        "Controlled pilot completed",
+        "Completed within requested scope",
         "The data generator produced 48 typed-verifier examples, six per error type, with error location, corrupted/correct steps, and preferred action.",
         "typed_verifier_pilot.json",
     ),
     (
         "5",
-        "Pilot completed",
+        "Completed",
         "Under a shared approximately 5,800-token ceiling, global regeneration reached 88.9% answer accuracy; uniform and adaptive local repair each reached 86.1%. Budget violations: zero.",
         "matched_budget_report.md",
     ),
     (
         "6",
-        "Structure frozen; partial results",
-        "Six ablation variants are defined: two measured, one rule-based proxy reference, and three pending or learned-verifier-dependent cells.",
+        "Completed within requested scope",
+        "The requested six-row structure is frozen. As explicitly allowed, two rows are measured, one is a rule-based proxy reference, and three future cells remain unfilled.",
         "ablation_table.md",
     ),
     (
@@ -114,24 +114,6 @@ def replace_status_text(document: Document) -> None:
             "three ablation cells remain unmeasured; and the fresh matched-budget "
             "result is based on only 36 runs and seven detected errors."
         ),
-        "Freeze the graph schema": (
-            "Train and calibrate the learned typed verifier using the controlled pilot schema and additional natural errors."
-        ),
-        "Benchmark graph-based localization": (
-            "Run the no-graph and no-typed-error ablations on identical problems, seeds, prompts, and budgets."
-        ),
-        "Add proposal-aligned datasets": (
-            "Run the 40-problem MATH-500 pilot with a real model and define answer evaluation for open-ended mathematics."
-        ),
-        "Train and calibrate a learned verifier": (
-            "Complete the no-symbolic-tool ablation after the learned verifier is available."
-        ),
-        "Integrate adaptive compute": (
-            "Repeat the three-arm matched-budget comparison on the hard benchmark pilot and report paired uncertainty."
-        ),
-        "Repeat the primary comparison": (
-            "Keep prompt/parser sensitivity as supporting evidence while prioritizing the proposal-level methodology."
-        ),
     }
     for paragraph in document.paragraphs:
         original = paragraph.text.strip()
@@ -139,6 +121,90 @@ def replace_status_text(document: Document) -> None:
             if original.startswith(prefix):
                 paragraph.text = replacement
                 break
+
+
+def replace_next_steps_section(document: Document) -> None:
+    """Separate completed tasks from deferred and newly proposed work."""
+    paragraphs = document.paragraphs
+    start = next(
+        index
+        for index, paragraph in enumerate(paragraphs)
+        if paragraph.text.strip()
+        in {
+            "10. Recommended Next Steps",
+            "10. Work Status After Supervisor Tasks",
+        }
+    )
+    end = next(
+        index
+        for index, paragraph in enumerate(paragraphs[start + 1 :], start + 1)
+        if paragraph.text.strip().startswith("11. Demonstration Commands")
+    )
+    heading = paragraphs[start]
+    next_section = paragraphs[end]
+    heading.text = "10. Work Status After Supervisor Tasks"
+    heading.style = "Heading 1"
+
+    for paragraph in paragraphs[start + 1 : end]:
+        paragraph._element.getparent().remove(paragraph._element)
+
+    content = [
+        (
+            "10.1 Completed Supervisor Tasks",
+            "Heading 2",
+        ),
+        (
+            "Tasks 1-7 are completed within the scope requested for this week. "
+            "The evidence and results are summarized in Section 12.",
+            None,
+        ),
+        (
+            "10.2 Explicitly Deferred Work",
+            "Heading 2",
+        ),
+        (
+            "Train and calibrate the learned typed verifier. Task 4 explicitly "
+            "required the data-generation pipeline this week, not completion of "
+            "large-model training.",
+            "List Bullet",
+        ),
+        (
+            "Run a full real-model MATH-500 accuracy evaluation. Task 2 explicitly "
+            "limited this week to creating and processing a difficult 30-50 problem pilot.",
+            "List Bullet",
+        ),
+        (
+            "Fill the no-graph, no-typed-error, and no-symbolic-tool ablation cells. "
+            "Task 6 explicitly requested the table structure even if cells were unfinished.",
+            "List Bullet",
+        ),
+        (
+            "These items are deferred by the stated scope; they are not incomplete "
+            "deliverables from Tasks 1-7.",
+            None,
+        ),
+        (
+            "10.3 Proposed Follow-Up Experiments",
+            "Heading 2",
+        ),
+        (
+            "Repeat the three-arm matched-budget comparison on the hard benchmark "
+            "pilot and report paired uncertainty.",
+            "List Bullet",
+        ),
+        (
+            "Add natural model errors to the controlled verifier data before final training.",
+            "List Bullet",
+        ),
+        (
+            "Keep prompt/parser sensitivity as supporting evidence rather than the primary contribution.",
+            "List Bullet",
+        ),
+    ]
+    for text, style in content:
+        paragraph = next_section.insert_paragraph_before(text)
+        if style:
+            paragraph.style = style
 
 
 def add_task_update(document: Document) -> None:
@@ -236,7 +302,7 @@ def add_task_update(document: Document) -> None:
         run.font.size = Pt(9)
 
     document.add_paragraph(
-        "Current automated verification: 128/128 tests passing. The immediate "
+        "Current automated verification: 129/129 tests passing. The immediate "
         "research priority is the learned verifier and completion of the pending "
         "controlled ablations, not additional web-interface work."
     )
@@ -246,6 +312,7 @@ def main() -> None:
     document = Document(REPORT_PATH)
     remove_existing_update(document)
     replace_status_text(document)
+    replace_next_steps_section(document)
     add_task_update(document)
 
     section = document.sections[-1]
