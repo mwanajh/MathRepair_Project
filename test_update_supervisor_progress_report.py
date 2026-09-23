@@ -1,14 +1,17 @@
 import unittest
 
 from docx import Document
+from docx.enum.text import WD_BREAK
 
 from update_supervisor_progress_report import (
     UPDATE_HEADING,
     remove_existing_update,
+    remove_empty_paragraphs,
     replace_experimental_design_section,
     replace_next_steps_section,
     replace_output_contract_section,
     replace_status_text,
+    update_demonstration_section,
     update_implemented_system_table,
 )
 
@@ -17,6 +20,8 @@ class SupervisorProgressReportTests(unittest.TestCase):
     def test_removes_existing_update_and_every_element_after_it(self):
         document = Document()
         document.add_paragraph("Original report")
+        document.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
+        document.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
         document.add_heading(UPDATE_HEADING, level=1)
         document.add_paragraph("Old update")
         document.add_table(rows=1, cols=1).cell(0, 0).text = "Old table"
@@ -29,6 +34,20 @@ class SupervisorProgressReportTests(unittest.TestCase):
             ["Original report"],
         )
         self.assertEqual(len(document.tables), 0)
+
+        cleanup_document = Document()
+        cleanup_document.add_paragraph("Keep this paragraph")
+        cleanup_document.add_paragraph(style="List Bullet")
+        cleanup_document.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
+        remove_empty_paragraphs(cleanup_document)
+        self.assertEqual(
+            [paragraph.text for paragraph in cleanup_document.paragraphs],
+            ["Keep this paragraph", ""],
+        )
+        self.assertEqual(
+            len(cleanup_document.paragraphs[1]._element.xpath(".//w:br")),
+            1,
+        )
 
         document.add_heading("10. Recommended Next Steps", level=1)
         document.add_paragraph("Old recommendation")
@@ -84,6 +103,17 @@ class SupervisorProgressReportTests(unittest.TestCase):
             "95% confidence interval",
             wording_document.paragraphs[0].text,
         )
+
+        demo_document = Document()
+        demo_document.add_heading("11. Demonstration Commands", level=1)
+        demo_document.add_paragraph("python graph_web_server.py --port 8765")
+        update_demonstration_section(demo_document)
+        update_demonstration_section(demo_document)
+        demo_text = "\n".join(
+            paragraph.text for paragraph in demo_document.paragraphs
+        )
+        self.assertEqual(demo_text.count("Primary Tasks 1-7"), 1)
+        self.assertEqual(demo_text.count("Live graph-integrated model trace"), 1)
 
 
 if __name__ == "__main__":

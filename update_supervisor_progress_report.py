@@ -23,7 +23,7 @@ TASK_ROWS = [
         "2",
         "Completed within requested scope",
         "A deterministic 40-problem MATH-500 subset has 17 level-4 and 23 level-5 problems across seven subjects. The smoke test processed 40/40 in text_unverified mode.",
-        "math500_pilot_40_manifest.json",
+        "math500_pilot_40_manifest.json; math500_pilot_run.json",
     ),
     (
         "3",
@@ -68,15 +68,54 @@ def set_cell_text(cell, text: str, bold: bool = False) -> None:
 
 def remove_existing_update(document: Document) -> None:
     body = document._element.body
-    found = False
-    for child in list(body):
-        if child.tag == qn("w:sectPr"):
-            continue
-        text = Paragraph(child, document).text if child.tag == qn("w:p") else ""
-        if text.strip() == UPDATE_HEADING:
-            found = True
-        if found:
+    children = list(body)
+    start = next(
+        (
+            index
+            for index, child in enumerate(children)
+            if child.tag == qn("w:p")
+            and Paragraph(child, document).text.strip() == UPDATE_HEADING
+        ),
+        None,
+    )
+    if start is None:
+        return
+
+    # add_task_update places a page-break-only paragraph before the heading.
+    # Remove all accumulated copies so repeated updater runs remain idempotent.
+    while start > 0:
+        previous = children[start - 1]
+        if previous.tag != qn("w:p"):
+            break
+        paragraph = Paragraph(previous, document)
+        if paragraph.text.strip() or not previous.xpath(
+            './/w:br[@w:type="page"]'
+        ):
+            break
+        start -= 1
+
+    for child in children[start:]:
+        if child.tag != qn("w:sectPr"):
             body.remove(child)
+
+
+def remove_empty_paragraphs(document: Document) -> None:
+    """Remove empty placeholders while preserving images and page breaks."""
+    body = document._element.body
+    for child in list(body):
+        if child.tag != qn("w:p") or Paragraph(child, document).text.strip():
+            continue
+        if any(
+            child.xpath(expression)
+            for expression in (
+                ".//w:drawing",
+                ".//w:object",
+                ".//w:pict",
+                ".//w:br",
+            )
+        ):
+            continue
+        body.remove(child)
 
 
 def replace_status_text(document: Document) -> None:
@@ -117,6 +156,14 @@ def replace_status_text(document: Document) -> None:
             "three ablation cells remain unmeasured; and the fresh matched-budget "
             "result is based on only 36 runs and seven detected errors."
         ),
+        "The implemented pipeline consists of model generation": (
+            "The implemented pipeline consists of model generation, equation "
+            "extraction, reasoning-state construction, symbolic verification, "
+            "first-error localization, typed repair selection, local regeneration, "
+            "and final re-verification. For currently supported equation-mode "
+            "problems, repair candidates are accepted only after symbolic "
+            "validation; the open-ended MATH-500 pilot remains text_unverified."
+        ),
         "For the problem 2(x + 3) = 14, the graph contains": (
             "For the pipeline demonstration 2(x + 3) = 14, n1 stores the problem "
             "state, n2 stores the model's invalid 2x + 3 = 14 transformation, and "
@@ -124,6 +171,23 @@ def replace_status_text(document: Document) -> None:
             "repaired state 2x + 6 = 14, recomputed x = 4, and final node statuses. "
             "A separate branching fixture retains an independent valid branch to "
             "test selective descendant propagation and zero allocation to unaffected nodes."
+        ),
+        "The paired local-minus-global answer difference was": (
+            "The paired local-minus-global answer difference was +7.4 percentage "
+            "points (100% - 92.6%), with a paired 95% Student-t confidence interval "
+            "of [+3.4, +11.4] across three seed-level trials. The interval reflects "
+            "seed variation on the same 36 problems, not problem-sampling uncertainty. "
+            "Across the expanded trials, 13 invalid traces were detected: 12 "
+            "algebraic-transformation errors and 1 arithmetic error. All 13 repairs "
+            "were accepted, 10 wrong answers were corrected, and no answer "
+            "regressions occurred."
+        ),
+        "Conclusion: the pilot supports continuing": (
+            "Conclusion: Tasks 1-7 establish the proposal-level infrastructure and "
+            "reproducible pilot evidence. Current performance claims remain "
+            "preliminary: the expanded accuracy result is limited to algebra, the "
+            "MATH-500 run is processing-only, and the learned verifier and three "
+            "ablation cells remain deferred."
         ),
     }
     for paragraph in document.paragraphs:
@@ -136,6 +200,31 @@ def replace_status_text(document: Document) -> None:
             paragraph.text = paragraph.text.replace(
                 "95% Candidate Interval", "95% confidence interval"
             )
+
+
+def update_demonstration_section(document: Document) -> None:
+    """Put the methodology walkthrough before the retained visual demos."""
+    prefixes = (
+        "Primary Tasks 1-7 terminal walkthrough:",
+        "Live graph-integrated model trace",
+    )
+    for paragraph in list(document.paragraphs):
+        if paragraph.text.strip().startswith(prefixes):
+            paragraph._element.getparent().remove(paragraph._element)
+
+    web_command = next(
+        paragraph
+        for paragraph in document.paragraphs
+        if paragraph.text.strip() == "python graph_web_server.py --port 8765"
+    )
+    web_command.insert_paragraph_before(
+        "Primary Tasks 1-7 terminal walkthrough: python show_experiments.py"
+    )
+    web_command.insert_paragraph_before(
+        "Live graph-integrated model trace (requires Ollama and the installed model): "
+        'python model_pipeline.py --provider ollama --model qwen2-math:1.5b '
+        '--problem "2(x + 3) = 14"'
+    )
 
 
 def update_implemented_system_table(document: Document) -> None:
@@ -573,7 +662,9 @@ def main() -> None:
     replace_experimental_design_section(document)
     replace_output_contract_section(document)
     replace_next_steps_section(document)
+    update_demonstration_section(document)
     add_task_update(document)
+    remove_empty_paragraphs(document)
 
     section = document.sections[-1]
     section.top_margin = Inches(0.65)
