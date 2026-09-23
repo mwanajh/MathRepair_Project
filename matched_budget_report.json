@@ -1,17 +1,38 @@
 {
-  "generated_utc": "2026-09-18T05:34:46.448363+00:00",
+  "generated_utc": "2026-09-23T02:11:53.701103+00:00",
+  "local_evaluation_mode": "live",
   "source": {
     "model": "qwen2-math:1.5b",
     "run_count": 36,
+    "completed_count": 36,
+    "failure_count": 0,
     "detected_error_runs": 7,
     "temperature": 1.4
   },
-  "budget_definition": "Per error run, global prompt plus completion tokens may not exceed the prompt plus completion tokens used by local model repair.",
+  "budget_definition": "Each repair strategy receives approximately the same total additional prompt-plus-completion token ceiling across detected error runs. Global retains recorded per-run ceilings; uniform and adaptive local repair redistribute the shared total.",
   "local_repair_additional_token_budget": 5800,
-  "global_regeneration_additional_tokens": 4841,
-  "global_budget_utilization_rate": 0.8346551724137931,
+  "global_regeneration_additional_tokens": 4796,
+  "global_budget_utilization_rate": 0.8268965517241379,
+  "global_budget_violation_count": 0,
+  "local_budget_violation_count": 0,
   "budget_violation_count": 0,
   "matched_budget_comparison_valid": true,
+  "compute_cost_definition": "Total compute cost is reported as prompt-plus-completion token equivalents; dollar cost requires a model/provider price card.",
+  "matched_additional_token_budget": 5800,
+  "uniform_budget_per_error_run": 828,
+  "adaptive_budget_allocation": [
+    1327,
+    1951,
+    664,
+    663,
+    332,
+    531,
+    332
+  ],
+  "answer_accuracy_difference_vs_global_percentage_points": {
+    "verified_local_repair_uniform": -2.777777777777768,
+    "verified_local_repair_adaptive": -2.777777777777768
+  },
   "strategies": [
     {
       "name": "no_repair",
@@ -19,8 +40,16 @@
       "answer_accuracy": 0.8611111111111112,
       "trace_valid": 29,
       "trace_valid_rate": 0.8055555555555556,
+      "repair_success": 0,
+      "repair_success_rate": 0.0,
       "additional_model_calls": 0,
-      "additional_tokens": 0
+      "additional_tokens": 0,
+      "allocated_additional_tokens": 0,
+      "total_model_calls": 36,
+      "total_tokens": 22469,
+      "average_model_calls": 1.0,
+      "average_tokens": 624.1388888888889,
+      "total_compute_cost": 22469
     },
     {
       "name": "verified_global_regeneration",
@@ -29,18 +58,991 @@
       "trace_valid": 32,
       "trace_valid_rate": 0.8888888888888888,
       "accepted_repairs": 3,
+      "repair_success": 3,
+      "repair_success_rate": 0.42857142857142855,
       "additional_model_calls": 9,
-      "additional_tokens": 4841
+      "additional_tokens": 4796,
+      "allocated_additional_tokens": 5800,
+      "total_model_calls": 45,
+      "total_tokens": 27265,
+      "average_model_calls": 1.25,
+      "average_tokens": 757.3611111111111,
+      "total_compute_cost": 27265,
+      "budget_respected": true
     },
     {
-      "name": "verified_local_repair",
-      "answer_correct": 36,
-      "answer_accuracy": 1.0,
-      "trace_valid": 35,
-      "trace_valid_rate": 0.9722222222222222,
-      "accepted_repairs": 6,
-      "additional_model_calls": 8,
-      "additional_tokens": 5800
+      "name": "verified_local_repair_uniform",
+      "answer_correct": 31,
+      "answer_accuracy": 0.8611111111111112,
+      "trace_valid": 30,
+      "trace_valid_rate": 0.8333333333333334,
+      "accepted_repairs": 1,
+      "repair_success": 1,
+      "repair_success_rate": 0.14285714285714285,
+      "additional_model_calls": 9,
+      "additional_tokens": 5327,
+      "allocated_additional_tokens": 5796,
+      "total_model_calls": 45,
+      "total_tokens": 27796,
+      "average_model_calls": 1.25,
+      "average_tokens": 772.1111111111111,
+      "total_compute_cost": 27796,
+      "budget_respected": true,
+      "budget_records": [
+        {
+          "seed": 3500,
+          "problem": "(5x + 11)/(2x - 3) = -4",
+          "allocated_token_cap": 828,
+          "used_tokens": 451,
+          "attempt_count": 1,
+          "accepted": true,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "5x + 11 = -4(2x - 3)",
+                "5x + 11 = -8x + 12",
+                "5x + 8x + 11 = 12",
+                "13x + 11 = 12",
+                "13x = 1",
+                "x = (1)/(13)",
+                "(5x + 11)/(2x - 3) = -4"
+              ],
+              "ignored_repeated_prefix": [
+                "5x + 11 = -4(2x - 3)",
+                "5x + 11 = -8x + 12"
+              ],
+              "repaired_steps": [
+                "5x + 11 = -4(2x - 3)",
+                "5x + 11 = -8x + 12",
+                "5x + 8x + 11 = 12",
+                "13x + 11 = 12",
+                "13x = 1",
+                "x = (1)/(13)",
+                "(5x + 11)/(2x - 3) = -4"
+              ],
+              "accepted": true,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 662,
+              "generation_tokens": {
+                "done_reason": "stop",
+                "total_duration": 2918356400,
+                "load_duration": 6226200,
+                "prompt_eval_count": 166,
+                "prompt_eval_duration": 495948000,
+                "eval_count": 285,
+                "eval_duration": 2398450000,
+                "seed": 503502,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 451,
+              "budget_respected": true,
+              "elapsed_seconds": 5.558
+            }
+          ]
+        },
+        {
+          "seed": 4500,
+          "problem": "13 - (4 - (3 - (2 - x))) = 29",
+          "allocated_token_cap": 828,
+          "used_tokens": 828,
+          "attempt_count": 2,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "13 - (4 - (3 - 2 + x)) = 29",
+                "13 - (4 - (1 - x)) = 29",
+                "13 - (4 - 1 + x) = 29",
+                "13 - (3 + x) = 29",
+                "13 - 3 - x = 29",
+                "10 - x = 29",
+                "-x = 29 - 10",
+                "-x = 19",
+                "x = -19"
+              ],
+              "ignored_repeated_prefix": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "13 - (4 - (3 - 2 + x)) = 29"
+              ],
+              "repaired_steps": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "13 - (4 - (3 - 2 + x)) = 29",
+                "13 - (4 - (1 - x)) = 29",
+                "13 - (4 - 1 + x) = 29",
+                "13 - (3 + x) = 29",
+                "13 - 3 - x = 29",
+                "10 - x = 29",
+                "-x = 29 - 10",
+                "-x = 19",
+                "x = -19"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": false,
+              "candidate_answer_correct": false,
+              "failure": "",
+              "completion_token_cap": 667,
+              "generation_tokens": {
+                "done_reason": "stop",
+                "total_duration": 3420617500,
+                "load_duration": 3114000,
+                "prompt_eval_count": 161,
+                "prompt_eval_duration": 460890000,
+                "eval_count": 345,
+                "eval_duration": 2940174000,
+                "seed": 504502,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 506,
+              "budget_respected": true,
+              "elapsed_seconds": 5.672
+            },
+            {
+              "attempt_index": 2,
+              "status": "completed",
+              "candidate_steps": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "3 - 2 + x = 1 + x",
+                "4 - 1 - x = 3 - x"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "13 - (4 - (3 - 2 + x)) = 29",
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "3 - 2 + x = 1 + x",
+                "4 - 1 - x = 3 - x"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": false,
+              "failure": "",
+              "completion_token_cap": 161,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 1539661500,
+                "load_duration": 1695100,
+                "prompt_eval_count": 161,
+                "prompt_eval_duration": 24397000,
+                "eval_count": 161,
+                "eval_duration": 1500866000,
+                "seed": 504504,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 322,
+              "budget_respected": true,
+              "elapsed_seconds": 3.661
+            }
+          ]
+        },
+        {
+          "seed": 5500,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+          "allocated_token_cap": 828,
+          "used_tokens": 828,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "7(6x - 10 + 4) - 5(x + 9) = 96",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5(x + 9) = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "x = 5"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "7(6x - 10 + 4) - 5(x + 9) = 96",
+                "6x - 10 + 4 = 6x - 6",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5 * x - 5 * 9 = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "7(6x - 10 + 4) - 5(x + 9) = 96",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5(x + 9) = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "x = 5"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": false,
+              "candidate_answer_correct": false,
+              "failure": "",
+              "completion_token_cap": 524,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 4953505700,
+                "load_duration": 2610000,
+                "prompt_eval_count": 304,
+                "prompt_eval_duration": 485401000,
+                "eval_count": 524,
+                "eval_duration": 4456224000,
+                "seed": 505502,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 828,
+              "budget_respected": true,
+              "elapsed_seconds": 7.602
+            }
+          ]
+        },
+        {
+          "seed": 5501,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+          "allocated_token_cap": 828,
+          "used_tokens": 828,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "2(3x - 5) = 6x - 10",
+                "7(6x - 10 + 4) - 5(x + 9) = 96",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "5(x + 9) = 5x + 45",
+                "7(6x - 6) - (5x + 45) = 96",
+                "7(6x - 6) = 42x - 42",
+                "-5(x + 9) = -5x - 45",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "x = 5"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "2(3x - 5) = 6x - 10",
+                "6x - 10 + 4 = 6x - 6",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7(6x - 6) = 42x - 42",
+                "-5(x + 9) = -5x - 45",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "2(3x - 5) = 6x - 10",
+                "7(6x - 10 + 4) - 5(x + 9) = 96",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "5(x + 9) = 5x + 45",
+                "7(6x - 6) - (5x + 45) = 96",
+                "7(6x - 6) = 42x - 42",
+                "-5(x + 9) = -5x - 45",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "x = 5"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": false,
+              "candidate_answer_correct": false,
+              "failure": "",
+              "completion_token_cap": 489,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 4724337300,
+                "load_duration": 3154600,
+                "prompt_eval_count": 339,
+                "prompt_eval_duration": 537713000,
+                "eval_count": 489,
+                "eval_duration": 4165805999,
+                "seed": 505503,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 828,
+              "budget_respected": true,
+              "elapsed_seconds": 7.359
+            }
+          ]
+        },
+        {
+          "seed": 5502,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+          "allocated_token_cap": 828,
+          "used_tokens": 736,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5(x + 9) = 96",
+                "42x - 42 - 5(x + 9) = 96",
+                "42x - 42 - 5 * x - 5 * 9 = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "x = 5"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5 * x - 5 * 9 = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5(x + 9) = 96",
+                "42x - 42 - 5(x + 9) = 96",
+                "42x - 42 - 5 * x - 5 * 9 = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "x = 5"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": false,
+              "candidate_answer_correct": false,
+              "failure": "",
+              "completion_token_cap": 532,
+              "generation_tokens": {
+                "done_reason": "stop",
+                "total_duration": 4207678200,
+                "load_duration": 2049500,
+                "prompt_eval_count": 296,
+                "prompt_eval_duration": 464912000,
+                "eval_count": 440,
+                "eval_duration": 3715267000,
+                "seed": 505504,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 736,
+              "budget_respected": true,
+              "elapsed_seconds": 6.762
+            }
+          ]
+        },
+        {
+          "seed": 6502,
+          "problem": "(2x - 5)/7 + (3x + 8)/11 = 19",
+          "allocated_token_cap": 828,
+          "used_tokens": 828,
+          "attempt_count": 2,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "77 ( (2x - 5)/(7) ) + 77 ( (3x + 8)/(11) ) = 77 * 19",
+                "11(2x - 5) + 7(3x + 8) = 1463",
+                "11 * 2x - 11 * 5 + 7 * 3x + 7 * 8 = 1463",
+                "22x - 55 + 21x + 56 = 1463",
+                "43x + 1 = 1463",
+                "43x = 1462",
+                "(2x - 5)/(7) + (3x + 8)/(11) = 19"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "77 ( (2x - 5)/(7) ) + 77 ( (3x + 8)/(11) ) = 77 * 19",
+                "11(2x - 5) + 7(3x + 8) = 1463",
+                "11 * 2x - 11 * 5 + 7 * 3x + 7 * 8 = 1463",
+                "22x - 55 + 21x + 56 = 1463",
+                "43x + 1 = 1463",
+                "43x = 1462",
+                "(2x - 5)/(7) + (3x + 8)/(11) = 19"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 714,
+              "generation_tokens": {
+                "done_reason": "stop",
+                "total_duration": 4110817700,
+                "load_duration": 2416000,
+                "prompt_eval_count": 114,
+                "prompt_eval_duration": 180896000,
+                "eval_count": 445,
+                "eval_duration": 3911183000,
+                "seed": 506504,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 559,
+              "budget_respected": true,
+              "elapsed_seconds": 6.386
+            },
+            {
+              "attempt_index": 2,
+              "status": "completed",
+              "candidate_steps": [
+                "(2x - 5)/(7) + (3x + 8)/(11) = 19",
+                "(11(2x - 5) + 7(3x + 8))/(77) = 19"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "(2x - 5)/(7) + (3x + 8)/(11) = 19",
+                "(11(2x - 5) + 7(3x + 8))/(77) = 19"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 155,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 1521021800,
+                "load_duration": 5662600,
+                "prompt_eval_count": 114,
+                "prompt_eval_duration": 25927000,
+                "eval_count": 155,
+                "eval_duration": 1476388000,
+                "seed": 506506,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 269,
+              "budget_respected": true,
+              "elapsed_seconds": 3.66
+            }
+          ]
+        },
+        {
+          "seed": 7500,
+          "problem": "(5x - 3)/13 - (2x + 7)/17 = 4",
+          "allocated_token_cap": 828,
+          "used_tokens": 828,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "(5x - 3)/(13) - (2x + 7)/(17) = 4",
+                "(17(5x - 3))/(221) - (13(2x + 7))/(221) = 4",
+                "(17(5x - 3) - 13(2x + 7))/(221) = 4",
+                "17(5x - 3) = 85x - 51",
+                "13(2x + 7) = 26x + 91",
+                "(85x - 51 - (26x + 91))/(221) = 4",
+                "85x - 51 - 26x - 91 = 59x - 142",
+                "(59x - 142)/(221) = 4",
+                "59x - 142 = 4 * 221",
+                "59x - 142 = 884",
+                "59x = 884 + 142",
+                "59x = 1026",
+                "x = (1026)/(59)",
+                "x = 17"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "(17(5x - 3))/(221) - (13(2x + 7))/(221) = 4",
+                "(17(5x - 3) - 13(2x + 7))/(221) = 4",
+                "17(5x - 3) = 85x - 51",
+                "13(2x + 7) = 26x + 91",
+                "(59x - 142)/(221) = 4",
+                "59x - 142 = 4 * 221",
+                "59x - 142 = 884",
+                "59x = 884 + 142",
+                "59x = 1026",
+                "x = (1026)/(59)",
+                "4 = 4",
+                "(5x - 3)/(13) - (2x + 7)/(17) = 4",
+                "13 * 17 = 221",
+                "(5x - 3)/(13) - (2x + 7)/(17) = 4",
+                "(17(5x - 3))/(221) - (13(2x + 7))/(221) = 4",
+                "(17(5x - 3) - 13(2x + 7))/(221) = 4",
+                "17(5x - 3) = 85x - 51",
+                "13(2x + 7) = 26x + 91",
+                "(85x - 51 - (26x + 91))/(221) = 4",
+                "85x - 51 - 26x - 91 = 59x - 142",
+                "(59x - 142)/(221) = 4",
+                "59x - 142 = 4 * 221",
+                "59x - 142 = 884",
+                "59x = 884 + 142",
+                "59x = 1026",
+                "x = (1026)/(59)",
+                "x = 17"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": false,
+              "candidate_answer_correct": false,
+              "failure": "",
+              "completion_token_cap": 476,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 4653889400,
+                "load_duration": 9035300,
+                "prompt_eval_count": 352,
+                "prompt_eval_duration": 566156000,
+                "eval_count": 476,
+                "eval_duration": 4069157000,
+                "seed": 507502,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 828,
+              "budget_respected": true,
+              "elapsed_seconds": 8.365
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "verified_local_repair_adaptive",
+      "answer_correct": 31,
+      "answer_accuracy": 0.8611111111111112,
+      "trace_valid": 31,
+      "trace_valid_rate": 0.8611111111111112,
+      "accepted_repairs": 2,
+      "repair_success": 2,
+      "repair_success_rate": 0.2857142857142857,
+      "additional_model_calls": 6,
+      "additional_tokens": 3506,
+      "allocated_additional_tokens": 5800,
+      "total_model_calls": 42,
+      "total_tokens": 25975,
+      "average_model_calls": 1.1666666666666667,
+      "average_tokens": 721.5277777777778,
+      "total_compute_cost": 25975,
+      "budget_respected": true,
+      "budget_records": [
+        {
+          "seed": 3500,
+          "problem": "(5x + 11)/(2x - 3) = -4",
+          "allocated_token_cap": 1327,
+          "used_tokens": 511,
+          "attempt_count": 1,
+          "accepted": true,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "(5x + 11)/(2x - 3) = -4",
+                "5x + 11 = -4(2x - 3)",
+                "5x + 11 = -8x + 12",
+                "5x + 8x + 11 = 12",
+                "13x + 11 = 12",
+                "13x = 1",
+                "x = (1)/(13)"
+              ],
+              "ignored_repeated_prefix": [
+                "(5x + 11)/(2x - 3) = -4",
+                "5x + 11 = -4(2x - 3)",
+                "5x + 11 = -8x + 12"
+              ],
+              "repaired_steps": [
+                "5x + 11 = -4(2x - 3)",
+                "5x + 11 = -8x + 12",
+                "5x + 8x + 11 = 12",
+                "13x + 11 = 12",
+                "13x = 1",
+                "x = (1)/(13)"
+              ],
+              "accepted": true,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 1161,
+              "generation_tokens": {
+                "done_reason": "stop",
+                "total_duration": 3128476700,
+                "load_duration": 5503400,
+                "prompt_eval_count": 166,
+                "prompt_eval_duration": 31709000,
+                "eval_count": 345,
+                "eval_duration": 3070694000,
+                "seed": 603502,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 511,
+              "budget_respected": true,
+              "elapsed_seconds": 5.706
+            }
+          ]
+        },
+        {
+          "seed": 4500,
+          "problem": "13 - (4 - (3 - (2 - x))) = 29",
+          "allocated_token_cap": 1951,
+          "used_tokens": 805,
+          "attempt_count": 1,
+          "accepted": true,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "13 - (4 - (3 - 2 + x)) = 29",
+                "13 - (4 - (1 + x)) = 29",
+                "13 - (4 - 1 - x) = 29",
+                "13 - (3 - x) = 29",
+                "13 - 3 + x = 29",
+                "10 + x = 29",
+                "x = 29 - 10",
+                "x = 19",
+                "3 - 2 = 1",
+                "4 - 1 = 3",
+                "13 - 3 = 10"
+              ],
+              "ignored_repeated_prefix": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "13 - (4 - (3 - 2 + x)) = 29"
+              ],
+              "repaired_steps": [
+                "13 - (4 - (3 - (2 - x))) = 29",
+                "13 - (4 - (3 - 2 + x)) = 29",
+                "13 - (4 - (1 + x)) = 29",
+                "13 - (4 - 1 - x) = 29",
+                "13 - (3 - x) = 29",
+                "13 - 3 + x = 29",
+                "10 + x = 29",
+                "x = 29 - 10",
+                "x = 19",
+                "3 - 2 = 1",
+                "4 - 1 = 3",
+                "13 - 3 = 10"
+              ],
+              "accepted": true,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 1790,
+              "generation_tokens": {
+                "done_reason": "stop",
+                "total_duration": 5724189500,
+                "load_duration": 8990200,
+                "prompt_eval_count": 161,
+                "prompt_eval_duration": 27616000,
+                "eval_count": 644,
+                "eval_duration": 5671015000,
+                "seed": 604502,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 805,
+              "budget_respected": true,
+              "elapsed_seconds": 7.975
+            }
+          ]
+        },
+        {
+          "seed": 5500,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+          "allocated_token_cap": 664,
+          "used_tokens": 664,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "6x - 10 + 4 = 6x - 6",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "42x - 42 - 5x - 45 = 96"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "7(6x - 10 + 4) - 5(x + 9) = 96",
+                "6x - 10 + 4 = 6x - 6",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5 * x - 5 * 9 = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "6x - 10 + 4 = 6x - 6",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "42x - 42 - 5x - 45 = 96"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 360,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 3272623500,
+                "load_duration": 2719300,
+                "prompt_eval_count": 304,
+                "prompt_eval_duration": 27878000,
+                "eval_count": 360,
+                "eval_duration": 3220356000,
+                "seed": 605502,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 664,
+              "budget_respected": true,
+              "elapsed_seconds": 5.68
+            }
+          ]
+        },
+        {
+          "seed": 5501,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+          "allocated_token_cap": 663,
+          "used_tokens": 663,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "2 ( 3x - 5 ) = 6x - 10",
+                "6x - 10 + 4 = 6x - 6",
+                "2 ( 3x - 5 ) + 4 = 6x - 6",
+                "7 (6x - 6) - 5 (x + 9) = 96",
+                "7 (6x - 6) = 42x - 42",
+                "-5 (x + 9) = -5x - 45",
+                "42x - 42 - 5x - 45 = 96"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "2(3x - 5) = 6x - 10",
+                "6x - 10 + 4 = 6x - 6",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7(6x - 6) = 42x - 42",
+                "-5(x + 9) = -5x - 45",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "2 ( 3x - 5 ) = 6x - 10",
+                "6x - 10 + 4 = 6x - 6",
+                "2 ( 3x - 5 ) + 4 = 6x - 6",
+                "7 (6x - 6) - 5 (x + 9) = 96",
+                "7 (6x - 6) = 42x - 42",
+                "-5 (x + 9) = -5x - 45",
+                "42x - 42 - 5x - 45 = 96"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 324,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 2947706700,
+                "load_duration": 5794400,
+                "prompt_eval_count": 339,
+                "prompt_eval_duration": 27862000,
+                "eval_count": 324,
+                "eval_duration": 2894396000,
+                "seed": 605503,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 663,
+              "budget_respected": true,
+              "elapsed_seconds": 5.373
+            }
+          ]
+        },
+        {
+          "seed": 5502,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+          "allocated_token_cap": 332,
+          "used_tokens": 332,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96",
+                "7(6x - 6) - 5(x + 9) = 96",
+                "7 * 6x - 7 * 6 - 5 * x - 5 * 9 = 96",
+                "42x - 42 - 5x - 45 = 96",
+                "42x - 5x - 42 - 45 = 96",
+                "37x - 87 = 96",
+                "37x - 87 + 87 = 96 + 87",
+                "37x = 183",
+                "x = (183)/(37)",
+                "7(2(3x - 5) + 4) - 5(x + 9) = 96"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 36,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 553413200,
+                "load_duration": 3290500,
+                "prompt_eval_count": 296,
+                "prompt_eval_duration": 28009000,
+                "eval_count": 36,
+                "eval_duration": 501705000,
+                "seed": 605504,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 332,
+              "budget_respected": true,
+              "elapsed_seconds": 2.882
+            }
+          ]
+        },
+        {
+          "seed": 6502,
+          "problem": "(2x - 5)/7 + (3x + 8)/11 = 19",
+          "allocated_token_cap": 531,
+          "used_tokens": 531,
+          "attempt_count": 1,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": [
+            {
+              "attempt_index": 1,
+              "status": "completed",
+              "candidate_steps": [
+                "(2x - 5)/(7) + (3x + 8)/(11) = 19",
+                "77 ( (2x - 5)/(7) + (3x + 8)/(11) ) = 77 * 19",
+                "77 * (2x - 5)/(7) + 77 * (3x + 8)/(11) = 1463",
+                "11(2x - 5) + 7(3x + 8) = 1463",
+                "11 * 2x - 11 * 5 + 7 * 3x + 7 * 8 = 1463",
+                "22x - 55 + 21x + 56 = 1463",
+                "(22x + 21x) + (-55 + 56) = 1463",
+                "43x + 1 = 1463",
+                "43x = 1462"
+              ],
+              "ignored_repeated_prefix": [],
+              "repaired_steps": [
+                "(2x - 5)/(7) + (3x + 8)/(11) = 19",
+                "77 ( (2x - 5)/(7) + (3x + 8)/(11) ) = 77 * 19",
+                "77 * (2x - 5)/(7) + 77 * (3x + 8)/(11) = 1463",
+                "11(2x - 5) + 7(3x + 8) = 1463",
+                "11 * 2x - 11 * 5 + 7 * 3x + 7 * 8 = 1463",
+                "22x - 55 + 21x + 56 = 1463",
+                "(22x + 21x) + (-55 + 56) = 1463",
+                "43x + 1 = 1463",
+                "43x = 1462"
+              ],
+              "accepted": false,
+              "candidate_trace_valid": true,
+              "candidate_answer_correct": true,
+              "failure": "",
+              "completion_token_cap": 417,
+              "generation_tokens": {
+                "done_reason": "length",
+                "total_duration": 3685503500,
+                "load_duration": 2074400,
+                "prompt_eval_count": 114,
+                "prompt_eval_duration": 24268000,
+                "eval_count": 417,
+                "eval_duration": 3644806000,
+                "seed": 606504,
+                "temperature": 1.4,
+                "prompt_profile": "default",
+                "problem_format": "equation"
+              },
+              "total_tokens": 531,
+              "budget_respected": true,
+              "elapsed_seconds": 6.006
+            }
+          ]
+        },
+        {
+          "seed": 7500,
+          "problem": "(5x - 3)/13 - (2x + 7)/17 = 4",
+          "allocated_token_cap": 332,
+          "used_tokens": 0,
+          "attempt_count": 0,
+          "accepted": false,
+          "budget_respected": true,
+          "attempts": []
+        }
+      ]
     }
   ],
   "global_regeneration_results": [
@@ -76,17 +1078,19 @@
           "completion_token_cap": 382,
           "generation_tokens": {
             "done_reason": "stop",
-            "total_duration": 3070229000,
-            "load_duration": 2184000,
+            "total_duration": 7419204900,
+            "load_duration": 4256495200,
             "prompt_eval_count": 74,
-            "prompt_eval_duration": 330370000,
+            "prompt_eval_duration": 332370000,
             "eval_count": 343,
-            "eval_duration": 2713946000,
+            "eval_duration": 2817835000,
             "seed": 303501,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 417,
-          "elapsed_seconds": 5.767
+          "elapsed_seconds": 10.215
         }
       ],
       "attempt_count": 1,
@@ -99,7 +1103,7 @@
       "local_repair_token_budget": 456,
       "global_total_tokens": 417,
       "budget_respected": true,
-      "elapsed_seconds": 5.767
+      "elapsed_seconds": 10.215
     },
     {
       "seed": 4500,
@@ -130,17 +1134,19 @@
           "completion_token_cap": 1094,
           "generation_tokens": {
             "done_reason": "stop",
-            "total_duration": 2140026800,
-            "load_duration": 6430400,
+            "total_duration": 2236231200,
+            "load_duration": 2625800,
             "prompt_eval_count": 76,
-            "prompt_eval_duration": 194119000,
+            "prompt_eval_duration": 187223000,
             "eval_count": 240,
-            "eval_duration": 1926712000,
+            "eval_duration": 2036187000,
             "seed": 304501,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 316,
-          "elapsed_seconds": 4.282
+          "elapsed_seconds": 4.376
         }
       ],
       "attempt_count": 1,
@@ -153,7 +1159,7 @@
       "local_repair_token_budget": 1170,
       "global_total_tokens": 316,
       "budget_respected": true,
-      "elapsed_seconds": 4.282
+      "elapsed_seconds": 4.376
     },
     {
       "seed": 5500,
@@ -193,17 +1199,19 @@
           "completion_token_cap": 725,
           "generation_tokens": {
             "done_reason": "stop",
-            "total_duration": 4812119100,
-            "load_duration": 2307000,
+            "total_duration": 5010748300,
+            "load_duration": 3205700,
             "prompt_eval_count": 84,
-            "prompt_eval_duration": 180888000,
+            "prompt_eval_duration": 177766000,
             "eval_count": 582,
-            "eval_duration": 4618095000,
+            "eval_duration": 4820312000,
             "seed": 305501,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 666,
-          "elapsed_seconds": 7.206
+          "elapsed_seconds": 7.435
         },
         {
           "attempt_index": 2,
@@ -224,17 +1232,19 @@
           "completion_token_cap": 59,
           "generation_tokens": {
             "done_reason": "length",
-            "total_duration": 671182800,
-            "load_duration": 2835000,
+            "total_duration": 702034200,
+            "load_duration": 2645100,
             "prompt_eval_count": 84,
-            "prompt_eval_duration": 25129000,
+            "prompt_eval_duration": 24074000,
             "eval_count": 59,
-            "eval_duration": 629286000,
+            "eval_duration": 659457000,
             "seed": 305502,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 143,
-          "elapsed_seconds": 2.746
+          "elapsed_seconds": 2.824
         }
       ],
       "attempt_count": 2,
@@ -247,7 +1257,7 @@
       "local_repair_token_budget": 809,
       "global_total_tokens": 809,
       "budget_respected": true,
-      "elapsed_seconds": 9.952
+      "elapsed_seconds": 10.259
     },
     {
       "seed": 5501,
@@ -285,17 +1295,19 @@
           "completion_token_cap": 1105,
           "generation_tokens": {
             "done_reason": "stop",
-            "total_duration": 4094350000,
-            "load_duration": 2629700,
+            "total_duration": 4289511600,
+            "load_duration": 3600100,
             "prompt_eval_count": 84,
-            "prompt_eval_duration": 21395000,
+            "prompt_eval_duration": 21045000,
             "eval_count": 497,
-            "eval_duration": 4067490000,
+            "eval_duration": 4254319000,
             "seed": 305502,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 581,
-          "elapsed_seconds": 6.412
+          "elapsed_seconds": 6.624
         },
         {
           "attempt_index": 2,
@@ -326,17 +1338,19 @@
           "completion_token_cap": 524,
           "generation_tokens": {
             "done_reason": "length",
-            "total_duration": 4352480100,
-            "load_duration": 2054200,
+            "total_duration": 4586160100,
+            "load_duration": 8486600,
             "prompt_eval_count": 84,
-            "prompt_eval_duration": 27446000,
+            "prompt_eval_duration": 26534000,
             "eval_count": 524,
-            "eval_duration": 4307703000,
+            "eval_duration": 4536699000,
             "seed": 305503,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 608,
-          "elapsed_seconds": 6.639
+          "elapsed_seconds": 6.914
         }
       ],
       "attempt_count": 2,
@@ -349,7 +1363,7 @@
       "local_repair_token_budget": 1189,
       "global_total_tokens": 1189,
       "budget_respected": true,
-      "elapsed_seconds": 13.051
+      "elapsed_seconds": 13.538
     },
     {
       "seed": 5502,
@@ -366,11 +1380,10 @@
             "2(3x - 5) = 6x - 10",
             "6x - 10 + 4 = 6x - 6",
             "7(6x - 6) - 5(x + 9) = 96",
-            "7 * 6x - 7 * 6 = 42x - 42",
-            "-5 * x - 5 * 9 = -5x - 45",
+            "7(6x - 6) = 42x - 42",
+            "-5(x + 9) = -5x - 45",
             "42x - 42 - 5x - 45 = 96",
             "42x - 5x - 42 - 45 = 96",
-            "(42x - 5x) + (-42 - 45) = 96",
             "37x - 87 = 96",
             "37x - 87 + 87 = 96 + 87",
             "37x = 183",
@@ -382,24 +1395,26 @@
           "candidate_has_isolated_answer": true,
           "candidate_answer_step": "x = 5",
           "candidate_answer_correct": false,
-          "first_error_node": "n15",
+          "first_error_node": "n14",
           "error_type": "algebraic_transformation_error",
           "failure": "",
           "infrastructure_retries": 0,
           "completion_token_cap": 627,
           "generation_tokens": {
             "done_reason": "stop",
-            "total_duration": 5060711100,
-            "load_duration": 2607400,
+            "total_duration": 4952600000,
+            "load_duration": 2068100,
             "prompt_eval_count": 84,
-            "prompt_eval_duration": 26964000,
-            "eval_count": 616,
-            "eval_duration": 5016363000,
+            "prompt_eval_duration": 28074000,
+            "eval_count": 571,
+            "eval_duration": 4908406000,
             "seed": 305503,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
-          "total_tokens": 700,
-          "elapsed_seconds": 7.421
+          "total_tokens": 655,
+          "elapsed_seconds": 7.326
         }
       ],
       "attempt_count": 1,
@@ -410,9 +1425,9 @@
       "local_model_repair_accepted": true,
       "local_post_answer_correct": true,
       "local_repair_token_budget": 711,
-      "global_total_tokens": 700,
+      "global_total_tokens": 655,
       "budget_respected": true,
-      "elapsed_seconds": 7.421
+      "elapsed_seconds": 7.326
     },
     {
       "seed": 6502,
@@ -446,17 +1461,19 @@
           "completion_token_cap": 547,
           "generation_tokens": {
             "done_reason": "stop",
-            "total_duration": 4394622000,
-            "load_duration": 2846100,
+            "total_duration": 4608045900,
+            "load_duration": 4311700,
             "prompt_eval_count": 79,
-            "prompt_eval_duration": 174986000,
+            "prompt_eval_duration": 169484000,
             "eval_count": 525,
-            "eval_duration": 4198417999,
+            "eval_duration": 4419033000,
             "seed": 306503,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 604,
-          "elapsed_seconds": 6.675
+          "elapsed_seconds": 6.894
         }
       ],
       "attempt_count": 1,
@@ -469,7 +1486,7 @@
       "local_repair_token_budget": 626,
       "global_total_tokens": 604,
       "budget_respected": true,
-      "elapsed_seconds": 6.675
+      "elapsed_seconds": 6.894
     },
     {
       "seed": 7500,
@@ -507,17 +1524,19 @@
           "completion_token_cap": 760,
           "generation_tokens": {
             "done_reason": "stop",
-            "total_duration": 5978637100,
-            "load_duration": 1682300,
+            "total_duration": 6414706400,
+            "load_duration": 10373800,
             "prompt_eval_count": 79,
-            "prompt_eval_duration": 177341000,
+            "prompt_eval_duration": 197815000,
             "eval_count": 727,
-            "eval_duration": 5796093000,
+            "eval_duration": 6190099000,
             "seed": 307501,
-            "temperature": 1.4
+            "temperature": 1.4,
+            "prompt_profile": "default",
+            "problem_format": "equation"
           },
           "total_tokens": 806,
-          "elapsed_seconds": 8.753
+          "elapsed_seconds": 9.355
         }
       ],
       "attempt_count": 1,
@@ -530,13 +1549,15 @@
       "local_repair_token_budget": 839,
       "global_total_tokens": 806,
       "budget_respected": true,
-      "elapsed_seconds": 8.753
+      "elapsed_seconds": 9.355
     }
   ],
   "caveats": [
     "This is a small stress set and not a benchmark result.",
     "Both repair strategies use the same symbolic verifier gate.",
     "Global regeneration retries only while its per-error budget remains.",
+    "Uniform and adaptive local strategies use fresh model calls.",
+    "Adaptive local caps use trace depth and typed-error risk as a pre-registered heuristic.",
     "GPU sampling may vary slightly even with recorded seeds."
   ]
 }

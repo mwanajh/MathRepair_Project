@@ -271,12 +271,19 @@ comparison.
 Run the matched-budget baseline:
 
 ```powershell
-python matched_budget_experiment.py
+python matched_budget_experiment.py --live-local
 ```
 
-Pilot result: global regeneration reached `88.9%` answer accuracy, while local
-repair reached `100%` under the same per-error token ceilings. This is still a
-small 12-problem set, not a benchmark result.
+Use `python matched_budget_experiment.py --reuse-global-results
+--reuse-local-results` to rebuild all tables from saved attempts without
+contacting the model.
+
+The fresh-call pilot under a shared `5,800` additional-token ceiling produced
+`88.9%` answer accuracy for global regeneration and `86.1%` for both uniform
+and adaptive local repair. Adaptive local repair improved valid-trace rate over
+uniform (`86.1%` versus `83.3%`) but did not improve answer accuracy. See
+`MATCHED_BUDGET_PROTOCOL.md`; this is a small stress pilot, not a benchmark
+conclusion.
 
 Run the repeated-seed evaluation:
 

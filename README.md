@@ -383,20 +383,33 @@ Results are written to `repair_experiment_summary.json` and
 Compare against verified global regeneration:
 
 ```powershell
-python matched_budget_experiment.py
+python matched_budget_experiment.py --live-local
 python analyze_repair_experiment.py
 ```
 
-Under matched per-error total-token ceilings, the pilot produced:
+Rebuild the matched-budget tables from the saved global attempts without new
+model calls:
+
+```powershell
+python matched_budget_experiment.py --reuse-global-results --reuse-local-results
+```
+
+The Task 5 report now compares all three requested strategies under a shared
+additional-token ceiling. The current fresh-call pilot produced:
 
 - no repair: answer `86.1%`, valid traces `80.6%`
-- verified global regeneration: answer `88.9%`, valid traces `88.9%`, 9 calls
-- verified local repair: answer `100%`, valid traces `97.2%`, 8 calls
+- global regeneration: answer `88.9%`, valid traces `88.9%`, repair success `42.9%`
+- local repair, uniform budget: answer `86.1%`, valid traces `83.3%`, repair success `14.3%`
+- local repair, adaptive budget: answer `86.1%`, valid traces `86.1%`, repair success `28.6%`
 
-Global regeneration used `4,841/5,800` allowed tokens because accepted runs
-stopped early and some remaining budgets could not fit another prompt. There
-was no budget violation. These are results from a 12-problem pilot, not a
-benchmark conclusion.
+The matched ceiling was `5,800` additional tokens. The adaptive heuristic did
+not improve answer accuracy in this pilot, although it improved trace validity
+relative to uniform allocation while using fewer actual tokens. Global
+regeneration was `+2.8` percentage points more accurate than either local arm.
+See
+[MATCHED_BUDGET_PROTOCOL.md](MATCHED_BUDGET_PROTOCOL.md) for the estimand,
+budget rules, metrics, and confirmatory-run requirements. These are results from
+a 12-problem stress pilot, not a benchmark conclusion.
 
 ## Repeated-seed experiment
 
