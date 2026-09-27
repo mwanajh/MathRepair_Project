@@ -76,7 +76,7 @@ def render_task1() -> str:
         )
     return "\n".join(
         [
-            "TASK 1 - REASONING GRAPH IN THE MODEL PIPELINE",
+            "REASONING GRAPH IN THE MODEL PIPELINE",
             f"Problem: {result.problem}",
             "Offline demonstration; the Ollama model uses this same graph path.",
             "",
@@ -110,7 +110,7 @@ def render_task2(root: Path) -> str:
     ]
     return "\n".join(
         [
-            "TASK 2 - HARD BENCHMARK PILOT",
+            "HARD BENCHMARK PILOT",
             f"Benchmark: {manifest['benchmark']}",
             f"Selected problems: {manifest['problem_count']}",
             f"Difficulty levels: {manifest['level_counts']}",
@@ -131,7 +131,7 @@ def render_task3() -> str:
     ]
     return "\n".join(
         [
-            "TASK 3 - FROZEN TYPED-ERROR TAXONOMY",
+            "FROZEN TYPED-ERROR TAXONOMY",
             f"Frozen error types: {len(ERROR_TAXONOMY)}",
             "",
             table(["Error type", "Recommended repair actions"], rows),
@@ -158,7 +158,7 @@ def render_task4(root: Path) -> str:
     ]
     return "\n".join(
         [
-            "TASK 4 - TYPED VERIFIER TRAINING DATA",
+            "TYPED VERIFIER TRAINING DATA",
             f"Dataset examples: {manifest['example_count']}",
             f"Examples per error type: {set(manifest['error_type_counts'].values()).pop()}",
             f"Reference-answer leakage: {manifest['reference_solution_leakage']}",
@@ -198,7 +198,7 @@ def render_task5(report: dict[str, object]) -> str:
     ]["verified_local_repair_adaptive"]
     return "\n".join(
         [
-            "TASK 5 - MATCHED-BUDGET EXPERIMENT",
+            "MATCHED-BUDGET EXPERIMENT",
             f"Matched additional-token ceiling: {report['matched_additional_token_budget']:,}",
             "",
             table(
@@ -229,7 +229,7 @@ def render_task6(report: dict[str, object]) -> str:
         )
     return "\n".join(
         [
-            "TASK 6 - ABLATION TABLE",
+            "ABLATION TABLE",
             table(
                 ["Variant", "Status", "Answer", "Valid trace", "Repair"],
                 rows,
@@ -256,7 +256,7 @@ def render_task7(report: dict[str, object]) -> str:
         )
     return "\n".join(
         [
-            "TASK 7 - OUTPUT-CONTRACT SENSITIVITY",
+            "OUTPUT-CONTRACT SENSITIVITY",
             table(
                 ["Model", "Prompt", "Failures", "Strict", "Normalized", "Delta"],
                 rows,
