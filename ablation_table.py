@@ -95,11 +95,14 @@ def build_ablation_table(
             "adaptive_compute": "on",
             "repair_scope": "local",
             "symbolic_tool": "on",
-            "status": "planned",
-            "result_source": "",
+            "status": "measured_separate_protocol",
+            "result_source": "math500_system_ablation_report.json",
             "metrics": planned_metrics(),
             "delta_answer_accuracy_pp": None,
-            "note": "Flatten nodes into a sequence and disable dependency impact propagation.",
+            "note": (
+                "Measured on the separate 40-problem MATH protocol; null cells "
+                "prevent mixing those metrics with this equation benchmark."
+            ),
         },
         {
             "variant_id": "no_typed_error",
@@ -109,11 +112,14 @@ def build_ablation_table(
             "adaptive_compute": "on",
             "repair_scope": "local",
             "symbolic_tool": "on",
-            "status": "planned",
-            "result_source": "",
+            "status": "measured_separate_protocol",
+            "result_source": "math500_system_ablation_report.json",
             "metrics": planned_metrics(),
             "delta_answer_accuracy_pp": None,
-            "note": "Use only valid/invalid labels and one generic local-resample action.",
+            "note": (
+                "Measured on the separate 40-problem MATH protocol; null cells "
+                "prevent mixing those metrics with this equation benchmark."
+            ),
         },
         {
             "variant_id": "no_adaptive_compute",
@@ -159,11 +165,14 @@ def build_ablation_table(
             "adaptive_compute": "on",
             "repair_scope": "local",
             "symbolic_tool": "off",
-            "status": "blocked_by_learned_verifier",
-            "result_source": "",
+            "status": "measured_separate_protocol",
+            "result_source": "math500_system_ablation_report.json",
             "metrics": planned_metrics(),
             "delta_answer_accuracy_pp": None,
-            "note": "Requires the learned verifier before symbolic acceptance can be removed.",
+            "note": (
+                "Measured on the separate 40-problem MATH protocol; the symbolic "
+                "heuristic had zero coverage on open-ended traces."
+            ),
         },
     ]
 
@@ -192,7 +201,12 @@ def build_ablation_table(
             "measured_count": sum(row["status"] == "measured" for row in rows),
             "proxy_count": sum(row["status"] == "proxy_result" for row in rows),
             "planned_count": sum(
-                row["status"] not in {"measured", "proxy_result"} for row in rows
+                row["status"]
+                not in {"measured", "proxy_result", "measured_separate_protocol"}
+                for row in rows
+            ),
+            "separate_protocol_count": sum(
+                row["status"] == "measured_separate_protocol" for row in rows
             ),
         },
         "interpretation_rule": (
@@ -267,9 +281,9 @@ def render_markdown(report: dict[str, object]) -> str:
                 f"- {row['variant']}: answer-accuracy delta versus the full "
                 f"proxy = {row['delta_answer_accuracy_pp']:+.1f} pp."
             )
-    lines.extend(["", "## Remaining Runs", ""])
+    lines.extend(["", "## Separate Protocol Evidence", ""])
     for row in report["rows"]:
-        if row["status"] not in {"measured", "proxy_result"}:
+        if row["status"] == "measured_separate_protocol":
             lines.append(f"- {row['variant']}: {row['note']}")
     return "\n".join(lines) + "\n"
 

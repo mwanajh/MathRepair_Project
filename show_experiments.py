@@ -108,8 +108,7 @@ def render_task2(root: Path) -> str:
         [subject, quota]
         for subject, quota in manifest["subject_quotas"].items()
     ]
-    return "\n".join(
-        [
+    lines = [
             "HARD BENCHMARK PILOT",
             f"Benchmark: {manifest['benchmark']}",
             f"Selected problems: {manifest['problem_count']}",
@@ -121,7 +120,37 @@ def render_task2(root: Path) -> str:
             "",
             "Note: text_unverified is a processing smoke test, not an accuracy result.",
         ]
-    )
+    accuracy_path = root / "math500_accuracy_pilot_5.json"
+    if accuracy_path.exists():
+        accuracy = load_report(accuracy_path)
+        lines.extend(
+            [
+                "",
+                "ANSWER-SCORED FIVE-PROBLEM PILOT",
+                f"Completed: {accuracy['completed_count']}/{accuracy['problem_count']}",
+                f"Initial answer accuracy: {percent(accuracy['initial_answer_accuracy'])}",
+                f"Final answer accuracy: {percent(accuracy['final_answer_accuracy'])}",
+                f"Repair success: {accuracy['repair_success_count']}/{accuracy['repair_attempt_count']}",
+                f"Repair regressions: {accuracy['repair_regression_count']}",
+                f"Model calls / tokens: {accuracy['total_model_calls']} / {accuracy['total_tokens']}",
+                "This is a calibration pilot, not a 40-problem benchmark result.",
+            ]
+        )
+    full_path = root / "math500_full40_baseline_report.json"
+    if full_path.exists():
+        full = load_report(full_path)
+        lines.extend(
+            [
+                "",
+                "ANSWER-SCORED FULL 40-PROBLEM BASELINE",
+                f"Completed generations: {full['completed_count']}/{full['problem_count']}",
+                f"Answer accuracy: {percent(full['initial_answer_accuracy'])}",
+                f"Strict / normalized outputs: {full['strict_output_contract_count']} / "
+                f"{full['normalized_recovery_count']}",
+                f"Model calls / tokens: {full['total_model_calls']} / {full['total_tokens']}",
+            ]
+        )
+    return "\n".join(lines)
 
 
 def render_task3() -> str:
@@ -156,8 +185,7 @@ def render_task4(root: Path) -> str:
         ]
         for example in examples[:4]
     ]
-    return "\n".join(
-        [
+    lines = [
             "TYPED VERIFIER TRAINING DATA",
             f"Dataset examples: {manifest['example_count']}",
             f"Examples per error type: {set(manifest['error_type_counts'].values()).pop()}",
@@ -170,7 +198,25 @@ def render_task4(root: Path) -> str:
             "",
             "The table shows the first four controlled-corruption examples.",
         ]
-    )
+    learned_path = root / "learned_verifier_report.json"
+    if learned_path.exists():
+        learned = load_report(learned_path)
+        test = learned["test_metrics"]
+        baseline = learned["test_rule_baseline"]
+        lines.extend(
+            [
+                "",
+                "LEARNED VERIFIER HELD-OUT PILOT",
+                f"Split: {learned['split']['train']['count']}/"
+                f"{learned['split']['dev']['count']}/"
+                f"{learned['split']['test']['count']} train/dev/test",
+                f"Location accuracy: {percent(test['error_location_accuracy'])}",
+                f"Error-type accuracy: {percent(test['error_type_accuracy'])}",
+                f"Rule/symbolic baseline coverage: {percent(baseline['coverage'])}",
+                "Synthetic templates only; natural-trace generalization is not established.",
+            ]
+        )
+    return "\n".join(lines)
 
 
 def render_task5(report: dict[str, object]) -> str:
@@ -235,8 +281,77 @@ def render_task6(report: dict[str, object]) -> str:
                 rows,
             ),
             "",
-            "Note: '--' means the experiment is planned but has not been run.",
-            "Full MathRepair is currently a rule-based proxy, not the final learned verifier.",
+            "Note: '--' avoids mixing metrics from the separate MATH-500 protocol.",
+            "Full MathRepair remains a rule-based proxy only within the equation table.",
+        ]
+    )
+
+
+def render_verifier_ablation(root: Path) -> str:
+    path = root / "verifier_ablation_report.json"
+    if not path.exists():
+        return ""
+    report = load_report(path)
+    rows = []
+    for variant in report["variants"]:
+        metrics = variant["metrics"]
+        rows.append(
+            [
+                variant["variant_id"],
+                percent(metrics["error_location_accuracy"]),
+                percent(metrics["error_type_accuracy"]),
+                percent(metrics["end_to_end_accuracy"]),
+            ]
+        )
+    return "\n".join(
+        [
+            "VERIFIER-STAGE ABLATIONS",
+            table(["Variant", "Location", "Type", "End to end"], rows),
+            "Eight synthetic held-out examples; these are not answer-accuracy ablations.",
+        ]
+    )
+
+
+def render_system_ablation(root: Path) -> str:
+    path = root / "math500_system_ablation_report.json"
+    if not path.exists():
+        return ""
+    report = load_report(path)
+    rows = []
+    for variant in report["variants"]:
+        rows.append(
+            [
+                variant["variant_id"],
+                percent(variant["initial_answer_accuracy"]),
+                percent(variant["final_answer_accuracy"]),
+                variant["verifier_detection_count"],
+                f"{variant['repair_success_count']}/{variant['repair_attempt_count']}",
+                variant["repair_regression_count"],
+                variant["budget_skipped_count"],
+                variant["additional_model_calls"],
+                variant["additional_tokens"],
+            ]
+        )
+    return "\n".join(
+        [
+            "MATH-500 SYSTEM-LEVEL ABLATIONS",
+            f"Shared additional-token ceiling: {report['matched_additional_token_budget']}",
+            table(
+                [
+                    "Variant",
+                    "Initial",
+                    "Final",
+                    "Detect",
+                    "Repair",
+                    "Regress",
+                    "Skipped",
+                    "Calls",
+                    "Tokens",
+                ],
+                rows,
+            ),
+            "Baseline generations are identical across arms; failures remain in the denominator.",
+            report["symbolic_support_observation"],
         ]
     )
 
@@ -286,6 +401,13 @@ def build_display(section: str, root: Path = PROJECT_DIR) -> str:
     blocks = ["MATHREPAIR EXPERIMENT RESULTS"]
     for name in selected:
         blocks.append(renderers[name]())
+        if name == "task6":
+            system_ablation = render_system_ablation(root)
+            if system_ablation:
+                blocks.append(system_ablation)
+            verifier_ablation = render_verifier_ablation(root)
+            if verifier_ablation:
+                blocks.append(verifier_ablation)
     return "\n\n".join(blocks)
 
 

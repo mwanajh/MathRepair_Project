@@ -8,6 +8,7 @@ from model_pipeline import (
     extract_equation_steps,
     parse_model_steps,
     parse_qwen_json_steps,
+    parse_normalized_text_steps,
     parse_text_steps,
     run_pipeline,
     save_trace,
@@ -34,6 +35,15 @@ class ModelPipelineTests(unittest.TestCase):
         self.assertEqual(
             parse_text_steps('{"steps": ["Count the cases", "Answer: 9"]}'),
             ["Count the cases", "Answer: 9"],
+        )
+
+    def test_normalizes_object_shaped_text_steps_for_sensitivity_runs(self):
+        response = json.dumps(
+            {"steps": [{"state": "Compute", "details": "2 + 2 = 4"}]}
+        )
+
+        self.assertEqual(
+            parse_normalized_text_steps(response), ["Compute 2 + 2 = 4"]
         )
 
     def test_qwen_profile_discards_explanatory_step_entries(self):

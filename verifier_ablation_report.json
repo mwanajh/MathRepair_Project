@@ -1,0 +1,81 @@
+{
+  "generated_utc": "2026-09-29T06:52:57.159076+00:00",
+  "experiment": "typed_verifier_component_ablation",
+  "evaluation_scope": "verifier_stage_only",
+  "seed": 42,
+  "test_example_count": 8,
+  "test_example_ids": [
+    "controlled-algebraic_transformation_error-004",
+    "controlled-arithmetic_error-004",
+    "controlled-dependency_error-004",
+    "controlled-incomplete_solution-002",
+    "controlled-logical_inference_error-002",
+    "controlled-missing_assumption-003",
+    "controlled-semantic_interpretation_error-006",
+    "controlled-sign_error-005"
+  ],
+  "variants": [
+    {
+      "variant_id": "full_mathrepair",
+      "graph": true,
+      "typed_error": true,
+      "symbolic_tool_support": true,
+      "metrics": {
+        "example_count": 8,
+        "error_location_accuracy": 1.0,
+        "error_type_accuracy": 1.0,
+        "end_to_end_accuracy": 1.0,
+        "typed_error_available": true,
+        "delta_location_accuracy_pp": 0.0,
+        "delta_end_to_end_accuracy_pp": 0.0
+      }
+    },
+    {
+      "variant_id": "no_graph",
+      "graph": false,
+      "typed_error": true,
+      "symbolic_tool_support": true,
+      "metrics": {
+        "example_count": 8,
+        "error_location_accuracy": 1.0,
+        "error_type_accuracy": 0.875,
+        "end_to_end_accuracy": 0.875,
+        "typed_error_available": true,
+        "delta_location_accuracy_pp": 0.0,
+        "delta_end_to_end_accuracy_pp": -12.5
+      }
+    },
+    {
+      "variant_id": "no_typed_error",
+      "graph": true,
+      "typed_error": false,
+      "symbolic_tool_support": true,
+      "metrics": {
+        "example_count": 8,
+        "error_location_accuracy": 1.0,
+        "error_type_accuracy": null,
+        "end_to_end_accuracy": null,
+        "typed_error_available": false,
+        "delta_location_accuracy_pp": 0.0,
+        "delta_end_to_end_accuracy_pp": null
+      }
+    },
+    {
+      "variant_id": "no_symbolic_tool",
+      "graph": true,
+      "typed_error": true,
+      "symbolic_tool_support": false,
+      "metrics": {
+        "example_count": 8,
+        "error_location_accuracy": 1.0,
+        "error_type_accuracy": 1.0,
+        "end_to_end_accuracy": 1.0,
+        "typed_error_available": true,
+        "delta_location_accuracy_pp": 0.0,
+        "delta_end_to_end_accuracy_pp": 0.0
+      }
+    }
+  ],
+  "interpretation": "These ablations measure held-out error localization and typing only. They do not establish final-answer or end-to-end repair effects.",
+  "limitation": "The controlled test has eight synthetic examples, one per frozen error class; equal scores can reflect template simplicity."
+}

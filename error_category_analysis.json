@@ -1,0 +1,186 @@
+{
+  "generated_utc": "2026-09-29T14:40:26.804567+00:00",
+  "experiment": "matched_budget_error_category_analysis",
+  "source_matched_report": "matched_budget_report.json",
+  "source_error_labels": "stress_multisample_report.json",
+  "detected_error_run_count": 7,
+  "observed_category_counts": {
+    "algebraic_transformation_error": 5,
+    "sign_error": 1,
+    "arithmetic_error": 1
+  },
+  "comparison_unit": "accepted answer-correct repair among detected-error runs",
+  "rows": [
+    {
+      "error_category": "arithmetic_error",
+      "observed_error_runs": 1,
+      "global_success_count": 0,
+      "global_success_rate": 0.0,
+      "uniform_local_success_count": 0,
+      "uniform_local_success_rate": 0.0,
+      "adaptive_local_success_count": 0,
+      "adaptive_local_success_rate": 0.0,
+      "best_observed_strategy": "tie",
+      "best_observed_strategies": [
+        "global_regeneration",
+        "uniform_local_repair",
+        "adaptive_local_repair"
+      ],
+      "evidence_status": "observed",
+      "keys": [
+        {
+          "seed": 6502,
+          "problem": "(2x - 5)/7 + (3x + 8)/11 = 19"
+        }
+      ]
+    },
+    {
+      "error_category": "algebraic_transformation_error",
+      "observed_error_runs": 5,
+      "global_success_count": 2,
+      "global_success_rate": 0.4,
+      "uniform_local_success_count": 1,
+      "uniform_local_success_rate": 0.2,
+      "adaptive_local_success_count": 1,
+      "adaptive_local_success_rate": 0.2,
+      "best_observed_strategy": "global_regeneration",
+      "best_observed_strategies": [
+        "global_regeneration"
+      ],
+      "evidence_status": "observed",
+      "keys": [
+        {
+          "seed": 3500,
+          "problem": "(5x + 11)/(2x - 3) = -4"
+        },
+        {
+          "seed": 5500,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96"
+        },
+        {
+          "seed": 5501,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96"
+        },
+        {
+          "seed": 5502,
+          "problem": "7(2(3x - 5) + 4) - 5(x + 9) = 96"
+        },
+        {
+          "seed": 7500,
+          "problem": "(5x - 3)/13 - (2x + 7)/17 = 4"
+        }
+      ]
+    },
+    {
+      "error_category": "missing_assumption",
+      "observed_error_runs": 0,
+      "global_success_count": 0,
+      "global_success_rate": null,
+      "uniform_local_success_count": 0,
+      "uniform_local_success_rate": null,
+      "adaptive_local_success_count": 0,
+      "adaptive_local_success_rate": null,
+      "best_observed_strategy": null,
+      "best_observed_strategies": [],
+      "evidence_status": "no_observed_cases",
+      "keys": []
+    },
+    {
+      "error_category": "dependency_error",
+      "observed_error_runs": 0,
+      "global_success_count": 0,
+      "global_success_rate": null,
+      "uniform_local_success_count": 0,
+      "uniform_local_success_rate": null,
+      "adaptive_local_success_count": 0,
+      "adaptive_local_success_rate": null,
+      "best_observed_strategy": null,
+      "best_observed_strategies": [],
+      "evidence_status": "no_observed_cases",
+      "keys": []
+    },
+    {
+      "error_category": "incomplete_solution",
+      "observed_error_runs": 0,
+      "global_success_count": 0,
+      "global_success_rate": null,
+      "uniform_local_success_count": 0,
+      "uniform_local_success_rate": null,
+      "adaptive_local_success_count": 0,
+      "adaptive_local_success_rate": null,
+      "best_observed_strategy": null,
+      "best_observed_strategies": [],
+      "evidence_status": "no_observed_cases",
+      "keys": []
+    },
+    {
+      "error_category": "sign_error",
+      "observed_error_runs": 1,
+      "global_success_count": 1,
+      "global_success_rate": 1.0,
+      "uniform_local_success_count": 0,
+      "uniform_local_success_rate": 0.0,
+      "adaptive_local_success_count": 1,
+      "adaptive_local_success_rate": 1.0,
+      "best_observed_strategy": "tie",
+      "best_observed_strategies": [
+        "global_regeneration",
+        "adaptive_local_repair"
+      ],
+      "evidence_status": "observed",
+      "keys": [
+        {
+          "seed": 4500,
+          "problem": "13 - (4 - (3 - (2 - x))) = 29"
+        }
+      ]
+    },
+    {
+      "error_category": "logical_inference_error",
+      "observed_error_runs": 0,
+      "global_success_count": 0,
+      "global_success_rate": null,
+      "uniform_local_success_count": 0,
+      "uniform_local_success_rate": null,
+      "adaptive_local_success_count": 0,
+      "adaptive_local_success_rate": null,
+      "best_observed_strategy": null,
+      "best_observed_strategies": [],
+      "evidence_status": "no_observed_cases",
+      "keys": []
+    },
+    {
+      "error_category": "semantic_interpretation_error",
+      "observed_error_runs": 0,
+      "global_success_count": 0,
+      "global_success_rate": null,
+      "uniform_local_success_count": 0,
+      "uniform_local_success_rate": null,
+      "adaptive_local_success_count": 0,
+      "adaptive_local_success_rate": null,
+      "best_observed_strategy": null,
+      "best_observed_strategies": [],
+      "evidence_status": "no_observed_cases",
+      "keys": []
+    }
+  ],
+  "observed_categories": [
+    "arithmetic_error",
+    "algebraic_transformation_error",
+    "sign_error"
+  ],
+  "unobserved_categories": [
+    "missing_assumption",
+    "dependency_error",
+    "incomplete_solution",
+    "logical_inference_error",
+    "semantic_interpretation_error"
+  ],
+  "interpretation": "Global regeneration was stronger on the observed algebraic-transformation cases, while adaptive local repair matched global regeneration on the one observed sign-error case. The arithmetic case produced no accepted repair for either strategy. Missing-assumption, dependency, incomplete-solution, logical-inference, and semantic-interpretation categories were not observed in this seven-error pilot and require targeted data before comparison.",
+  "limitations": [
+    "Only seven detected-error runs are available.",
+    "Five of the seven runs are algebraic-transformation errors.",
+    "Rates describe this matched-budget pilot, not general error-type behavior.",
+    "Unobserved categories are not evidence of zero repair success."
+  ]
+}

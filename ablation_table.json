@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-09-23T02:32:05.136220+00:00",
+  "generated_utc": "2026-09-29T07:47:50.286400+00:00",
   "table_status": "structure_frozen_partial_results",
   "primary_comparison_metric": "answer_accuracy",
   "source": {
@@ -40,8 +40,8 @@
       "adaptive_compute": "on",
       "repair_scope": "local",
       "symbolic_tool": "on",
-      "status": "planned",
-      "result_source": "",
+      "status": "measured_separate_protocol",
+      "result_source": "math500_system_ablation_report.json",
       "metrics": {
         "answer_accuracy": null,
         "trace_valid_rate": null,
@@ -51,7 +51,7 @@
         "total_compute_cost": null
       },
       "delta_answer_accuracy_pp": null,
-      "note": "Flatten nodes into a sequence and disable dependency impact propagation."
+      "note": "Measured on the separate 40-problem MATH protocol; null cells prevent mixing those metrics with this equation benchmark."
     },
     {
       "variant_id": "no_typed_error",
@@ -61,8 +61,8 @@
       "adaptive_compute": "on",
       "repair_scope": "local",
       "symbolic_tool": "on",
-      "status": "planned",
-      "result_source": "",
+      "status": "measured_separate_protocol",
+      "result_source": "math500_system_ablation_report.json",
       "metrics": {
         "answer_accuracy": null,
         "trace_valid_rate": null,
@@ -72,7 +72,7 @@
         "total_compute_cost": null
       },
       "delta_answer_accuracy_pp": null,
-      "note": "Use only valid/invalid labels and one generic local-resample action."
+      "note": "Measured on the separate 40-problem MATH protocol; null cells prevent mixing those metrics with this equation benchmark."
     },
     {
       "variant_id": "no_adaptive_compute",
@@ -124,8 +124,8 @@
       "adaptive_compute": "on",
       "repair_scope": "local",
       "symbolic_tool": "off",
-      "status": "blocked_by_learned_verifier",
-      "result_source": "",
+      "status": "measured_separate_protocol",
+      "result_source": "math500_system_ablation_report.json",
       "metrics": {
         "answer_accuracy": null,
         "trace_valid_rate": null,
@@ -135,14 +135,15 @@
         "total_compute_cost": null
       },
       "delta_answer_accuracy_pp": null,
-      "note": "Requires the learned verifier before symbolic acceptance can be removed."
+      "note": "Measured on the separate 40-problem MATH protocol; the symbolic heuristic had zero coverage on open-ended traces."
     }
   ],
   "completion": {
     "row_count": 6,
     "measured_count": 2,
     "proxy_count": 1,
-    "planned_count": 3
+    "planned_count": 0,
+    "separate_protocol_count": 3
   },
   "interpretation_rule": "Only rows marked measured may support an ablation claim. The full row is a rule-based proxy until the learned verifier is trained."
 }

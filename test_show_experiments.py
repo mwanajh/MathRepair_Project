@@ -22,8 +22,19 @@ class ShowExperimentsTests(unittest.TestCase):
     def test_default_display_covers_all_supervisor_tasks(self):
         rendered = build_display("all", PROJECT_DIR)
 
-        for task_number in range(1, 8):
-            self.assertIn(f"TASK {task_number} -", rendered)
+        expected_headings = [
+            "REASONING GRAPH IN THE MODEL PIPELINE",
+            "HARD BENCHMARK PILOT",
+            "FROZEN TYPED-ERROR TAXONOMY",
+            "TYPED VERIFIER TRAINING DATA",
+            "MATCHED-BUDGET EXPERIMENT",
+            "ABLATION TABLE",
+            "OUTPUT-CONTRACT SENSITIVITY",
+        ]
+        for heading in expected_headings:
+            self.assertIn(heading, rendered)
+        self.assertIn("ANSWER-SCORED FULL 40-PROBLEM BASELINE", rendered)
+        self.assertIn("MATH-500 SYSTEM-LEVEL ABLATIONS", rendered)
 
 
 if __name__ == "__main__":

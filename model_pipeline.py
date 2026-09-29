@@ -293,6 +293,32 @@ class OllamaMathModel:
             problem, self.last_repair_raw_response
         )
 
+    def repair_text(
+        self,
+        problem: str,
+        valid_prefix: list[str],
+        bad_step: str,
+        error_type: str,
+        attempt_index: int,
+    ) -> list[str]:
+        """Regenerate an open-ended suffix without receiving the answer key."""
+        prompt = (
+            "Repair this mathematical solution from the first suspected error. "
+            "Return exactly one JSON object with a non-empty field named steps. "
+            "The steps must be concise reasoning states and the last state must "
+            "contain the final answer. Do not repeat the verified prefix. Do not "
+            "use Markdown or text outside the JSON object.\n\n"
+            f"Problem: {problem}\n"
+            f"Verified prefix: {json.dumps(valid_prefix)}\n"
+            f"Suspected step: {bad_step}\n"
+            f"Predicted error type: {error_type or 'unspecified_error'}"
+        )
+        repair_seed = self.seed + 100_000 + attempt_index
+        self.last_repair_raw_response, self.last_repair_metadata = self._generate_response(
+            prompt, repair_seed
+        )
+        return self._parse_text_response(self.last_repair_raw_response)
+
 
 def parse_model_steps(response_text: str) -> list[str]:
     """Validate the model's strict JSON response."""
@@ -329,6 +355,40 @@ def parse_text_steps(response_text: str) -> list[str]:
     if not all(isinstance(step, str) and step.strip() for step in steps):
         raise ValueError("Every reasoning step must be a non-empty string.")
     return [step.strip() for step in steps]
+
+
+def parse_normalized_text_steps(response_text: str) -> list[str]:
+    """Recover common structured-step variants for sensitivity evaluation."""
+    candidate = response_text.strip()
+    if candidate.startswith("```"):
+        candidate = re.sub(
+            r"^```(?:json)?\s*|\s*```$", "", candidate, flags=re.I | re.S
+        )
+    try:
+        data = json.loads(candidate)
+    except json.JSONDecodeError as error:
+        raise ValueError("Model did not return recoverable JSON reasoning steps.") from error
+    raw_steps = data.get("steps") if isinstance(data, dict) else None
+    if isinstance(raw_steps, str) and raw_steps.strip():
+        return [raw_steps.strip()]
+    if not isinstance(raw_steps, list) or not raw_steps:
+        raise ValueError("Model JSON has no recoverable reasoning steps.")
+    recovered: list[str] = []
+    for item in raw_steps:
+        if isinstance(item, str) and item.strip():
+            recovered.append(item.strip())
+            continue
+        if isinstance(item, dict):
+            parts = [
+                str(item.get(field, "")).strip()
+                for field in ("state", "details", "reasoning", "answer")
+                if str(item.get(field, "")).strip()
+            ]
+            if parts:
+                recovered.append(" ".join(parts))
+    if not recovered:
+        raise ValueError("Model JSON has no recoverable reasoning states.")
+    return recovered
 
 
 def parse_qwen_json_steps(problem: str, response_text: str) -> list[str]:

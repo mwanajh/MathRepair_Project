@@ -53,7 +53,8 @@ class AblationTableTests(unittest.TestCase):
         self.assertEqual(report["completion"]["row_count"], 6)
         self.assertEqual(report["completion"]["measured_count"], 2)
         self.assertEqual(report["completion"]["proxy_count"], 1)
-        self.assertEqual(report["completion"]["planned_count"], 3)
+        self.assertEqual(report["completion"]["planned_count"], 0)
+        self.assertEqual(report["completion"]["separate_protocol_count"], 3)
 
     def test_maps_available_results_to_the_correct_variants(self):
         rows = {
@@ -83,16 +84,19 @@ class AblationTableTests(unittest.TestCase):
 
     def test_unfinished_rows_have_only_null_metrics(self):
         rows = build_ablation_table(valid_matched_report())["rows"]
-        unfinished = [
+        separate_protocol = [
             row
             for row in rows
-            if row["status"] not in {"measured", "proxy_result"}
+            if row["status"] == "measured_separate_protocol"
         ]
 
-        self.assertEqual(len(unfinished), 3)
-        for row in unfinished:
+        self.assertEqual(len(separate_protocol), 3)
+        for row in separate_protocol:
             self.assertEqual(set(row["metrics"]), set(METRIC_KEYS))
             self.assertTrue(all(value is None for value in row["metrics"].values()))
+            self.assertEqual(
+                row["result_source"], "math500_system_ablation_report.json"
+            )
 
     def test_rejects_invalid_or_replay_only_source_reports(self):
         invalid = valid_matched_report()

@@ -107,6 +107,20 @@ The dataset is intentionally controlled synthetic data for validating the label
 contract. It is not yet a claim of natural model-error prevalence; later work
 should add model-generated traces and independently reviewed labels.
 
+Train and evaluate the first learned verifier with:
+
+```powershell
+python learned_verifier.py
+```
+
+The pilot uses TF-IDF features and logistic regression for two predictions:
+first-error location and one of the eight frozen error types. Whole traces are
+kept disjoint across the deterministic 32/8/8 train/dev/test split. The current
+eight-example test result is 100% for both targets, versus 50% coverage and 50%
+type accuracy (counting abstentions as wrong) for the implemented structural and
+symbolic baseline. This is a pipeline check on simple synthetic templates, not
+evidence of generalization to natural model traces.
+
 ## Adaptive compute allocation
 
 `compute_allocator.py` uses the proposal heuristic:
@@ -271,6 +285,52 @@ nodes are marked `verification_mode: text_unverified` until a domain-general
 verifier is added; equation-mode symbolic metrics must not be mixed with this
 pilot.
 
+Run the answer-scored learned-verifier pilot with:
+
+```powershell
+python math500_evaluation.py --model qwen2.5:3b --limit 5 `
+  --report math500_accuracy_pilot_5.json `
+  --traces math500_accuracy_pilot_5_traces.jsonl
+```
+
+This runner keeps answers out of prompts and uses them only for post-generation
+scoring. It reports initial/final answer accuracy, verifier behavior, repair
+success/regressions, model calls, and prompt-plus-completion tokens. Strict
+output-contract compliance and normalized recovery are reported separately.
+Raw generations and repairs are retained in the ignored JSONL trace file.
+
+The current five-problem calibration result is deliberately small: initial and
+final accuracy were both 20% (1/5), one of four attempted repairs corrected a
+wrong answer, and one repair regressed a correct answer. Only one generation
+strictly followed the requested step-array contract, three were recovered by
+the documented normalization, and one timed out. These results show that the
+synthetic learned verifier does not yet support a broad MATH-500 claim.
+
+The full 40-problem baseline used `qwen2.5:3b`, seed 42, temperature 0,
+`max_output_tokens=1024`, and no repair. It completed 30 generations, retained
+10 output failures in the accuracy denominator, and obtained 10.0% (4/40)
+answer accuracy after documented output normalization. Only one output followed
+the strict array contract; 29 completions required normalized recovery. The run
+used 40 calls and 28,791 prompt-plus-completion tokens.
+
+```powershell
+python math500_evaluation.py --model qwen2.5:3b --repair-attempts 0 `
+  --timeout-seconds 120 --max-output-tokens 1024 `
+  --report math500_full40_baseline_report.json `
+  --traces math500_full40_baseline_traces.jsonl
+```
+
+Add `--resume` after an interrupted run to continue from the JSONL checkpoint
+without repeating completed benchmark IDs.
+
+When extraction logic changes, recompute scores from preserved outputs without
+calling the model again:
+
+```powershell
+python rescore_math500.py --traces math500_accuracy_pilot_5_traces.jsonl `
+  --report math500_accuracy_pilot_5.json --model qwen2.5:3b
+```
+
 ## Batch natural-model experiment
 
 Start with three problems:
@@ -422,6 +482,53 @@ Task 5 arms, explicit null cells for unrun variants, and a rule-based proxy row
 for the current full pipeline. See [ABLATION_PROTOCOL.md](ABLATION_PROTOCOL.md)
 for controlled variables and the remaining run order. Only rows marked
 `measured` support ablation claims.
+
+Run the three requested verifier-stage ablations with:
+
+```powershell
+python verifier_ablation.py
+```
+
+`verifier_ablation_report.json` compares the full hybrid verifier with no graph,
+no typed-error output, and no structural/symbolic heuristic support on the same
+held-out examples. The full and no-symbolic variants reached 100% end-to-end;
+removing graph fields reduced end-to-end accuracy to 87.5%; the no-typed variant
+retained 100% localization but has no type/end-to-end metric by definition.
+These are eight-example verifier-stage ablations and must not be presented as
+final-answer or end-to-end repair ablations.
+
+The system-level ablation uses the same frozen 40 baseline outputs for every
+arm and a shared ceiling of 8,487 additional tokens:
+
+```powershell
+python math500_system_ablation.py --model qwen2.5:3b `
+  --timeout-seconds 60 --max-output-tokens 192
+```
+
+Full, no-graph, no-typed-error, and no-symbolic-tool variants all finished at
+5.0% final-answer accuracy. Full MathRepair corrected 1/20 attempted repairs but
+regressed three initially correct answers. No graph corrected 0/19 and regressed
+two; it detected 30 errors, but 11 repair calls were skipped because their
+corresponding full-arm per-problem allocation was zero. No typed error and no
+symbolic tool each corrected 1/20 and regressed three. The structural/symbolic
+heuristic abstained on every completed open-ended
+trace, so the no-symbolic result is non-informative for this benchmark rather
+than evidence that symbolic support is unnecessary.
+
+Analyze the earlier matched-budget pilot by typed error category with:
+
+```powershell
+python error_category_analysis.py
+```
+
+The current seven-error analysis finds global regeneration stronger on the five
+observed algebraic-transformation errors (40.0% versus 20.0% for adaptive local
+repair). Adaptive local repair matched global regeneration on the one observed
+sign error (100.0% each), while neither strategy succeeded on the one arithmetic
+error. Missing-assumption, dependency, incomplete-reasoning, logical-inference,
+and semantic-interpretation categories had no observed cases and are reported as
+`--`, not zero-success results. This is the first evidence for a conditional
+repair policy rather than a claim that local repair is always better.
 
 ## Repeated-seed experiment
 
@@ -615,7 +722,14 @@ This example contains a distribution error: `2(x + 3)` should become
 - `run_repeated_experiments.py`: runs multiple seeds and confidence intervals
 - `compute_allocator.py`: assigns test-time compute to important nodes
 - `generate_dataset.py`: creates controlled synthetic error data
+- `learned_verifier.py`: trains and evaluates first-error location/type models
+- `verifier_ablation.py`: runs matched verifier-stage component ablations
 - `challenge_evaluation_data.csv`: unseen hand-written challenge examples
+- `math500_evaluation.py`: evaluates hard-subset answers, repairs, calls, and tokens
+- `math500_system_ablation.py`: runs matched-budget hard-subset component ablations
+- `math_answer_scoring.py`: extracts and normalizes open-ended final answers
+- `rescore_math500.py`: re-scores preserved MATH traces without model calls
+- `error_category_analysis.py`: compares local/global repair success by error type
 - `model_pipeline.py`: connects model output to the MathRepair verifier
 - `model_problems.csv`: problems for the batch natural-model experiment
 - `hard_model_problems.csv`: nested, fractional, rational, and polynomial problems

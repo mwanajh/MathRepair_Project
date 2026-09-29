@@ -39,7 +39,7 @@ def load_pilot(path: Path, limit: int | None) -> list[dict[str, object]]:
             except json.JSONDecodeError as error:
                 raise ValueError(f"Invalid JSON at line {line_number}.") from error
     records = []
-    for record in decoded:
+    for line_number, record in enumerate(decoded, start=1):
         required = {"benchmark_id", "problem", "answer", "subject", "level"}
         if not isinstance(record, dict) or not required.issubset(record):
             raise ValueError(f"Pilot record at line {line_number} is incomplete.")
