@@ -54,8 +54,11 @@ class Math500SystemAblationTests(unittest.TestCase):
         self.assertTrue(report["matched_budget_comparison_valid"])
         self.assertEqual(report["matched_additional_token_budget"], 8)
         for arm in report["variants"]:
-            self.assertEqual(arm["final_answer_accuracy"], 1.0)
-            self.assertEqual(arm["repair_success_rate"], 1.0)
+            result = arm["results"][0]
+            self.assertEqual(result["final_answer"], result["initial_answer"])
+            self.assertFalse(result["repair_accepted"])
+            self.assertEqual(arm["final_answer_accuracy"], arm["initial_answer_accuracy"])
+            self.assertEqual(arm["repair_success_rate"], 0.0)
             self.assertLessEqual(arm["additional_tokens"], 8)
 
 

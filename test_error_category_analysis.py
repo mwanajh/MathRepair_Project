@@ -1,7 +1,12 @@
-import copy
+import json
 import unittest
+from pathlib import Path
 
-from error_category_analysis import analyze_categories, render_markdown
+from error_category_analysis import (
+    analyze_categories,
+    analyze_reviewed_error_categories,
+    render_markdown,
+)
 
 
 def source_record(seed, problem, error_type):
@@ -79,7 +84,8 @@ class ErrorCategoryAnalysisTests(unittest.TestCase):
         self.assertEqual(rows["arithmetic_error"]["observed_error_runs"], 1)
         self.assertEqual(rows["arithmetic_error"]["global_success_rate"], 0.0)
         self.assertEqual(rows["algebraic_transformation_error"]["adaptive_local_success_rate"], 1.0)
-        self.assertEqual(rows["sign_error"]["best_observed_strategy"], "tie")
+        self.assertEqual(rows["sign_error"]["evidence_status"], "sparse")
+        self.assertIsNone(rows["sign_error"]["best_observed_strategy"])
         self.assertIn("missing_assumption", report["unobserved_categories"])
         self.assertIsNone(rows["missing_assumption"]["global_success_rate"])
 
@@ -88,8 +94,54 @@ class ErrorCategoryAnalysisTests(unittest.TestCase):
         markdown = render_markdown(analyze_categories(matched, source))
 
         self.assertIn("arithmetic_error", markdown)
-        self.assertIn("no_observed_cases", markdown)
+        self.assertIn("unobserved", markdown)
+        self.assertIn("sparse", markdown)
         self.assertIn("Unobserved categories are not evidence", markdown)
+
+    def test_sparse_reviews_do_not_name_a_strategy(self):
+        report = analyze_reviewed_error_categories(
+            [
+                {"error_type": "sign_error", "recovery_action": "BACKTRACK"},
+                {"error_type": "sign_error", "recovery_action": "BACKTRACK"},
+                {
+                    "error_type": "arithmetic_error",
+                    "recovery_action": "TOOL_EXECUTE",
+                },
+                {
+                    "error_type": "arithmetic_error",
+                    "recovery_action": "TOOL_EXECUTE",
+                },
+                {
+                    "error_type": "arithmetic_error",
+                    "recovery_action": "TOOL_EXECUTE",
+                },
+                {"error_type": "logical_inference_error", "recovery_action": "REPLAN"},
+                {"error_type": "logical_inference_error", "recovery_action": "BACKTRACK"},
+                {"error_type": "logical_inference_error", "recovery_action": "REPLAN"},
+            ]
+        )
+        rows = {row["error_type"]: row for row in report["rows"]}
+
+        self.assertEqual(rows["sign_error"]["evidence_status"], "sparse")
+        self.assertIsNone(rows["sign_error"]["unanimous_reviewed_action"])
+        self.assertEqual(rows["arithmetic_error"]["unanimous_reviewed_action"], "TOOL_EXECUTE")
+        self.assertIsNone(rows["arithmetic_error"]["measured_repair_outcome"])
+        self.assertIsNone(rows["logical_inference_error"]["unanimous_reviewed_action"])
+        self.assertEqual(rows["dependency_error"]["evidence_status"], "unobserved")
+        self.assertEqual(rows["dependency_error"]["recovery_action_counts"]["GLOBAL_REGENERATE"], 0)
+
+    def test_real_reviews_leave_global_regeneration_unobserved(self):
+        reviews = json.loads(
+            Path(__file__).with_name("natural_error_reviews.json").read_text(encoding="utf-8")
+        )
+        report = analyze_reviewed_error_categories(reviews)
+
+        self.assertEqual(report["reviewed_count"], 39)
+        self.assertEqual(report["unobserved_recovery_actions"], ["GLOBAL_REGENERATE"])
+        self.assertEqual(report["sparse_error_types"], [])
+        for row in report["rows"]:
+            self.assertIsNone(row["measured_repair_outcome"])
+            self.assertEqual(row["recovery_action_counts"]["GLOBAL_REGENERATE"], 0)
 
 
 if __name__ == "__main__":

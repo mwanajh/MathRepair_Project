@@ -11,6 +11,14 @@ from typing import Callable
 import joblib
 
 from benchmark_pilot import load_pilot
+from frozen_protocol import (
+    FROZEN_BASE_SEED,
+    FROZEN_MODEL,
+    FROZEN_PROMPT_PROFILE,
+    FROZEN_TEMPERATURE,
+    ProtocolDrift,
+    require_frozen_base,
+)
 from learned_verifier import (
     DEFAULT_DATASET,
     LearnedTypedVerifier,
@@ -21,6 +29,7 @@ from learned_verifier import (
 from math500_evaluation import load_checkpoint, token_count, trace_nodes
 from math_answer_scoring import answers_equivalent, extract_final_answer
 from model_pipeline import OllamaMathModel, append_jsonl_record, parse_normalized_text_steps
+from repair_acceptance import compare_repair_states
 from rescore_math500 import load_trace_records
 
 
@@ -74,6 +83,8 @@ def compact_arm_checkpoint(record: dict[str, object]) -> dict[str, object]:
         "location_confidence",
         "repair_attempted",
         "repair_generation_succeeded",
+        "repair_accepted",
+        "repair_rejection_reason",
         "repair_success",
         "final_answer",
         "final_answer_correct",
@@ -128,6 +139,11 @@ def summarize_arm(
         "repair_generation_success_count": sum(
             bool(item.get("repair_generation_succeeded")) for item in attempted
         ),
+        "repair_accepted_count": sum(bool(item.get("repair_accepted")) for item in attempted),
+        "repair_gate_rejection_count": sum(
+            bool(item.get("repair_generation_succeeded")) and not bool(item.get("repair_accepted"))
+            for item in attempted
+        ),
         "repair_success_count": sum(bool(item.get("repair_success")) for item in attempted),
         "repair_success_rate": (
             sum(bool(item.get("repair_success")) for item in attempted) / len(attempted)
@@ -165,6 +181,7 @@ def run_arm(
     per_problem_budgets: dict[str, int] | None = None,
     model_factory: Callable[[int, int], object] | None = None,
     resume: bool = False,
+    prompt_profile: str = FROZEN_PROMPT_PROFILE,
 ) -> dict[str, object]:
     if variant not in VARIANTS:
         raise ValueError(f"Unknown system ablation variant: {variant}")
@@ -205,16 +222,28 @@ def run_arm(
             continue
         problem = str(problem_record["problem"])
         steps = list(baseline.get("initial_steps", []))
+        initial_answer = extract_final_answer(
+            steps, str(baseline.get("raw_response", ""))
+        )
+        initial_correct = answers_equivalent(
+            str(problem_record["answer"]), initial_answer
+        )
+        # The primary evaluation must not use the reference answer to decide
+        # whether repair is needed. The verifier makes that decision; the
+        # reference answer is used only below for post-hoc scoring.
         prediction, nodes = predict_for_variant(
             variant, problem, steps, full_verifier, no_graph_verifier
         )
         candidate: list[str] = []
+        valid_prefix: list[str] = []
         raw_response = ""
         metadata: dict[str, object] = {}
         repair_failure = ""
         repair_normalized = False
         budget_skipped = False
         attempted = False
+        repair_accepted = False
+        repair_rejection_reason = ""
         if prediction["error_location"]:
             remaining = None if budget is None else budget - used_tokens
             problem_budget = (
@@ -254,6 +283,7 @@ def run_arm(
                         temperature=temperature,
                         timeout_seconds=timeout_seconds,
                         max_output_tokens=completion_cap,
+                        prompt_profile=prompt_profile,
                         problem_format="text",
                     )
                 )
@@ -266,37 +296,44 @@ def run_arm(
                 valid_prefix = steps[:step_index]
                 bad_step = steps[step_index] if steps else ""
                 attempted = True
-                try:
-                    candidate = model.repair_text(
-                        problem,
-                        valid_prefix,
-                        bad_step,
-                        str(prediction["error_type"]),
-                        1,
-                    )
-                except Exception as error:
-                    repair_failure = str(error)
-                    raw_response = str(getattr(model, "last_repair_raw_response", ""))
-                    if raw_response:
-                        try:
-                            candidate = parse_normalized_text_steps(raw_response)
-                            repair_failure = ""
-                            repair_normalized = True
-                        except ValueError:
-                            pass
+                for repair_attempt in range(1, 3):
+                    try:
+                        candidate = model.repair_text(
+                            problem,
+                            valid_prefix,
+                            bad_step,
+                            str(prediction["error_type"]),
+                            repair_attempt,
+                        )
+                        repair_failure = ""
+                        break
+                    except Exception as error:
+                        repair_failure = str(error)
+                        raw_response = str(getattr(model, "last_repair_raw_response", ""))
+                        if raw_response:
+                            try:
+                                candidate = parse_normalized_text_steps(raw_response)
+                                repair_failure = ""
+                                repair_normalized = True
+                                break
+                            except ValueError:
+                                pass
                 raw_response = str(getattr(model, "last_repair_raw_response", raw_response))
                 metadata = dict(getattr(model, "last_repair_metadata", {}))
                 used_tokens += token_count(metadata)
-        initial_answer = extract_final_answer(
-            steps, str(baseline.get("raw_response", ""))
-        )
-        initial_correct = answers_equivalent(
-            str(problem_record["answer"]), initial_answer
-        )
         if candidate:
-            final_steps = valid_prefix + candidate
-            final_answer = extract_final_answer(final_steps, raw_response)
+            decision = compare_repair_states(problem, list(steps), valid_prefix + candidate)
+            repair_accepted = decision.accepted
+            if decision.accepted:
+                final_steps = valid_prefix + candidate
+                final_answer = extract_final_answer(final_steps, raw_response)
+            else:
+                repair_rejection_reason = decision.reason
+                final_steps = steps
+                final_answer = initial_answer
         else:
+            if attempted:
+                repair_rejection_reason = "No repair candidate was generated."
             final_steps = steps
             final_answer = initial_answer
         final_correct = answers_equivalent(str(problem_record["answer"]), final_answer)
@@ -313,6 +350,8 @@ def run_arm(
             "location_confidence": prediction["location_confidence"],
             "repair_attempted": attempted,
             "repair_generation_succeeded": bool(candidate),
+            "repair_accepted": repair_accepted,
+            "repair_rejection_reason": repair_rejection_reason,
             "repair_success": attempted and not initial_correct and final_correct,
             "final_answer": final_answer,
             "final_answer_correct": final_correct,
@@ -366,6 +405,7 @@ def run_system_ablation(
     max_output_tokens: int = 192,
     model_factory: Callable[[int, int], object] | None = None,
     resume: bool = False,
+    prompt_profile: str = FROZEN_PROMPT_PROFILE,
 ) -> dict[str, object]:
     baseline_by_id = {
         str(record["benchmark_id"]): record for record in baseline_records
@@ -387,6 +427,7 @@ def run_system_ablation(
         budget=None,
         model_factory=model_factory,
         resume=resume,
+        prompt_profile=prompt_profile,
     )
     matched_budget = int(full["additional_tokens"])
     full["matched_additional_token_budget"] = matched_budget
@@ -420,6 +461,7 @@ def run_system_ablation(
                 per_problem_budgets=per_problem_budgets,
                 model_factory=model_factory,
                 resume=resume,
+                prompt_profile=prompt_profile,
             )
         )
     baseline_generation_tokens = sum(
@@ -479,15 +521,25 @@ def main() -> None:
     parser.add_argument(
         "--trace-prefix", type=Path, default=PROJECT_DIR / "math500_system_ablation"
     )
-    parser.add_argument("--model", default="qwen2.5:3b")
-    parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--model", default=FROZEN_MODEL)
+    parser.add_argument("--seed", type=int, default=FROZEN_BASE_SEED)
+    parser.add_argument("--temperature", type=float, default=FROZEN_TEMPERATURE)
     parser.add_argument("--timeout-seconds", type=int, default=60)
     parser.add_argument("--max-output-tokens", type=int, default=192)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--allow-larger-benchmark", action="store_true")
+    parser.add_argument("--allow-protocol-change", action="store_true")
     args = parser.parse_args()
     try:
         problems = load_pilot(args.problems, limit=None)
+        require_frozen_base(
+            problem_count=len(problems),
+            model=args.model,
+            temperature=args.temperature,
+            base_seed=args.seed,
+            allow_larger=args.allow_larger_benchmark,
+            allow_change=args.allow_protocol_change,
+        )
         baseline = load_trace_records(args.baseline_traces)
         full_verifier = joblib.load(args.verifier)
         if not isinstance(full_verifier, LearnedTypedVerifier):
@@ -507,11 +559,12 @@ def main() -> None:
             timeout_seconds=args.timeout_seconds,
             max_output_tokens=args.max_output_tokens,
             resume=args.resume,
+            prompt_profile=FROZEN_PROMPT_PROFILE,
         )
         args.report.write_text(
             json.dumps(report, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
         )
-    except (OSError, ValueError, TypeError) as error:
+    except (OSError, ValueError, TypeError, ProtocolDrift) as error:
         parser.error(str(error))
     for arm in report["variants"]:
         print(

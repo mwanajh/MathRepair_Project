@@ -149,6 +149,22 @@ def _node_rows(
                 serialize_node(str(example["problem"]), trace, index, include_graph=include_graph)
             )
             labels.append(int(node["node_id"] == example["error_location"]))
+        # Add the paired clean trace as explicit hard negatives. The original
+        # training set already contained valid nodes around each corruption,
+        # but clean traces teach the locator that an entirely valid solution
+        # should produce no repair target when the baseline answer is correct.
+        clean_trace = example.get("correct_trace")
+        if isinstance(clean_trace, list):
+            for index, node in enumerate(clean_trace):
+                texts.append(
+                    serialize_node(
+                        str(example["problem"]),
+                        clean_trace,
+                        index,
+                        include_graph=include_graph,
+                    )
+                )
+                labels.append(0)
     return texts, labels
 
 
@@ -166,6 +182,25 @@ def _type_rows(
             serialize_node(str(example["problem"]), trace, index, include_graph=include_graph)
         )
         labels.append(str(example["error_type"]))
+    return texts, labels
+
+
+def _trace_rows(
+    examples: Iterable[dict[str, object]], *, include_graph: bool = True
+) -> tuple[list[str], list[int]]:
+    texts: list[str] = []
+    labels: list[int] = []
+    for example in examples:
+        for key, label in (("correct_trace", 1), ("corrupted_trace", 0)):
+            trace = example.get(key)
+            if not isinstance(trace, list):
+                continue
+            features = [
+                serialize_node(str(example["problem"]), trace, index, include_graph=include_graph)
+                for index in range(len(trace))
+            ]
+            texts.append("\n---\n".join(features))
+            labels.append(label)
     return texts, labels
 
 
@@ -220,12 +255,33 @@ def _location_accuracy(
 def select_location_threshold(
     verifier: LearnedTypedVerifier, dev: list[dict[str, object]]
 ) -> float:
-    """Choose a deterministic dev threshold; ties prefer the stricter value."""
+    """Choose a threshold using corrupted traces and paired clean negatives."""
     candidates = [round(value / 100, 2) for value in range(0, 91, 5)]
     scores = []
+    clean_examples = [
+        {**example, "corrupted_trace": example["correct_trace"]}
+        for example in dev
+        if isinstance(example.get("correct_trace"), list)
+    ]
     for threshold in candidates:
         verifier.location_threshold = threshold
-        scores.append((_location_accuracy(verifier, dev), threshold))
+        corrupted_accuracy = _location_accuracy(verifier, dev)
+        clean_abstention = (
+            sum(
+                verifier.predict(str(example["problem"]), list(example["corrupted_trace"]))[
+                    "error_location"
+                ]
+                is None
+                for example in clean_examples
+            )
+            / len(clean_examples)
+            if clean_examples
+            else 0.0
+        )
+        # Detection remains the primary objective; clean-trace abstention is a
+        # secondary calibration signal rather than a reason to suppress known
+        # corruption on the held-out error classes.
+        scores.append((0.9 * corrupted_accuracy + 0.1 * clean_abstention, threshold))
     return max(scores)[1]
 
 

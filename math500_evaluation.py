@@ -11,6 +11,17 @@ from typing import Callable
 import joblib
 
 from benchmark_pilot import load_pilot
+from frozen_protocol import (
+    FROZEN_BASE_SEED,
+    FROZEN_BASELINE_REPAIR_ATTEMPTS,
+    FROZEN_MAX_OUTPUT_TOKENS,
+    FROZEN_MODEL,
+    FROZEN_PROMPT_PROFILE,
+    FROZEN_TEMPERATURE,
+    FROZEN_TIMEOUT_SECONDS,
+    ProtocolDrift,
+    require_generation_protocol,
+)
 from learned_verifier import LearnedTypedVerifier
 from math_answer_scoring import answers_equivalent, extract_final_answer
 from model_pipeline import (
@@ -130,7 +141,8 @@ def evaluate_math500(
     seed: int = 42,
     temperature: float = 0.0,
     timeout_seconds: int = 120,
-    max_output_tokens: int | None = 512,
+    max_output_tokens: int | None = FROZEN_MAX_OUTPUT_TOKENS,
+    prompt_profile: str = "default",
     resume: bool = False,
 ) -> dict[str, object]:
     """Evaluate generation, learned verification, local repair, and cost."""
@@ -156,6 +168,7 @@ def evaluate_math500(
                 temperature=temperature,
                 timeout_seconds=timeout_seconds,
                 max_output_tokens=max_output_tokens,
+                prompt_profile=prompt_profile,
                 problem_format="text",
             )
         )
@@ -336,6 +349,7 @@ def evaluate_math500(
             "answer_scorer": "normalized_exact_symbolic_v1",
             "timeout_seconds": timeout_seconds,
             "max_output_tokens": max_output_tokens,
+            "prompt_profile": prompt_profile,
             "resumed_from_checkpoint": resume,
         }
     )
@@ -348,23 +362,56 @@ def main() -> None:
     parser.add_argument("--verifier", type=Path, default=DEFAULT_VERIFIER)
     parser.add_argument("--traces", type=Path, default=DEFAULT_TRACES)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
-    parser.add_argument("--model", default="qwen2-math:1.5b")
+    parser.add_argument("--model", default=FROZEN_MODEL)
     parser.add_argument("--limit", type=int)
-    parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--temperature", type=float, default=0.0)
-    parser.add_argument("--repair-attempts", type=int, default=1)
-    parser.add_argument("--timeout-seconds", type=int, default=120)
-    parser.add_argument("--max-output-tokens", type=int, default=512)
+    parser.add_argument("--seed", type=int, default=FROZEN_BASE_SEED)
+    parser.add_argument("--temperature", type=float, default=FROZEN_TEMPERATURE)
+    parser.add_argument(
+        "--repair-attempts", type=int, default=FROZEN_BASELINE_REPAIR_ATTEMPTS
+    )
+    parser.add_argument("--timeout-seconds", type=int, default=FROZEN_TIMEOUT_SECONDS)
+    parser.add_argument("--max-output-tokens", type=int, default=FROZEN_MAX_OUTPUT_TOKENS)
+    parser.add_argument(
+        "--prompt-profile",
+        choices=(
+            "default",
+            "qwen2_math_json",
+            "stable_text_json",
+            "closed_text_json",
+        ),
+        default=FROZEN_PROMPT_PROFILE,
+    )
     parser.add_argument(
         "--resume",
         action="store_true",
         help="Keep completed checkpoint records and run only missing benchmark IDs.",
+    )
+    parser.add_argument(
+        "--allow-larger-benchmark",
+        action="store_true",
+        help="Permit more problems than the measured stability pilot.",
+    )
+    parser.add_argument(
+        "--allow-protocol-change",
+        action="store_true",
+        help="Permit a model or output setting outside the frozen protocol.",
     )
     args = parser.parse_args()
     if args.limit is not None and args.limit < 1:
         parser.error("--limit must be at least 1.")
     try:
         problems = load_pilot(args.problems, args.limit)
+        require_generation_protocol(
+            problem_count=len(problems),
+            model=args.model,
+            prompt_profile=args.prompt_profile,
+            temperature=args.temperature,
+            base_seed=args.seed,
+            max_output_tokens=args.max_output_tokens,
+            repair_attempts=args.repair_attempts,
+            allow_larger=args.allow_larger_benchmark,
+            allow_change=args.allow_protocol_change,
+        )
         verifier = joblib.load(args.verifier)
         if not isinstance(verifier, LearnedTypedVerifier):
             raise ValueError("Verifier artifact has the wrong type.")
@@ -378,12 +425,13 @@ def main() -> None:
             temperature=args.temperature,
             timeout_seconds=args.timeout_seconds,
             max_output_tokens=args.max_output_tokens,
+            prompt_profile=args.prompt_profile,
             resume=args.resume,
         )
         args.report.write_text(
             json.dumps(report, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
         )
-    except (OSError, ValueError, TypeError) as error:
+    except (OSError, ValueError, TypeError, ProtocolDrift) as error:
         parser.error(str(error))
     print(
         f"Initial accuracy: {report['initial_answer_correct_count']}/"

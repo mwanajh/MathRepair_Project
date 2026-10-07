@@ -1,0 +1,323 @@
+{
+  "generated_utc": "2026-10-07T07:10:27.290201+00:00",
+  "experiment": "recovery_routing_comparison",
+  "primary_seed": 42,
+  "seeds": [
+    42,
+    7,
+    11,
+    19,
+    23
+  ],
+  "dataset": {
+    "reviewed_count": 39,
+    "recovery_action_counts": {
+      "BACKTRACK": 14,
+      "REPLAN": 10,
+      "CONTINUE": 4,
+      "TOOL_EXECUTE": 7,
+      "LOCAL_REPAIR": 4
+    },
+    "observed_recovery_actions": [
+      "CONTINUE",
+      "LOCAL_REPAIR",
+      "TOOL_EXECUTE",
+      "REPLAN",
+      "BACKTRACK"
+    ],
+    "unobserved_recovery_actions": [
+      "GLOBAL_REGENERATE"
+    ]
+  },
+  "policies": {
+    "always_global_regeneration": {
+      "role": "A_always_global_regeneration",
+      "predicted_action": "GLOBAL_REGENERATE",
+      "full_set_agreement": {
+        "example_count": 39,
+        "action_accuracy": 0.0,
+        "action_macro_f1": 0.0
+      },
+      "primary_seed_details": {
+        "test_predictions": [
+          {
+            "example_id": "math500-test/algebra/1143.json",
+            "expected_action": "TOOL_EXECUTE",
+            "predicted_action": "GLOBAL_REGENERATE"
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1009.json",
+            "expected_action": "CONTINUE",
+            "predicted_action": "GLOBAL_REGENERATE"
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1014.json",
+            "expected_action": "BACKTRACK",
+            "predicted_action": "GLOBAL_REGENERATE"
+          },
+          {
+            "example_id": "math500-test/intermediate_algebra/1063.json",
+            "expected_action": "REPLAN",
+            "predicted_action": "GLOBAL_REGENERATE"
+          },
+          {
+            "example_id": "math500-test/precalculus/1056.json",
+            "expected_action": "LOCAL_REPAIR",
+            "predicted_action": "GLOBAL_REGENERATE"
+          }
+        ]
+      },
+      "splits": [
+        {
+          "seed": 42,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.0,
+            "action_macro_f1": 0.0
+          }
+        },
+        {
+          "seed": 7,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.0,
+            "action_macro_f1": 0.0
+          }
+        },
+        {
+          "seed": 11,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.0,
+            "action_macro_f1": 0.0
+          }
+        },
+        {
+          "seed": 19,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.0,
+            "action_macro_f1": 0.0
+          }
+        },
+        {
+          "seed": 23,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.0,
+            "action_macro_f1": 0.0
+          }
+        }
+      ],
+      "repeated_split_summary": {
+        "action_accuracy": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "splits": 5
+        },
+        "action_macro_f1": {
+          "mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "splits": 5
+        }
+      }
+    },
+    "always_local_repair": {
+      "role": "B_always_local_repair",
+      "predicted_action": "LOCAL_REPAIR",
+      "full_set_agreement": {
+        "example_count": 39,
+        "action_accuracy": 0.102564,
+        "action_macro_f1": 0.037209
+      },
+      "primary_seed_details": {
+        "test_predictions": [
+          {
+            "example_id": "math500-test/algebra/1143.json",
+            "expected_action": "TOOL_EXECUTE",
+            "predicted_action": "LOCAL_REPAIR"
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1009.json",
+            "expected_action": "CONTINUE",
+            "predicted_action": "LOCAL_REPAIR"
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1014.json",
+            "expected_action": "BACKTRACK",
+            "predicted_action": "LOCAL_REPAIR"
+          },
+          {
+            "example_id": "math500-test/intermediate_algebra/1063.json",
+            "expected_action": "REPLAN",
+            "predicted_action": "LOCAL_REPAIR"
+          },
+          {
+            "example_id": "math500-test/precalculus/1056.json",
+            "expected_action": "LOCAL_REPAIR",
+            "predicted_action": "LOCAL_REPAIR"
+          }
+        ]
+      },
+      "splits": [
+        {
+          "seed": 42,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.2,
+            "action_macro_f1": 0.066667
+          }
+        },
+        {
+          "seed": 7,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.2,
+            "action_macro_f1": 0.066667
+          }
+        },
+        {
+          "seed": 11,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.2,
+            "action_macro_f1": 0.066667
+          }
+        },
+        {
+          "seed": 19,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.2,
+            "action_macro_f1": 0.066667
+          }
+        },
+        {
+          "seed": 23,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.2,
+            "action_macro_f1": 0.066667
+          }
+        }
+      ],
+      "repeated_split_summary": {
+        "action_accuracy": {
+          "mean": 0.2,
+          "minimum": 0.2,
+          "maximum": 0.2,
+          "splits": 5
+        },
+        "action_macro_f1": {
+          "mean": 0.066667,
+          "minimum": 0.066667,
+          "maximum": 0.066667,
+          "splits": 5
+        }
+      }
+    },
+    "learned_tfidf_routing": {
+      "role": "C_learned_recovery_routing",
+      "representation": "word and character TF-IDF with logistic regression",
+      "trained_on": "reviewed_recovery_actions",
+      "primary_seed_details": {
+        "test_predictions": [
+          {
+            "example_id": "math500-test/algebra/1143.json",
+            "expected_action": "TOOL_EXECUTE",
+            "predicted_action": "REPLAN"
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1009.json",
+            "expected_action": "CONTINUE",
+            "predicted_action": "BACKTRACK"
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1014.json",
+            "expected_action": "BACKTRACK",
+            "predicted_action": "BACKTRACK"
+          },
+          {
+            "example_id": "math500-test/intermediate_algebra/1063.json",
+            "expected_action": "REPLAN",
+            "predicted_action": "REPLAN"
+          },
+          {
+            "example_id": "math500-test/precalculus/1056.json",
+            "expected_action": "LOCAL_REPAIR",
+            "predicted_action": "BACKTRACK"
+          }
+        ]
+      },
+      "splits": [
+        {
+          "seed": 42,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.4,
+            "action_macro_f1": 0.233333
+          }
+        },
+        {
+          "seed": 7,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.4,
+            "action_macro_f1": 0.28
+          }
+        },
+        {
+          "seed": 11,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.2,
+            "action_macro_f1": 0.08
+          }
+        },
+        {
+          "seed": 19,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.2,
+            "action_macro_f1": 0.08
+          }
+        },
+        {
+          "seed": 23,
+          "test_metrics": {
+            "example_count": 5,
+            "action_accuracy": 0.4,
+            "action_macro_f1": 0.233333
+          }
+        }
+      ],
+      "repeated_split_summary": {
+        "action_accuracy": {
+          "mean": 0.32,
+          "minimum": 0.2,
+          "maximum": 0.4,
+          "splits": 5
+        },
+        "action_macro_f1": {
+          "mean": 0.181333,
+          "minimum": 0.08,
+          "maximum": 0.28,
+          "splits": 5
+        }
+      }
+    }
+  },
+  "metric_definitions": {
+    "action_accuracy": "Fraction of traces whose predicted action equals the reviewed recovery action.",
+    "action_macro_f1": "Unweighted mean F1 over the observed recovery actions in the split."
+  },
+  "limitations": [
+    "The score is agreement with the reviewed recovery action, not a change in the final answer.",
+    "No repair was generated for this comparison, and the larger benchmark remains blocked.",
+    "GLOBAL_REGENERATE has no reviewed example. Agreement of zero is an empty category, not a repair-quality result.",
+    "Each test split contains one example of every observed action, so one split is unstable.",
+    "Reference answers, sampling correctness, annotation notes, error locations, and error types are not features."
+  ]
+}

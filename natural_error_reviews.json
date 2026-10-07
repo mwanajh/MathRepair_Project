@@ -1,0 +1,314 @@
+[
+  {
+    "benchmark_id": "test/algebra/101.json",
+    "trace_validity": "valid",
+    "error_location": null,
+    "error_type": "VALID_NO_REPAIR",
+    "recovery_action": "CONTINUE",
+    "annotation_note": "The inequality is rewritten, factored, and solved on the correct sign chart. The final interval is [-2, 7]."
+  },
+  {
+    "benchmark_id": "test/counting_and_probability/1009.json",
+    "trace_validity": "valid",
+    "error_location": null,
+    "error_type": "VALID_NO_REPAIR",
+    "recovery_action": "CONTINUE",
+    "annotation_note": "Stars-and-bars counting gives C(8, 2) = 28 for six indistinguishable-within-type cookies of three kinds."
+  },
+  {
+    "benchmark_id": "test/counting_and_probability/1114.json",
+    "trace_validity": "valid",
+    "error_location": null,
+    "error_type": "VALID_NO_REPAIR",
+    "recovery_action": "CONTINUE",
+    "annotation_note": "Exactly the 11 outcomes in which at least one die shows 5 are counted, so the probability is 11/36."
+  },
+  {
+    "benchmark_id": "test/intermediate_algebra/1126.json",
+    "trace_validity": "valid",
+    "error_location": null,
+    "error_type": "VALID_NO_REPAIR",
+    "recovery_action": "CONTINUE",
+    "annotation_note": "The foci, center, and hyperbola relation 2a = 24 with c = 13 produce h + k + a + b = 16."
+  },
+  {
+    "benchmark_id": "test/algebra/1072.json",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "arithmetic_error",
+    "recovery_action": "TOOL_EXECUTE",
+    "annotation_note": "The ratio 3/5 is correct. The first failure is 125 * 2187, which is 273375, not 248025. The eighth term is 243/625."
+  },
+  {
+    "benchmark_id": "test/algebra/1082.json",
+    "trace_validity": "invalid",
+    "error_location": "n3",
+    "error_type": "algebraic_transformation_error",
+    "recovery_action": "LOCAL_REPAIR",
+    "annotation_note": "1/sqrt(3) is rationalized as sqrt(3)/2. The equivalent form is sqrt(3)/3, and the simplified target is (9 sqrt(2) + 8 sqrt(3))/6."
+  },
+  {
+    "benchmark_id": "test/counting_and_probability/1014.json",
+    "trace_validity": "invalid",
+    "error_location": "n5",
+    "error_type": "logical_inference_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "The books are distinct, so two chosen gaps can be filled in 2! ways. C(5, 2) alone produces 240 instead of 480."
+  },
+  {
+    "benchmark_id": "test/geometry/1097.json",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "semantic_interpretation_error",
+    "recovery_action": "REPLAN",
+    "annotation_note": "Strictly inside x from -5 to 5 and y from -4 to 4 includes x = -4..4 and y = -3..3, which is 9 * 7 = 63. The trace excludes the wrong boundary values."
+  },
+  {
+    "benchmark_id": "test/geometry/1140.json",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "missing_assumption",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "The trace assumes ACD is similar to ABC at ratio 1:2 because AD is half of AB. That relation is not established by the side lengths."
+  },
+  {
+    "benchmark_id": "test/number_theory/1000.json",
+    "trace_validity": "invalid",
+    "error_location": "n7",
+    "error_type": "arithmetic_error",
+    "recovery_action": "TOOL_EXECUTE",
+    "annotation_note": "17 * 5 \u2261 2 (mod 83) is correct. The later claim 17 * 46 \u2261 1 (mod 83) is not; the inverse is 44."
+  },
+  {
+    "benchmark_id": "test/number_theory/109.json",
+    "trace_validity": "invalid",
+    "error_location": "n6",
+    "error_type": "arithmetic_error",
+    "recovery_action": "TOOL_EXECUTE",
+    "annotation_note": "The sum 10000 is correct. 10000 divided by 7 leaves remainder 4, not 1."
+  },
+  {
+    "benchmark_id": "test/algebra/1031.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The trace names the domain inequality but never writes or solves it, and it does not state the smallest domain value 11/2."
+  },
+  {
+    "benchmark_id": "test/algebra/1143.json",
+    "trace_validity": "invalid",
+    "error_location": "n3",
+    "error_type": "arithmetic_error",
+    "recovery_action": "TOOL_EXECUTE",
+    "annotation_note": "The expansion x^2 + (x^4/4 - 9x^2 + 81) simplifies to x^4/4 - 8x^2 + 81, not x^4/4 - (7/2)x^2 + 81. The minimum squared distance is 17."
+  },
+  {
+    "benchmark_id": "test/counting_and_probability/10.json",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "algebraic_transformation_error",
+    "recovery_action": "LOCAL_REPAIR",
+    "annotation_note": "The factor (1/6)^(n-2) is deleted from the binomial equation. Keeping it gives n = 4."
+  },
+  {
+    "benchmark_id": "test/counting_and_probability/1003.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "missing_assumption",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "The trace assumes face F is 1 and that the opposite face has probability 1/n. Neither condition is given."
+  },
+  {
+    "benchmark_id": "test/counting_and_probability/119.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The trace lists binomial steps but never writes a general term or the constant, which is -125."
+  },
+  {
+    "benchmark_id": "test/geometry/172.json",
+    "trace_validity": "invalid",
+    "error_location": "n3",
+    "error_type": "logical_inference_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "A centroid ratio of 2:1 does not imply that triangles GBC and GNM are similar at ratio 1:2. The area is 8, not 3."
+  },
+  {
+    "benchmark_id": "test/geometry/283.json",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "arithmetic_error",
+    "recovery_action": "TOOL_EXECUTE",
+    "annotation_note": "8/3 - 4 equals -4/3, not -2/3, so the slope of EF is not -3."
+  },
+  {
+    "benchmark_id": "test/intermediate_algebra/102.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The trace names a telescoping plan but never simplifies a term or states the sum, which is 2."
+  },
+  {
+    "benchmark_id": "test/intermediate_algebra/1063.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The trace says it will compute z_1 and the period, but it never produces z_2002."
+  },
+  {
+    "benchmark_id": "test/intermediate_algebra/1166.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "incomplete_solution",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The trace outlines AM-GM steps without an expression or the minimum value 100."
+  },
+  {
+    "benchmark_id": "test/intermediate_algebra/117.json",
+    "trace_validity": "invalid",
+    "error_location": "n8",
+    "error_type": "algebraic_transformation_error",
+    "recovery_action": "LOCAL_REPAIR",
+    "annotation_note": "P(2) = 2R(2). With R(x) = dx + e, that is 4d + 2e, not 2d + e."
+  },
+  {
+    "benchmark_id": "test/number_theory/1002.json",
+    "trace_validity": "invalid",
+    "error_location": "n8",
+    "error_type": "arithmetic_error",
+    "recovery_action": "TOOL_EXECUTE",
+    "annotation_note": "143 divided by 7 leaves remainder 3, not 2. The largest such integer below 2010 is 1440."
+  },
+  {
+    "benchmark_id": "test/number_theory/1090.json",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "logical_inference_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "The trace computes 5^4 = 625 < 2010 but then lists only 1, 5, and 25. The powers also include 125 and 625, and a + b = 202."
+  },
+  {
+    "benchmark_id": "test/prealgebra/1003.json",
+    "trace_validity": "invalid",
+    "error_location": "n6",
+    "error_type": "arithmetic_error",
+    "recovery_action": "TOOL_EXECUTE",
+    "annotation_note": "900/7 - 90 = 270/7. The decimal 38.571429 is not equal to 761/200."
+  },
+  {
+    "benchmark_id": "test/prealgebra/1044.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The 70s column gives stamp counts 12, 12, 6, and 13, not prices. The prices are 6, 6, 4, and 5 cents, and the average is 5.4 cents."
+  },
+  {
+    "benchmark_id": "test/precalculus/1056.json",
+    "trace_validity": "invalid",
+    "error_location": "n3",
+    "error_type": "algebraic_transformation_error",
+    "recovery_action": "LOCAL_REPAIR",
+    "annotation_note": "The plane x - z = 0 has normal length sqrt(2), so its distance is |x - z| / sqrt(2), not |x - z|."
+  },
+  {
+    "benchmark_id": "test/precalculus/1172.json",
+    "trace_validity": "invalid",
+    "error_location": "n5",
+    "error_type": "logical_inference_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "The written quotient is not the distance between parallel lines. The cross-product formula gives 7."
+  },
+  {
+    "benchmark_id": "test/precalculus/1199.json",
+    "trace_validity": "invalid",
+    "error_location": "n3",
+    "error_type": "logical_inference_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "Half the period is not the phase constant. The drawn function is 2 sin(3x + pi) + 1, so the smallest positive c is pi."
+  },
+  {
+    "benchmark_id": "stress-multisample/13",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "sign_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "Expanding 3 - (2 - x) gives 3 - 2 + x. The next step writes 1 - x, which flips the sign of x. Later sign changes cancel, so the final value matches, but the trace is still invalid."
+  },
+  {
+    "benchmark_id": "stability-stable/test/algebra/101.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The inequality is non-strict. The first step rewrites x^2 - 5x - 14 <= 0 as a strict less-than, so the endpoints are lost."
+  },
+  {
+    "benchmark_id": "stability-stable/test/algebra/1031.json",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "semantic_interpretation_error",
+    "recovery_action": "REPLAN",
+    "annotation_note": "A square root is defined when its radicand is non-negative. The step writes 10x - 55 != 0. The reported value 5.5 matches 11/2, but the trace is invalid."
+  },
+  {
+    "benchmark_id": "stability-stable/test/algebra/1078.json",
+    "trace_validity": "invalid",
+    "error_location": "n5",
+    "error_type": "sign_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "After (x^2 + 2)^2 < 21, the upper bound is sqrt(21) - 2. The next step writes sqrt(21) + 2, flipping the sign of 2."
+  },
+  {
+    "benchmark_id": "stability-qwen2.5-3b/test/intermediate_algebra/1111.json",
+    "trace_validity": "invalid",
+    "error_location": "n2",
+    "error_type": "semantic_interpretation_error",
+    "recovery_action": "REPLAN",
+    "annotation_note": "The track is two straight edges plus two semicircles whose diameter is the field width. The first step counts length, width, and radius as separate perimeter parts."
+  },
+  {
+    "benchmark_id": "pair-equations/3n",
+    "trace_validity": "invalid",
+    "error_location": "n5",
+    "error_type": "dependency_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "3n = 12 gives n = 4, and 3n + 5 = 14 gives n = 3. The last step applies n = 4 to both equations."
+  },
+  {
+    "benchmark_id": "pair-equations/6a",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "dependency_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "The first equation gives a = 3. The next step substitutes that value into 6a + 4 = 16 instead of solving the second equation from its own statement. That equation gives a = 2."
+  },
+  {
+    "benchmark_id": "pair-equations/6u",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "missing_assumption",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "The equations are separate: 6u = 12 gives u = 2, and 6u + 12 = 18 gives u = 1. The next step assumes the two equations must share one value, which the problem does not state."
+  },
+  {
+    "benchmark_id": "pair-equations/8d",
+    "trace_validity": "invalid",
+    "error_location": "n4",
+    "error_type": "dependency_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "8d = 24 gives d = 3. The next step substitutes that value into 8d + 8 = 16. Solved on its own, the second equation gives d = 1."
+  },
+  {
+    "benchmark_id": "sign-equation/nested-8",
+    "trace_validity": "invalid",
+    "error_location": "n12",
+    "error_type": "sign_error",
+    "recovery_action": "BACKTRACK",
+    "annotation_note": "From -x - 1 = 0, moving -1 to the other side gives -x = 1. The next step writes -x = 0."
+  }
+]

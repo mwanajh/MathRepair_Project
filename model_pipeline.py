@@ -23,11 +23,72 @@ from repair_policy import RepairDecision, make_repair_decision
 PROMPT_VERSION_BY_PROFILE = {
     "default": "equation_json_default_v1",
     "qwen2_math_json": "equation_json_qwen2_v1",
+    "stable_text_json": "text_json_stable_v1",
+    "closed_text_json": "text_json_closed_v1",
 }
 PARSER_VERSION_BY_PROFILE = {
     "default": "equation_parser_default_v1",
     "qwen2_math_json": "equation_parser_qwen2_v1",
+    "stable_text_json": "text_parser_stable_v1",
+    "closed_text_json": "text_parser_stable_v1",
 }
+CLOSED_TEXT_JSON_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "steps": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 6,
+        }
+    },
+    "required": ["steps"],
+    "additionalProperties": False,
+}
+
+
+def generation_format_field(
+    prompt_profile: str, problem_format: str
+) -> dict[str, object]:
+    """Return the Ollama format field for one generation request."""
+    if prompt_profile == "closed_text_json":
+        return {"format": CLOSED_TEXT_JSON_SCHEMA}
+    if prompt_profile == "qwen2_math_json" or problem_format == "text":
+        return {"format": "json"}
+    return {}
+
+
+def text_problem_prompt(problem: str, prompt_profile: str) -> str:
+    """Build the open-ended prompt for one text problem."""
+    if prompt_profile == "closed_text_json":
+        instruction = (
+            "Return one JSON object and then stop. Solve the problem in at most "
+            "6 short steps. Each step is one sentence. The response must match "
+            'exactly this shape: {"steps":["step 1","step 2"]}. Write the steps '
+            "field once. After the closing brace, stop. Do not emit a second "
+            "steps field, a second JSON object, or any text outside the object. "
+            "The steps array must be non-empty, every item must be a string, and "
+            "the last item must state the final answer. Do not use Markdown or "
+            "code fences."
+        )
+    elif prompt_profile == "stable_text_json":
+        instruction = (
+            "Return only valid JSON. Solve the problem using at most 6 "
+            "short steps. The response must match exactly this shape: "
+            '{"steps":["step 1","step 2"]}. The steps array must be '
+            "non-empty, every item must be a string, and the last item "
+            "must state the final answer. Do not write text outside the "
+            "JSON object. Do not use Markdown or code fences."
+        )
+    else:
+        instruction = (
+            "Solve this mathematical problem step by step. Output exactly "
+            "one JSON object with one field named steps. steps must be a "
+            "non-empty array of concise reasoning states, in order, with "
+            "the final state containing the answer. Do not include prose "
+            "outside the JSON object. Do not use Markdown code fences."
+        )
+    return f"{instruction}\n\nProblem: {problem}"
 
 
 class MathModel(Protocol):
@@ -103,9 +164,11 @@ class OllamaMathModel:
             raise ValueError("Ollama model name cannot be empty.")
         if max_output_tokens is not None and max_output_tokens < 1:
             raise ValueError("max_output_tokens must be at least 1.")
-        if prompt_profile not in {"default", "qwen2_math_json"}:
+        if prompt_profile not in PROMPT_VERSION_BY_PROFILE:
             raise ValueError(
-                "prompt_profile must be 'default' or 'qwen2_math_json'."
+                "prompt_profile must be one of "
+                + ", ".join(sorted(PROMPT_VERSION_BY_PROFILE))
+                + "."
             )
         if problem_format not in {"equation", "text"}:
             raise ValueError("problem_format must be 'equation' or 'text'.")
@@ -137,11 +200,8 @@ class OllamaMathModel:
                 "prompt": prompt,
                 "stream": False,
                 "options": options,
-                **(
-                    {"format": "json"}
-                    if self.prompt_profile == "qwen2_math_json"
-                    or self.problem_format == "text"
-                    else {}
+                **generation_format_field(
+                    self.prompt_profile, self.problem_format
                 ),
             }
         ).encode("utf-8")
@@ -212,14 +272,7 @@ class OllamaMathModel:
 
     def solve(self, problem: str) -> list[str]:
         if self.problem_format == "text":
-            prompt = (
-                "Solve this mathematical problem step by step. Output exactly "
-                "one JSON object with one field named steps. steps must be a "
-                "non-empty array of concise reasoning states, in order, with "
-                "the final state containing the answer. Do not include prose "
-                "outside the JSON object. Do not use Markdown code fences.\n\n"
-                f"Problem: {problem}"
-            )
+            prompt = text_problem_prompt(problem, self.prompt_profile)
         elif self.prompt_profile == "qwen2_math_json":
             prompt = (
                 "Solve the equation. Output exactly one JSON object with one "

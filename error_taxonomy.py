@@ -11,6 +11,9 @@ LOGICAL_INFERENCE_ERROR = "logical_inference_error"
 SEMANTIC_INTERPRETATION_ERROR = "semantic_interpretation_error"
 DEPENDENCY_ERROR = "dependency_error"
 INCOMPLETE_SOLUTION = "incomplete_solution"
+# Supervision outcome for a trace that should not be repaired. It is not one of
+# the eight reasoning-error codes in ERROR_TYPE_CODES.
+VALID_NO_REPAIR = "VALID_NO_REPAIR"
 
 
 @dataclass(frozen=True)

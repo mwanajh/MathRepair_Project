@@ -1,0 +1,34 @@
+{
+  "saved_generations": 50,
+  "completed_traces": 40,
+  "output_failures": 10,
+  "sampling_answer_correct": 6,
+  "sampling_answer_incorrect": 34,
+  "reviewed_count": 39,
+  "unreviewed_count": 1,
+  "trace_validity_counts": {
+    "invalid": 35,
+    "valid": 4
+  },
+  "error_type_counts": {
+    "dependency_error": 3,
+    "missing_assumption": 3,
+    "sign_error": 3,
+    "semantic_interpretation_error": 5,
+    "VALID_NO_REPAIR": 4,
+    "incomplete_solution": 5,
+    "arithmetic_error": 7,
+    "algebraic_transformation_error": 4,
+    "logical_inference_error": 5
+  },
+  "recovery_action_counts": {
+    "BACKTRACK": 14,
+    "REPLAN": 10,
+    "CONTINUE": 4,
+    "TOOL_EXECUTE": 7,
+    "LOCAL_REPAIR": 4
+  },
+  "unobserved_error_types": [],
+  "trainable": true,
+  "note": "Unreviewed rows are an annotation queue. sampling_answer_correct is not a trace-validity label and must not be used as VALID_NO_REPAIR."
+}

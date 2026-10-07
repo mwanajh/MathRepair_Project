@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-09-29T14:40:26.804567+00:00",
+  "generated_utc": "2026-10-07T07:17:12.234925+00:00",
   "experiment": "matched_budget_error_category_analysis",
   "source_matched_report": "matched_budget_report.json",
   "source_error_labels": "stress_multisample_report.json",
@@ -20,13 +20,9 @@
       "uniform_local_success_rate": 0.0,
       "adaptive_local_success_count": 0,
       "adaptive_local_success_rate": 0.0,
-      "best_observed_strategy": "tie",
-      "best_observed_strategies": [
-        "global_regeneration",
-        "uniform_local_repair",
-        "adaptive_local_repair"
-      ],
-      "evidence_status": "observed",
+      "best_observed_strategy": null,
+      "best_observed_strategies": [],
+      "evidence_status": "sparse",
       "keys": [
         {
           "seed": 6502,
@@ -47,7 +43,7 @@
       "best_observed_strategies": [
         "global_regeneration"
       ],
-      "evidence_status": "observed",
+      "evidence_status": "counted",
       "keys": [
         {
           "seed": 3500,
@@ -82,7 +78,7 @@
       "adaptive_local_success_rate": null,
       "best_observed_strategy": null,
       "best_observed_strategies": [],
-      "evidence_status": "no_observed_cases",
+      "evidence_status": "unobserved",
       "keys": []
     },
     {
@@ -96,7 +92,7 @@
       "adaptive_local_success_rate": null,
       "best_observed_strategy": null,
       "best_observed_strategies": [],
-      "evidence_status": "no_observed_cases",
+      "evidence_status": "unobserved",
       "keys": []
     },
     {
@@ -110,7 +106,7 @@
       "adaptive_local_success_rate": null,
       "best_observed_strategy": null,
       "best_observed_strategies": [],
-      "evidence_status": "no_observed_cases",
+      "evidence_status": "unobserved",
       "keys": []
     },
     {
@@ -122,12 +118,9 @@
       "uniform_local_success_rate": 0.0,
       "adaptive_local_success_count": 1,
       "adaptive_local_success_rate": 1.0,
-      "best_observed_strategy": "tie",
-      "best_observed_strategies": [
-        "global_regeneration",
-        "adaptive_local_repair"
-      ],
-      "evidence_status": "observed",
+      "best_observed_strategy": null,
+      "best_observed_strategies": [],
+      "evidence_status": "sparse",
       "keys": [
         {
           "seed": 4500,
@@ -146,7 +139,7 @@
       "adaptive_local_success_rate": null,
       "best_observed_strategy": null,
       "best_observed_strategies": [],
-      "evidence_status": "no_observed_cases",
+      "evidence_status": "unobserved",
       "keys": []
     },
     {
@@ -160,7 +153,7 @@
       "adaptive_local_success_rate": null,
       "best_observed_strategy": null,
       "best_observed_strategies": [],
-      "evidence_status": "no_observed_cases",
+      "evidence_status": "unobserved",
       "keys": []
     }
   ],
@@ -176,11 +169,16 @@
     "logical_inference_error",
     "semantic_interpretation_error"
   ],
-  "interpretation": "Global regeneration was stronger on the observed algebraic-transformation cases, while adaptive local repair matched global regeneration on the one observed sign-error case. The arithmetic case produced no accepted repair for either strategy. Missing-assumption, dependency, incomplete-solution, logical-inference, and semantic-interpretation categories were not observed in this seven-error pilot and require targeted data before comparison.",
+  "sparse_categories": [
+    "arithmetic_error",
+    "sign_error"
+  ],
+  "interpretation": "algebraic_transformation_error has 5 runs; the higher repair rate in this pilot is global_regeneration. arithmetic_error, sign_error have fewer than 3 runs, so no strategy is selected. missing_assumption, dependency_error, incomplete_solution, logical_inference_error, semantic_interpretation_error were not observed. An empty cell is not a repair result.",
   "limitations": [
     "Only seven detected-error runs are available.",
     "Five of the seven runs are algebraic-transformation errors.",
     "Rates describe this matched-budget pilot, not general error-type behavior.",
+    "A strategy is named only when a category has at least three detected-error runs.",
     "Unobserved categories are not evidence of zero repair success."
   ]
 }

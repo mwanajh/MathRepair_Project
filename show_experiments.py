@@ -383,6 +383,135 @@ def render_task7(report: dict[str, object]) -> str:
     )
 
 
+def render_task8(root: Path) -> str:
+    report = load_report(root / "learned_verifier_report.json")
+    test = report["test_metrics"]
+    baseline = report["test_rule_baseline"]
+    split = report["split"]
+    return "\n".join(
+        [
+            "LEARNED TYPED VERIFIER",
+            "Saved experiment result: TF-IDF + logistic regression",
+            f"Controlled examples: {report['dataset']['example_count']}",
+            "Train / development / test: "
+            f"{split['train']['count']} / {split['dev']['count']} / {split['test']['count']}",
+            "",
+            table(
+                ["Method", "First-error location", "Error type", "Coverage"],
+                [
+                    ["Learned verifier", percent(test["error_location_accuracy"]),
+                     percent(test["error_type_accuracy"]), "100.0%"],
+                    ["Rule/symbolic baseline",
+                     percent(baseline["error_location_accuracy_with_abstentions_wrong"]),
+                     percent(baseline["error_type_accuracy_with_abstentions_wrong"]),
+                     percent(baseline["coverage"])],
+                ],
+            ),
+            "",
+            "Test set has eight synthetic examples; natural-trace accuracy is unproven.",
+        ]
+    )
+
+
+def render_task9(root: Path) -> str:
+    report = load_report(root / "math500_full40_baseline_report.json")
+    return "\n".join(
+        [
+            "MATH-500 ANSWER-SCORED EVALUATION",
+            f"Benchmark: {report['benchmark']} | Model: {report['model']}",
+            "Saved result; reference answers used after generation for scoring.",
+            "",
+            table(
+                ["Metric", "Result"],
+                [
+                    ["Problems", report["problem_count"]],
+                    ["Completed generations", report["completed_count"]],
+                    ["Output failures", report["failure_count"]],
+                    ["Correct answers", report["final_answer_correct_count"]],
+                    ["Answer accuracy (all 40)", percent(report["final_answer_accuracy"])],
+                    ["Strict / normalized outputs",
+                     f"{report['strict_output_contract_count']} / {report['normalized_recovery_count']}"],
+                    ["Model calls / tokens",
+                     f"{report['total_model_calls']} / {report['total_tokens']:,}"],
+                ],
+            ),
+            "",
+            "All ten output failures remain in the accuracy denominator.",
+        ]
+    )
+
+
+def render_task10(root: Path) -> str:
+    report = load_report(root / "math500_system_ablation_report.json")
+    full = next(
+        variant for variant in report["variants"]
+        if variant["variant_id"] == "full_mathrepair"
+    )
+    return "\n".join(
+        [
+            "MATCHED-BUDGET SYSTEM ABLATIONS",
+            "Saved experiment result; same baseline generations across variants.",
+            f"Shared additional-token ceiling: {report['matched_additional_token_budget']:,}",
+            "",
+            table(
+                ["Variant", "Initial", "Final", "Detected", "Fixed", "Regressed", "Tokens"],
+                [
+                    [variant["variant_id"],
+                     percent(variant["initial_answer_accuracy"]),
+                     percent(variant["final_answer_accuracy"]),
+                     variant["verifier_detection_count"],
+                     f"{variant['repair_success_count']}/{variant['repair_attempt_count']}",
+                     variant["repair_regression_count"],
+                     variant["additional_tokens"]]
+                    for variant in report["variants"]
+                ],
+            ),
+            "",
+            f"Full system: {full['repair_success_count']} successful repair and "
+            f"{full['repair_regression_count']} regressions; final accuracy "
+            f"{percent(full['final_answer_accuracy'])}.",
+            "The symbolic heuristic abstained on every completed open-ended trace.",
+            "These are pilot results; component value is not established.",
+        ]
+    )
+
+
+def render_task11(root: Path) -> str:
+    report = load_report(root / "error_category_analysis.json")
+
+    def result(row: dict[str, object], prefix: str) -> str:
+        if row["observed_error_runs"] == 0:
+            return "--"
+        return (f"{row[prefix + '_success_count']}/{row['observed_error_runs']} "
+                f"({percent(row[prefix + '_success_rate'])})")
+
+    rows = [
+        [row["error_category"], row["observed_error_runs"],
+         result(row, "global"), result(row, "uniform_local"),
+         result(row, "adaptive_local"),
+         ("--" if row["observed_error_runs"] == 0 else
+          "none succeeded" if max(row["global_success_count"],
+                                  row["uniform_local_success_count"],
+                                  row["adaptive_local_success_count"]) == 0 else
+          "global/adaptive tie" if row["best_observed_strategy"] == "tie" else
+          str(row["best_observed_strategy"]))]
+        for row in report["rows"]
+    ]
+    return "\n".join(
+        [
+            "ERROR-CATEGORY REPAIR ANALYSIS",
+            f"Detected-error runs: {report['detected_error_run_count']}",
+            "Accepted, answer-correct repairs in the matched-budget pilot:",
+            "",
+            table(["Error category", "Cases", "Global", "Uniform local",
+                   "Adaptive local", "Best observed"], rows),
+            "",
+            "Global regeneration was stronger for observed algebraic errors (2/5).",
+            "The sign-error comparison has only one case; five categories had no cases.",
+        ]
+    )
+
+
 def build_display(section: str, root: Path = PROJECT_DIR) -> str:
     renderers = {
         "task1": lambda: render_task1(),
@@ -396,6 +525,10 @@ def build_display(section: str, root: Path = PROJECT_DIR) -> str:
         "task7": lambda: render_task7(
             load_report(root / "output_contract_evidence.json")
         ),
+        "task8": lambda: render_task8(root),
+        "task9": lambda: render_task9(root),
+        "task10": lambda: render_task10(root),
+        "task11": lambda: render_task11(root),
     }
     selected = list(renderers) if section == "all" else [section]
     blocks = ["MATHREPAIR EXPERIMENT RESULTS"]
@@ -424,6 +557,10 @@ def main() -> None:
             "task5",
             "task6",
             "task7",
+            "task8",
+            "task9",
+            "task10",
+            "task11",
         ],
         default="all",
         help="Choose one experiment section or show all sections.",

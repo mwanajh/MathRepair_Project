@@ -1,0 +1,155 @@
+{
+  "generated_utc": "2026-10-07T07:17:13.995884+00:00",
+  "experiment": "reviewed_error_category_labels",
+  "minimum_cases_for_a_named_action": 3,
+  "reviewed_count": 39,
+  "rows": [
+    {
+      "error_type": "VALID_NO_REPAIR",
+      "reviewed_count": 4,
+      "recovery_action_counts": {
+        "CONTINUE": 4,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 0,
+        "BACKTRACK": 0
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "CONTINUE",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "arithmetic_error",
+      "reviewed_count": 7,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 7,
+        "REPLAN": 0,
+        "BACKTRACK": 0
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "TOOL_EXECUTE",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "algebraic_transformation_error",
+      "reviewed_count": 4,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 4,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 0,
+        "BACKTRACK": 0
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "LOCAL_REPAIR",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "sign_error",
+      "reviewed_count": 3,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 0,
+        "BACKTRACK": 3
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "BACKTRACK",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "missing_assumption",
+      "reviewed_count": 3,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 0,
+        "BACKTRACK": 3
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "BACKTRACK",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "logical_inference_error",
+      "reviewed_count": 5,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 0,
+        "BACKTRACK": 5
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "BACKTRACK",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "semantic_interpretation_error",
+      "reviewed_count": 5,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 5,
+        "BACKTRACK": 0
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "REPLAN",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "dependency_error",
+      "reviewed_count": 3,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 0,
+        "BACKTRACK": 3
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "BACKTRACK",
+      "measured_repair_outcome": null
+    },
+    {
+      "error_type": "incomplete_solution",
+      "reviewed_count": 5,
+      "recovery_action_counts": {
+        "CONTINUE": 0,
+        "LOCAL_REPAIR": 0,
+        "GLOBAL_REGENERATE": 0,
+        "TOOL_EXECUTE": 0,
+        "REPLAN": 5,
+        "BACKTRACK": 0
+      },
+      "evidence_status": "counted",
+      "unanimous_reviewed_action": "REPLAN",
+      "measured_repair_outcome": null
+    }
+  ],
+  "unobserved_error_types": [],
+  "sparse_error_types": [],
+  "unobserved_recovery_actions": [
+    "GLOBAL_REGENERATE"
+  ],
+  "interpretation": "VALID_NO_REPAIR has 4 reviews, all labeled CONTINUE. arithmetic_error has 7 reviews, all labeled TOOL_EXECUTE. algebraic_transformation_error has 4 reviews, all labeled LOCAL_REPAIR. sign_error has 3 reviews, all labeled BACKTRACK. missing_assumption has 3 reviews, all labeled BACKTRACK. logical_inference_error has 5 reviews, all labeled BACKTRACK. semantic_interpretation_error has 5 reviews, all labeled REPLAN. dependency_error has 3 reviews, all labeled BACKTRACK. incomplete_solution has 5 reviews, all labeled REPLAN. These labels do not measure whether the named action repairs the answer.",
+  "limitations": [
+    "Counts are reviewed labels, not measured repair outcomes.",
+    "A zero recovery count means that action was not assigned. It is not a measured failure.",
+    "A named action is the unanimous review in a category with at least three examples.",
+    "GLOBAL_REGENERATE remains unobserved. That empty cell is not evidence against global regeneration."
+  ]
+}

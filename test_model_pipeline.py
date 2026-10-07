@@ -4,8 +4,10 @@ from tempfile import TemporaryDirectory
 import unittest
 
 from model_pipeline import (
+    CLOSED_TEXT_JSON_SCHEMA,
     MockMathModel,
     extract_equation_steps,
+    generation_format_field,
     parse_model_steps,
     parse_qwen_json_steps,
     parse_normalized_text_steps,
@@ -13,6 +15,7 @@ from model_pipeline import (
     run_pipeline,
     save_trace,
     select_model_answer_step,
+    text_problem_prompt,
 )
 from repair_policy import RepairAction
 
@@ -64,6 +67,25 @@ class ModelPipelineTests(unittest.TestCase):
             parse_qwen_json_steps("2x = 8", response),
             ["x = (8)/(2)"],
         )
+
+    def test_closed_text_profile_stops_after_one_steps_object(self):
+        prompt = text_problem_prompt("What is 2 + 2?", "closed_text_json")
+        request_format = generation_format_field("closed_text_json", "text")
+
+        self.assertIn("After the closing brace, stop.", prompt)
+        self.assertIn("Do not emit a second steps field", prompt)
+        self.assertEqual(request_format["format"], CLOSED_TEXT_JSON_SCHEMA)
+        self.assertEqual(
+            request_format["format"]["properties"]["steps"]["maxItems"], 6
+        )
+        self.assertFalse(request_format["format"]["additionalProperties"])
+
+    def test_stable_text_profile_keeps_the_frozen_json_format(self):
+        prompt = text_problem_prompt("What is 2 + 2?", "stable_text_json")
+
+        self.assertIn("Return only valid JSON.", prompt)
+        self.assertNotIn("second steps field", prompt)
+        self.assertEqual(generation_format_field("stable_text_json", "text"), {"format": "json"})
 
     def test_rejects_nonpositive_output_token_cap(self):
         with self.assertRaisesRegex(ValueError, "at least 1"):

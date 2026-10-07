@@ -13,7 +13,10 @@ DEFAULT_MATCHED_REPORT = Path(__file__).with_name("matched_budget_report.json")
 DEFAULT_SOURCE_REPORT = Path(__file__).with_name("stress_multisample_report.json")
 DEFAULT_OUTPUT = Path(__file__).with_name("error_category_analysis.json")
 DEFAULT_MARKDOWN = Path(__file__).with_name("error_category_analysis.md")
+DEFAULT_REVIEWS = Path(__file__).with_name("natural_error_reviews.json")
+DEFAULT_REVIEWED_OUTPUT = Path(__file__).with_name("reviewed_error_category_analysis.json")
 
+MINIMUM_CASES_FOR_A_STRATEGY = 3
 ERROR_CATEGORIES = (
     "arithmetic_error",
     "algebraic_transformation_error",
@@ -102,6 +105,48 @@ def _rate(successes: int, cases: int) -> float | None:
     return successes / cases if cases else None
 
 
+def _evidence_status(observed: int) -> str:
+    """Keep a small cell from being read as a strategy result."""
+    if observed <= 0:
+        return "unobserved"
+    if observed < MINIMUM_CASES_FOR_A_STRATEGY:
+        return "sparse"
+    return "counted"
+
+
+def _outcome_interpretation(rows: list[dict[str, object]]) -> str:
+    """Describe only categories large enough to compare."""
+    sentences = []
+    for row in rows:
+        if row["evidence_status"] != "counted":
+            continue
+        strategy = row["best_observed_strategy"]
+        if strategy:
+            sentences.append(
+                f"{row['error_category']} has {row['observed_error_runs']} runs; "
+                f"the higher repair rate in this pilot is {strategy}."
+            )
+        else:
+            sentences.append(
+                f"{row['error_category']} has {row['observed_error_runs']} runs "
+                "and no single higher strategy."
+            )
+    sparse = [str(row["error_category"]) for row in rows if row["evidence_status"] == "sparse"]
+    unobserved = [
+        str(row["error_category"]) for row in rows if row["evidence_status"] == "unobserved"
+    ]
+    if sparse:
+        sentences.append(
+            f"{', '.join(sparse)} have fewer than {MINIMUM_CASES_FOR_A_STRATEGY} runs, "
+            "so no strategy is selected."
+        )
+    if unobserved:
+        sentences.append(
+            f"{', '.join(unobserved)} were not observed. An empty cell is not a repair result."
+        )
+    return " ".join(sentences)
+
+
 def analyze_categories(
     matched: dict[str, object], source: dict[str, object]
 ) -> dict[str, object]:
@@ -125,6 +170,14 @@ def analyze_categories(
         available = {name: value for name, value in rates.items() if value is not None}
         best_rate = max(available.values()) if available else None
         winners = [name for name, value in available.items() if value == best_rate] if best_rate is not None else []
+        status = _evidence_status(observed)
+        if status == "counted" and len(winners) == 1:
+            best = winners[0]
+        elif status == "counted" and len(winners) > 1:
+            best = "tie"
+        else:
+            best = None
+            winners = []
         rows.append(
             {
                 "error_category": category,
@@ -135,9 +188,9 @@ def analyze_categories(
                 "uniform_local_success_rate": rates["uniform_local_repair"],
                 "adaptive_local_success_count": adaptive_successes,
                 "adaptive_local_success_rate": rates["adaptive_local_repair"],
-                "best_observed_strategy": winners[0] if len(winners) == 1 else ("tie" if winners else None),
+                "best_observed_strategy": best,
                 "best_observed_strategies": winners,
-                "evidence_status": "observed" if observed else "no_observed_cases",
+                "evidence_status": status,
                 "keys": [
                     {"seed": key[0], "problem": key[1]} for key in sorted(keys)
                 ],
@@ -160,21 +213,104 @@ def analyze_categories(
         "unobserved_categories": [
             row["error_category"] for row in rows if not row["observed_error_runs"]
         ],
-        "interpretation": (
-            "Global regeneration was stronger on the observed algebraic-transformation "
-            "cases, while adaptive local repair matched global regeneration on the one "
-            "observed sign-error case. The arithmetic case produced no accepted repair "
-            "for either strategy. Missing-assumption, dependency, incomplete-solution, "
-            "logical-inference, and semantic-interpretation categories were not observed "
-            "in this seven-error pilot and require targeted data before comparison."
-        ),
+        "sparse_categories": [
+            row["error_category"] for row in rows if row["evidence_status"] == "sparse"
+        ],
+        "interpretation": _outcome_interpretation(rows),
         "limitations": [
             "Only seven detected-error runs are available.",
             "Five of the seven runs are algebraic-transformation errors.",
             "Rates describe this matched-budget pilot, not general error-type behavior.",
+            "A strategy is named only when a category has at least three detected-error runs.",
             "Unobserved categories are not evidence of zero repair success.",
         ],
     }
+
+
+def analyze_reviewed_error_categories(
+    reviews: list[dict[str, object]],
+) -> dict[str, object]:
+    """Count reviewed recovery labels without turning a small cell into a strategy."""
+    from error_taxonomy import ERROR_TYPE_CODES, VALID_NO_REPAIR
+    from natural_error_dataset import RECOVERY_ACTIONS
+
+    error_types = (VALID_NO_REPAIR, *ERROR_TYPE_CODES)
+    rows: list[dict[str, object]] = []
+    for error_type in error_types:
+        group = [item for item in reviews if item.get("error_type") == error_type]
+        counts = Counter(str(item.get("recovery_action")) for item in group)
+        observed = len(group)
+        status = _evidence_status(observed)
+        unanimous = None
+        if status == "counted":
+            leaders = [action for action, count in counts.items() if count == observed]
+            unanimous = leaders[0] if len(leaders) == 1 else None
+        rows.append(
+            {
+                "error_type": error_type,
+                "reviewed_count": observed,
+                "recovery_action_counts": {
+                    action: int(counts.get(action, 0)) for action in RECOVERY_ACTIONS
+                },
+                "evidence_status": status,
+                "unanimous_reviewed_action": unanimous,
+                "measured_repair_outcome": None,
+            }
+        )
+    action_totals = Counter(
+        str(item.get("recovery_action"))
+        for item in reviews
+        if isinstance(item, dict)
+    )
+    return {
+        "generated_utc": datetime.now(timezone.utc).isoformat(),
+        "experiment": "reviewed_error_category_labels",
+        "minimum_cases_for_a_named_action": MINIMUM_CASES_FOR_A_STRATEGY,
+        "reviewed_count": len(reviews),
+        "rows": rows,
+        "unobserved_error_types": [
+            row["error_type"] for row in rows if row["evidence_status"] == "unobserved"
+        ],
+        "sparse_error_types": [
+            row["error_type"] for row in rows if row["evidence_status"] == "sparse"
+        ],
+        "unobserved_recovery_actions": [
+            action for action in RECOVERY_ACTIONS if action_totals[action] == 0
+        ],
+        "interpretation": _reviewed_interpretation(rows),
+        "limitations": [
+            "Counts are reviewed labels, not measured repair outcomes.",
+            "A zero recovery count means that action was not assigned. It is not a measured failure.",
+            "A named action is the unanimous review in a category with at least three examples.",
+            "GLOBAL_REGENERATE remains unobserved. That empty cell is not evidence against global regeneration.",
+        ],
+    }
+
+
+def _reviewed_interpretation(rows: list[dict[str, object]]) -> str:
+    sentences = []
+    for row in rows:
+        action = row["unanimous_reviewed_action"]
+        if row["evidence_status"] == "counted" and action:
+            sentences.append(
+                f"{row['error_type']} has {row['reviewed_count']} reviews, all labeled {action}."
+            )
+        elif row["evidence_status"] == "counted":
+            sentences.append(
+                f"{row['error_type']} has {row['reviewed_count']} reviews and more than one recovery label, so no single action is selected."
+            )
+    sparse = [str(row["error_type"]) for row in rows if row["evidence_status"] == "sparse"]
+    unobserved = [str(row["error_type"]) for row in rows if row["evidence_status"] == "unobserved"]
+    if sparse:
+        sentences.append(
+            f"{', '.join(sparse)} have fewer than {MINIMUM_CASES_FOR_A_STRATEGY} reviews, so no action is selected."
+        )
+    if unobserved:
+        sentences.append(
+            f"{', '.join(unobserved)} were not observed. An empty error type is not a repair result."
+        )
+    sentences.append("These labels do not measure whether the named action repairs the answer.")
+    return " ".join(sentences)
 
 
 def _percent(value: object) -> str:
@@ -219,6 +355,8 @@ def main() -> None:
     parser.add_argument("--source-report", type=Path, default=DEFAULT_SOURCE_REPORT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
+    parser.add_argument("--reviews", type=Path, default=DEFAULT_REVIEWS)
+    parser.add_argument("--reviewed-output", type=Path, default=DEFAULT_REVIEWED_OUTPUT)
     args = parser.parse_args()
     try:
         report = analyze_categories(
@@ -229,6 +367,11 @@ def main() -> None:
             json.dumps(report, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
         )
         args.markdown.write_text(render_markdown(report), encoding="utf-8")
+        reviews = json.loads(args.reviews.read_text(encoding="utf-8"))
+        reviewed = analyze_reviewed_error_categories(reviews)
+        args.reviewed_output.write_text(
+            json.dumps(reviewed, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        )
     except (OSError, ValueError, TypeError, KeyError) as error:
         parser.error(str(error))
     for row in report["rows"]:

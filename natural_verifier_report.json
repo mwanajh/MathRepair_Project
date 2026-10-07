@@ -1,0 +1,821 @@
+{
+  "generated_utc": "2026-10-07T06:50:36.886264+00:00",
+  "experiment": "natural_mixed_verifier_retraining",
+  "primary_seed": 42,
+  "seeds": [
+    42,
+    7,
+    11,
+    19,
+    23
+  ],
+  "dataset": {
+    "source": "model_generated",
+    "reviewed_count": 39,
+    "unreviewed_count": 1,
+    "excluded_unreviewed_benchmark_ids": [
+      "test/number_theory/1065.json"
+    ],
+    "error_type_counts": {
+      "dependency_error": 3,
+      "missing_assumption": 3,
+      "sign_error": 3,
+      "semantic_interpretation_error": 5,
+      "VALID_NO_REPAIR": 4,
+      "incomplete_solution": 5,
+      "arithmetic_error": 7,
+      "algebraic_transformation_error": 4,
+      "logical_inference_error": 5
+    },
+    "trainable": true,
+    "example_sha256": "5519a052a4d06c3bc06f69edbebec193adb359f509697f40804d07c66f841a23",
+    "note": "Unreviewed rows are an annotation queue. sampling_answer_correct is not a trace-validity label and must not be used as VALID_NO_REPAIR."
+  },
+  "primary_split": {
+    "train": {
+      "count": 21,
+      "example_ids": [
+        "math500-pair-equations/3n",
+        "math500-pair-equations/6u",
+        "math500-stability-qwen2.5-3b/test/intermediate_algebra/1111.json",
+        "math500-stability-stable/test/algebra/1031.json",
+        "math500-stress-multisample/13",
+        "math500-test/algebra/101.json",
+        "math500-test/algebra/1031.json",
+        "math500-test/algebra/1072.json",
+        "math500-test/algebra/1082.json",
+        "math500-test/counting_and_probability/10.json",
+        "math500-test/counting_and_probability/119.json",
+        "math500-test/geometry/172.json",
+        "math500-test/geometry/283.json",
+        "math500-test/intermediate_algebra/1126.json",
+        "math500-test/intermediate_algebra/1166.json",
+        "math500-test/number_theory/1002.json",
+        "math500-test/number_theory/109.json",
+        "math500-test/number_theory/1090.json",
+        "math500-test/prealgebra/1003.json",
+        "math500-test/prealgebra/1044.json",
+        "math500-test/precalculus/1199.json"
+      ],
+      "error_type_counts": {
+        "dependency_error": 1,
+        "missing_assumption": 1,
+        "semantic_interpretation_error": 3,
+        "sign_error": 1,
+        "VALID_NO_REPAIR": 2,
+        "incomplete_solution": 3,
+        "arithmetic_error": 5,
+        "algebraic_transformation_error": 2,
+        "logical_inference_error": 3
+      }
+    },
+    "dev": {
+      "count": 9,
+      "example_ids": [
+        "math500-pair-equations/8d",
+        "math500-stability-stable/test/algebra/1078.json",
+        "math500-test/algebra/1143.json",
+        "math500-test/counting_and_probability/1003.json",
+        "math500-test/counting_and_probability/1009.json",
+        "math500-test/geometry/1097.json",
+        "math500-test/intermediate_algebra/102.json",
+        "math500-test/intermediate_algebra/117.json",
+        "math500-test/precalculus/1172.json"
+      ],
+      "error_type_counts": {
+        "dependency_error": 1,
+        "sign_error": 1,
+        "arithmetic_error": 1,
+        "missing_assumption": 1,
+        "VALID_NO_REPAIR": 1,
+        "semantic_interpretation_error": 1,
+        "incomplete_solution": 1,
+        "algebraic_transformation_error": 1,
+        "logical_inference_error": 1
+      }
+    },
+    "test": {
+      "count": 9,
+      "example_ids": [
+        "math500-pair-equations/6a",
+        "math500-sign-equation/nested-8",
+        "math500-stability-stable/test/algebra/101.json",
+        "math500-test/counting_and_probability/1014.json",
+        "math500-test/counting_and_probability/1114.json",
+        "math500-test/geometry/1140.json",
+        "math500-test/intermediate_algebra/1063.json",
+        "math500-test/number_theory/1000.json",
+        "math500-test/precalculus/1056.json"
+      ],
+      "error_type_counts": {
+        "dependency_error": 1,
+        "sign_error": 1,
+        "semantic_interpretation_error": 1,
+        "logical_inference_error": 1,
+        "VALID_NO_REPAIR": 1,
+        "missing_assumption": 1,
+        "incomplete_solution": 1,
+        "arithmetic_error": 1,
+        "algebraic_transformation_error": 1
+      }
+    }
+  },
+  "metric_definitions": {
+    "repair_trigger_precision": "Among traces where a repair is predicted, the fraction reviewed as invalid.",
+    "repair_trigger_recall": "Among traces reviewed as invalid, the fraction where a repair is predicted.",
+    "false_positive_repair_rate": "Among traces reviewed as valid, the fraction where a repair is predicted.",
+    "error_location_accuracy": "Among invalid traces, the fraction whose predicted node is the reviewed first error.",
+    "error_location_f1": "Exact-node F1. A true positive is an invalid trace with the reviewed node. Any other repair prediction is a false positive. An invalid trace without that node is a false negative.",
+    "error_type_macro_f1": "Unweighted mean F1 over VALID_NO_REPAIR and the eight error codes. Abstention is scored as VALID_NO_REPAIR."
+  },
+  "systems": {
+    "tfidf_logistic_regression": {
+      "role": "retrained_tfidf_baseline",
+      "representation": "word and character TF-IDF with logistic regression",
+      "trained_on": "reviewed_natural_traces",
+      "primary_seed_details": {
+        "development_metrics": {
+          "example_count": 9,
+          "valid_count": 1,
+          "invalid_count": 8,
+          "repair_trigger_true_positives": 6,
+          "repair_trigger_false_positives": 1,
+          "repair_trigger_false_negatives": 2,
+          "repair_trigger_true_negatives": 0,
+          "repair_trigger_precision": 0.857143,
+          "repair_trigger_recall": 0.75,
+          "false_positive_repair_rate": 1.0,
+          "error_location_accuracy": 0.25,
+          "error_location_f1": 0.266667,
+          "error_type_macro_f1": 0.027778
+        },
+        "test_predictions": [
+          {
+            "example_id": "math500-pair-equations/6a",
+            "expected_location": "n4",
+            "predicted_location": "n4",
+            "expected_type": "dependency_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.528166
+          },
+          {
+            "example_id": "math500-sign-equation/nested-8",
+            "expected_location": "n12",
+            "predicted_location": "n4",
+            "expected_type": "sign_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.562023
+          },
+          {
+            "example_id": "math500-stability-stable/test/algebra/101.json",
+            "expected_location": "n2",
+            "predicted_location": null,
+            "expected_type": "semantic_interpretation_error",
+            "predicted_type": "VALID_NO_REPAIR",
+            "location_confidence": 0.255683
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1014.json",
+            "expected_location": "n5",
+            "predicted_location": "n4",
+            "expected_type": "logical_inference_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.507108
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1114.json",
+            "expected_location": null,
+            "predicted_location": null,
+            "expected_type": "VALID_NO_REPAIR",
+            "predicted_type": "VALID_NO_REPAIR",
+            "location_confidence": 0.382788
+          },
+          {
+            "example_id": "math500-test/geometry/1140.json",
+            "expected_location": "n4",
+            "predicted_location": "n4",
+            "expected_type": "missing_assumption",
+            "predicted_type": "logical_inference_error",
+            "location_confidence": 0.544695
+          },
+          {
+            "example_id": "math500-test/intermediate_algebra/1063.json",
+            "expected_location": "n2",
+            "predicted_location": "n2",
+            "expected_type": "incomplete_solution",
+            "predicted_type": "incomplete_solution",
+            "location_confidence": 0.520942
+          },
+          {
+            "example_id": "math500-test/number_theory/1000.json",
+            "expected_location": "n7",
+            "predicted_location": "n4",
+            "expected_type": "arithmetic_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.507531
+          },
+          {
+            "example_id": "math500-test/precalculus/1056.json",
+            "expected_location": "n3",
+            "predicted_location": "n2",
+            "expected_type": "algebraic_transformation_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.462239
+          }
+        ]
+      },
+      "splits": [
+        {
+          "seed": 42,
+          "location_threshold": 0.45,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 7,
+            "repair_trigger_false_positives": 0,
+            "repair_trigger_false_negatives": 1,
+            "repair_trigger_true_negatives": 1,
+            "repair_trigger_precision": 1.0,
+            "repair_trigger_recall": 0.875,
+            "false_positive_repair_rate": 0.0,
+            "error_location_accuracy": 0.375,
+            "error_location_f1": 0.4,
+            "error_type_macro_f1": 0.222222
+          }
+        },
+        {
+          "seed": 7,
+          "location_threshold": 0.45,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 4,
+            "repair_trigger_false_positives": 0,
+            "repair_trigger_false_negatives": 4,
+            "repair_trigger_true_negatives": 1,
+            "repair_trigger_precision": 1.0,
+            "repair_trigger_recall": 0.5,
+            "false_positive_repair_rate": 0.0,
+            "error_location_accuracy": 0.125,
+            "error_location_f1": 0.166667,
+            "error_type_macro_f1": 0.081481
+          }
+        },
+        {
+          "seed": 11,
+          "location_threshold": 0.45,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 5,
+            "repair_trigger_false_positives": 0,
+            "repair_trigger_false_negatives": 3,
+            "repair_trigger_true_negatives": 1,
+            "repair_trigger_precision": 1.0,
+            "repair_trigger_recall": 0.625,
+            "false_positive_repair_rate": 0.0,
+            "error_location_accuracy": 0.375,
+            "error_location_f1": 0.461538,
+            "error_type_macro_f1": 0.081481
+          }
+        },
+        {
+          "seed": 19,
+          "location_threshold": 0.45,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 3,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 5,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.75,
+            "repair_trigger_recall": 0.375,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.0
+          }
+        },
+        {
+          "seed": 23,
+          "location_threshold": 0.55,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 2,
+            "repair_trigger_false_positives": 0,
+            "repair_trigger_false_negatives": 6,
+            "repair_trigger_true_negatives": 1,
+            "repair_trigger_precision": 1.0,
+            "repair_trigger_recall": 0.25,
+            "false_positive_repair_rate": 0.0,
+            "error_location_accuracy": 0.25,
+            "error_location_f1": 0.4,
+            "error_type_macro_f1": 0.027778
+          }
+        }
+      ],
+      "repeated_split_summary": {
+        "repair_trigger_precision": {
+          "mean": 0.95,
+          "minimum": 0.75,
+          "maximum": 1.0,
+          "splits": 5
+        },
+        "repair_trigger_recall": {
+          "mean": 0.525,
+          "minimum": 0.25,
+          "maximum": 0.875,
+          "splits": 5
+        },
+        "false_positive_repair_rate": {
+          "mean": 0.2,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "splits": 5
+        },
+        "error_location_accuracy": {
+          "mean": 0.225,
+          "minimum": 0.0,
+          "maximum": 0.375,
+          "splits": 5
+        },
+        "error_location_f1": {
+          "mean": 0.285641,
+          "minimum": 0.0,
+          "maximum": 0.461538,
+          "splits": 5
+        },
+        "error_type_macro_f1": {
+          "mean": 0.082593,
+          "minimum": 0.0,
+          "maximum": 0.222222,
+          "splits": 5
+        }
+      }
+    },
+    "tfidf_svd_logistic_regression": {
+      "role": "stronger_learned_representation",
+      "representation": "the same TF-IDF features projected by truncated SVD, then logistic regression",
+      "trained_on": "reviewed_natural_traces",
+      "primary_seed_details": {
+        "development_metrics": {
+          "example_count": 9,
+          "valid_count": 1,
+          "invalid_count": 8,
+          "repair_trigger_true_positives": 4,
+          "repair_trigger_false_positives": 1,
+          "repair_trigger_false_negatives": 4,
+          "repair_trigger_true_negatives": 0,
+          "repair_trigger_precision": 0.8,
+          "repair_trigger_recall": 0.5,
+          "false_positive_repair_rate": 1.0,
+          "error_location_accuracy": 0.125,
+          "error_location_f1": 0.153846,
+          "error_type_macro_f1": 0.0
+        },
+        "test_predictions": [
+          {
+            "example_id": "math500-pair-equations/6a",
+            "expected_location": "n4",
+            "predicted_location": "n1",
+            "expected_type": "dependency_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.589733
+          },
+          {
+            "example_id": "math500-sign-equation/nested-8",
+            "expected_location": "n12",
+            "predicted_location": null,
+            "expected_type": "sign_error",
+            "predicted_type": "VALID_NO_REPAIR",
+            "location_confidence": 0.494245
+          },
+          {
+            "example_id": "math500-stability-stable/test/algebra/101.json",
+            "expected_location": "n2",
+            "predicted_location": "n1",
+            "expected_type": "semantic_interpretation_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.507633
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1014.json",
+            "expected_location": "n5",
+            "predicted_location": "n1",
+            "expected_type": "logical_inference_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.509994
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1114.json",
+            "expected_location": null,
+            "predicted_location": "n1",
+            "expected_type": "VALID_NO_REPAIR",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.512179
+          },
+          {
+            "example_id": "math500-test/geometry/1140.json",
+            "expected_location": "n4",
+            "predicted_location": "n1",
+            "expected_type": "missing_assumption",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.51678
+          },
+          {
+            "example_id": "math500-test/intermediate_algebra/1063.json",
+            "expected_location": "n2",
+            "predicted_location": null,
+            "expected_type": "incomplete_solution",
+            "predicted_type": "VALID_NO_REPAIR",
+            "location_confidence": 0.479124
+          },
+          {
+            "example_id": "math500-test/number_theory/1000.json",
+            "expected_location": "n7",
+            "predicted_location": "n1",
+            "expected_type": "arithmetic_error",
+            "predicted_type": "arithmetic_error",
+            "location_confidence": 0.513321
+          },
+          {
+            "example_id": "math500-test/precalculus/1056.json",
+            "expected_location": "n3",
+            "predicted_location": null,
+            "expected_type": "algebraic_transformation_error",
+            "predicted_type": "VALID_NO_REPAIR",
+            "location_confidence": 0.483676
+          }
+        ]
+      },
+      "splits": [
+        {
+          "seed": 42,
+          "location_threshold": 0.5,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 5,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 3,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.833333,
+            "repair_trigger_recall": 0.625,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.031746
+          }
+        },
+        {
+          "seed": 7,
+          "location_threshold": 0.95,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 0,
+            "repair_trigger_false_positives": 0,
+            "repair_trigger_false_negatives": 8,
+            "repair_trigger_true_negatives": 1,
+            "repair_trigger_precision": null,
+            "repair_trigger_recall": 0.0,
+            "false_positive_repair_rate": 0.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.022222
+          }
+        },
+        {
+          "seed": 11,
+          "location_threshold": 0.45,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 8,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 0,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.888889,
+            "repair_trigger_recall": 1.0,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.125,
+            "error_location_f1": 0.117647,
+            "error_type_macro_f1": 0.022222
+          }
+        },
+        {
+          "seed": 19,
+          "location_threshold": 0.45,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 8,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 0,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.888889,
+            "repair_trigger_recall": 1.0,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.022222
+          }
+        },
+        {
+          "seed": 23,
+          "location_threshold": 0.45,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 7,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 1,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.875,
+            "repair_trigger_recall": 0.875,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.024691
+          }
+        }
+      ],
+      "repeated_split_summary": {
+        "repair_trigger_precision": {
+          "mean": 0.871528,
+          "minimum": 0.833333,
+          "maximum": 0.888889,
+          "splits": 4
+        },
+        "repair_trigger_recall": {
+          "mean": 0.7,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "splits": 5
+        },
+        "false_positive_repair_rate": {
+          "mean": 0.8,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "splits": 5
+        },
+        "error_location_accuracy": {
+          "mean": 0.025,
+          "minimum": 0.0,
+          "maximum": 0.125,
+          "splits": 5
+        },
+        "error_location_f1": {
+          "mean": 0.023529,
+          "minimum": 0.0,
+          "maximum": 0.117647,
+          "splits": 5
+        },
+        "error_type_macro_f1": {
+          "mean": 0.024621,
+          "minimum": 0.022222,
+          "maximum": 0.031746,
+          "splits": 5
+        }
+      }
+    },
+    "synthetic_tfidf_baseline": {
+      "role": "current_tfidf_baseline_not_retrained",
+      "representation": "word and character TF-IDF with logistic regression",
+      "trained_on": "typed_verifier_pilot.json",
+      "location_threshold_selected_on": "synthetic_development_split",
+      "primary_seed_details": {
+        "test_predictions": [
+          {
+            "example_id": "math500-pair-equations/6a",
+            "expected_location": "n4",
+            "predicted_location": null,
+            "expected_type": "dependency_error",
+            "predicted_type": "VALID_NO_REPAIR",
+            "location_confidence": 0.535249
+          },
+          {
+            "example_id": "math500-sign-equation/nested-8",
+            "expected_location": "n12",
+            "predicted_location": "n5",
+            "expected_type": "sign_error",
+            "predicted_type": "dependency_error",
+            "location_confidence": 0.631271
+          },
+          {
+            "example_id": "math500-stability-stable/test/algebra/101.json",
+            "expected_location": "n2",
+            "predicted_location": "n5",
+            "expected_type": "semantic_interpretation_error",
+            "predicted_type": "algebraic_transformation_error",
+            "location_confidence": 0.600753
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1014.json",
+            "expected_location": "n5",
+            "predicted_location": "n5",
+            "expected_type": "logical_inference_error",
+            "predicted_type": "dependency_error",
+            "location_confidence": 0.662464
+          },
+          {
+            "example_id": "math500-test/counting_and_probability/1114.json",
+            "expected_location": null,
+            "predicted_location": "n5",
+            "expected_type": "VALID_NO_REPAIR",
+            "predicted_type": "algebraic_transformation_error",
+            "location_confidence": 0.704247
+          },
+          {
+            "example_id": "math500-test/geometry/1140.json",
+            "expected_location": "n4",
+            "predicted_location": "n5",
+            "expected_type": "missing_assumption",
+            "predicted_type": "dependency_error",
+            "location_confidence": 0.653173
+          },
+          {
+            "example_id": "math500-test/intermediate_algebra/1063.json",
+            "expected_location": "n2",
+            "predicted_location": "n5",
+            "expected_type": "incomplete_solution",
+            "predicted_type": "semantic_interpretation_error",
+            "location_confidence": 0.619203
+          },
+          {
+            "example_id": "math500-test/number_theory/1000.json",
+            "expected_location": "n7",
+            "predicted_location": "n5",
+            "expected_type": "arithmetic_error",
+            "predicted_type": "dependency_error",
+            "location_confidence": 0.698006
+          },
+          {
+            "example_id": "math500-test/precalculus/1056.json",
+            "expected_location": "n3",
+            "predicted_location": null,
+            "expected_type": "algebraic_transformation_error",
+            "predicted_type": "VALID_NO_REPAIR",
+            "location_confidence": 0.541537
+          }
+        ]
+      },
+      "splits": [
+        {
+          "seed": 42,
+          "location_threshold": 0.55,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 6,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 2,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.857143,
+            "repair_trigger_recall": 0.75,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.125,
+            "error_location_f1": 0.133333,
+            "error_type_macro_f1": 0.0
+          }
+        },
+        {
+          "seed": 7,
+          "location_threshold": 0.55,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 6,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 2,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.857143,
+            "repair_trigger_recall": 0.75,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.111111
+          }
+        },
+        {
+          "seed": 11,
+          "location_threshold": 0.55,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 8,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 0,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.888889,
+            "repair_trigger_recall": 1.0,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.125,
+            "error_location_f1": 0.117647,
+            "error_type_macro_f1": 0.148148
+          }
+        },
+        {
+          "seed": 19,
+          "location_threshold": 0.55,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 8,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 0,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.888889,
+            "repair_trigger_recall": 1.0,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.22963
+          }
+        },
+        {
+          "seed": 23,
+          "location_threshold": 0.55,
+          "test_metrics": {
+            "example_count": 9,
+            "valid_count": 1,
+            "invalid_count": 8,
+            "repair_trigger_true_positives": 6,
+            "repair_trigger_false_positives": 1,
+            "repair_trigger_false_negatives": 2,
+            "repair_trigger_true_negatives": 0,
+            "repair_trigger_precision": 0.857143,
+            "repair_trigger_recall": 0.75,
+            "false_positive_repair_rate": 1.0,
+            "error_location_accuracy": 0.0,
+            "error_location_f1": 0.0,
+            "error_type_macro_f1": 0.222222
+          }
+        }
+      ],
+      "repeated_split_summary": {
+        "repair_trigger_precision": {
+          "mean": 0.869841,
+          "minimum": 0.857143,
+          "maximum": 0.888889,
+          "splits": 5
+        },
+        "repair_trigger_recall": {
+          "mean": 0.85,
+          "minimum": 0.75,
+          "maximum": 1.0,
+          "splits": 5
+        },
+        "false_positive_repair_rate": {
+          "mean": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0,
+          "splits": 5
+        },
+        "error_location_accuracy": {
+          "mean": 0.05,
+          "minimum": 0.0,
+          "maximum": 0.125,
+          "splits": 5
+        },
+        "error_location_f1": {
+          "mean": 0.050196,
+          "minimum": 0.0,
+          "maximum": 0.133333,
+          "splits": 5
+        },
+        "error_type_macro_f1": {
+          "mean": 0.142222,
+          "minimum": 0.0,
+          "maximum": 0.22963,
+          "splits": 5
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Training uses 39 reviewed model-generated traces. One unreadable trace is excluded.",
+    "Each development and test split contains one example of every class, so one split is unstable.",
+    "Means are across five stratified splits. They are not a large-benchmark result.",
+    "The synthetic TF-IDF model is not retrained here. Its earlier perfect score was on eight synthetic examples.",
+    "The stronger representation is truncated SVD over the same TF-IDF features, not a pretrained language-model encoder.",
+    "Reference answers, sampling correctness, annotation notes, and recovery actions are not features.",
+    "These metrics do not measure whether a later repair improves the final answer."
+  ]
+}

@@ -1,0 +1,461 @@
+{
+  "generated_utc": "2026-10-06T11:41:12.759030+00:00",
+  "experiment": "learned_typed_verifier_pilot",
+  "model_family": "tfidf_logistic_regression",
+  "seed": 42,
+  "location_threshold_selected_on_dev": 0.55,
+  "dataset": {
+    "path": "typed_verifier_pilot.json",
+    "sha256": "7a4fc482effabecbc2b1e2d1e2751ff6e8721e7b39e0cd4cbe10906681fc340a",
+    "source": "controlled_synthetic",
+    "example_count": 48
+  },
+  "split": {
+    "train": {
+      "count": 32,
+      "example_ids": [
+        "controlled-algebraic_transformation_error-001",
+        "controlled-algebraic_transformation_error-003",
+        "controlled-algebraic_transformation_error-005",
+        "controlled-algebraic_transformation_error-006",
+        "controlled-arithmetic_error-002",
+        "controlled-arithmetic_error-003",
+        "controlled-arithmetic_error-005",
+        "controlled-arithmetic_error-006",
+        "controlled-dependency_error-001",
+        "controlled-dependency_error-003",
+        "controlled-dependency_error-005",
+        "controlled-dependency_error-006",
+        "controlled-incomplete_solution-001",
+        "controlled-incomplete_solution-004",
+        "controlled-incomplete_solution-005",
+        "controlled-incomplete_solution-006",
+        "controlled-logical_inference_error-001",
+        "controlled-logical_inference_error-003",
+        "controlled-logical_inference_error-005",
+        "controlled-logical_inference_error-006",
+        "controlled-missing_assumption-001",
+        "controlled-missing_assumption-004",
+        "controlled-missing_assumption-005",
+        "controlled-missing_assumption-006",
+        "controlled-semantic_interpretation_error-001",
+        "controlled-semantic_interpretation_error-003",
+        "controlled-semantic_interpretation_error-004",
+        "controlled-semantic_interpretation_error-005",
+        "controlled-sign_error-001",
+        "controlled-sign_error-002",
+        "controlled-sign_error-003",
+        "controlled-sign_error-006"
+      ],
+      "error_type_counts": {
+        "algebraic_transformation_error": 4,
+        "arithmetic_error": 4,
+        "dependency_error": 4,
+        "incomplete_solution": 4,
+        "logical_inference_error": 4,
+        "missing_assumption": 4,
+        "semantic_interpretation_error": 4,
+        "sign_error": 4
+      }
+    },
+    "dev": {
+      "count": 8,
+      "example_ids": [
+        "controlled-algebraic_transformation_error-002",
+        "controlled-arithmetic_error-001",
+        "controlled-dependency_error-002",
+        "controlled-incomplete_solution-003",
+        "controlled-logical_inference_error-004",
+        "controlled-missing_assumption-002",
+        "controlled-semantic_interpretation_error-002",
+        "controlled-sign_error-004"
+      ],
+      "error_type_counts": {
+        "algebraic_transformation_error": 1,
+        "arithmetic_error": 1,
+        "dependency_error": 1,
+        "incomplete_solution": 1,
+        "logical_inference_error": 1,
+        "missing_assumption": 1,
+        "semantic_interpretation_error": 1,
+        "sign_error": 1
+      }
+    },
+    "test": {
+      "count": 8,
+      "example_ids": [
+        "controlled-algebraic_transformation_error-004",
+        "controlled-arithmetic_error-004",
+        "controlled-dependency_error-004",
+        "controlled-incomplete_solution-002",
+        "controlled-logical_inference_error-002",
+        "controlled-missing_assumption-003",
+        "controlled-semantic_interpretation_error-006",
+        "controlled-sign_error-005"
+      ],
+      "error_type_counts": {
+        "algebraic_transformation_error": 1,
+        "arithmetic_error": 1,
+        "dependency_error": 1,
+        "incomplete_solution": 1,
+        "logical_inference_error": 1,
+        "missing_assumption": 1,
+        "semantic_interpretation_error": 1,
+        "sign_error": 1
+      }
+    }
+  },
+  "dev_metrics": {
+    "example_count": 8,
+    "error_location_accuracy": 1.0,
+    "error_type_accuracy": 1.0,
+    "error_type_macro_f1": 1.0,
+    "end_to_end_accuracy": 1.0,
+    "confusion_matrix": {
+      "labels": [
+        "arithmetic_error",
+        "algebraic_transformation_error",
+        "sign_error",
+        "missing_assumption",
+        "logical_inference_error",
+        "semantic_interpretation_error",
+        "dependency_error",
+        "incomplete_solution"
+      ],
+      "values": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "predictions": [
+      {
+        "example_id": "controlled-algebraic_transformation_error-002",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "algebraic_transformation_error",
+        "predicted_type": "algebraic_transformation_error",
+        "location_confidence": 0.743075282357179
+      },
+      {
+        "example_id": "controlled-arithmetic_error-001",
+        "expected_location": "n1",
+        "predicted_location": "n1",
+        "expected_type": "arithmetic_error",
+        "predicted_type": "arithmetic_error",
+        "location_confidence": 0.6473482846481335
+      },
+      {
+        "example_id": "controlled-dependency_error-002",
+        "expected_location": "n3",
+        "predicted_location": "n3",
+        "expected_type": "dependency_error",
+        "predicted_type": "dependency_error",
+        "location_confidence": 0.7346139188022658
+      },
+      {
+        "example_id": "controlled-incomplete_solution-003",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "incomplete_solution",
+        "predicted_type": "incomplete_solution",
+        "location_confidence": 0.5838387533849977
+      },
+      {
+        "example_id": "controlled-logical_inference_error-004",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "logical_inference_error",
+        "predicted_type": "logical_inference_error",
+        "location_confidence": 0.7080276411506305
+      },
+      {
+        "example_id": "controlled-missing_assumption-002",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "missing_assumption",
+        "predicted_type": "missing_assumption",
+        "location_confidence": 0.7005026032202322
+      },
+      {
+        "example_id": "controlled-semantic_interpretation_error-002",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "semantic_interpretation_error",
+        "predicted_type": "semantic_interpretation_error",
+        "location_confidence": 0.6747304517938583
+      },
+      {
+        "example_id": "controlled-sign_error-004",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "sign_error",
+        "predicted_type": "sign_error",
+        "location_confidence": 0.7017278549964243
+      }
+    ]
+  },
+  "test_metrics": {
+    "example_count": 8,
+    "error_location_accuracy": 1.0,
+    "error_type_accuracy": 1.0,
+    "error_type_macro_f1": 1.0,
+    "end_to_end_accuracy": 1.0,
+    "confusion_matrix": {
+      "labels": [
+        "arithmetic_error",
+        "algebraic_transformation_error",
+        "sign_error",
+        "missing_assumption",
+        "logical_inference_error",
+        "semantic_interpretation_error",
+        "dependency_error",
+        "incomplete_solution"
+      ],
+      "values": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "predictions": [
+      {
+        "example_id": "controlled-algebraic_transformation_error-004",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "algebraic_transformation_error",
+        "predicted_type": "algebraic_transformation_error",
+        "location_confidence": 0.7549769320447429
+      },
+      {
+        "example_id": "controlled-arithmetic_error-004",
+        "expected_location": "n1",
+        "predicted_location": "n1",
+        "expected_type": "arithmetic_error",
+        "predicted_type": "arithmetic_error",
+        "location_confidence": 0.6477283208364539
+      },
+      {
+        "example_id": "controlled-dependency_error-004",
+        "expected_location": "n3",
+        "predicted_location": "n3",
+        "expected_type": "dependency_error",
+        "predicted_type": "dependency_error",
+        "location_confidence": 0.728907698782604
+      },
+      {
+        "example_id": "controlled-incomplete_solution-002",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "incomplete_solution",
+        "predicted_type": "incomplete_solution",
+        "location_confidence": 0.5858661313086476
+      },
+      {
+        "example_id": "controlled-logical_inference_error-002",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "logical_inference_error",
+        "predicted_type": "logical_inference_error",
+        "location_confidence": 0.7115963232727438
+      },
+      {
+        "example_id": "controlled-missing_assumption-003",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "missing_assumption",
+        "predicted_type": "missing_assumption",
+        "location_confidence": 0.7020980176262006
+      },
+      {
+        "example_id": "controlled-semantic_interpretation_error-006",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "semantic_interpretation_error",
+        "predicted_type": "semantic_interpretation_error",
+        "location_confidence": 0.6761930341810305
+      },
+      {
+        "example_id": "controlled-sign_error-005",
+        "expected_location": "n2",
+        "predicted_location": "n2",
+        "expected_type": "sign_error",
+        "predicted_type": "sign_error",
+        "location_confidence": 0.7100524043765792
+      }
+    ]
+  },
+  "test_rule_baseline": {
+    "name": "current_structural_symbolic_heuristics",
+    "example_count": 8,
+    "coverage": 0.5,
+    "error_location_accuracy_with_abstentions_wrong": 0.5,
+    "error_type_accuracy_with_abstentions_wrong": 0.5,
+    "prediction_counts": {
+      "algebraic_transformation_error": 1,
+      "arithmetic_error": 1,
+      "dependency_error": 1,
+      "abstain": 4,
+      "sign_error": 1
+    }
+  },
+  "limitations": [
+    "The dataset has only 48 controlled synthetic examples.",
+    "The eight-example test split gives one example per error type.",
+    "Results are a pipeline pilot, not evidence of broad mathematical generalization."
+  ]
+}
